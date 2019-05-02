@@ -45,6 +45,7 @@ namespace NoSQL_0._0
 
         public List<Customer> GetAllCostumers()
         {
+            Console.WriteLine("\nTest\n");
             return colCustomer.Find(x => true).ToList();
         }
 
