@@ -1,0 +1,111 @@
+﻿<Window x:Class="NoSQL_0._0.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoSQL_0._0"
+        mc:Ignorable="d"
+        Title="BeaverCoffee AB" Height="600" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Grid Margin="299,244,261,227" x:Name="gridLogin" Visibility="Hidden">
+            <Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Label Content="Password: " HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="74,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="txtUser"/>
+            <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
+            <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
+        </Grid>
+        <Grid x:Name="gridDataGrid" Margin="0,295,0,0" Visibility="Hidden" Height="274" VerticalAlignment="Top" HorizontalAlignment="Left" Width="792" >
+            <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" Height="224" VerticalAlignment="Top" HorizontalAlignment="Left" Width="792">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="gridMain_DoubleClick"/>
+                    </Style>
+                </DataGrid.Resources>
+            </DataGrid>
+            <Button x:Name="btnLogout" Content="Logout" Margin="706,229,0,0" Click="btnLogout_Click" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="76"/>
+            <ComboBox x:Name="comboShowAll" HorizontalAlignment="Left" Margin="72,231,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboShowAll_SelectionChanged">
+                <ComboBoxItem Content="Customers"/>
+                <ComboBoxItem Content="Employees"/>
+                <ComboBoxItem Content="Items"/>
+                <ComboBoxItem Content="Orders"/>
+                <ComboBoxItem Content="Comments"/>
+            </ComboBox>
+            <Label Content="Show all:" HorizontalAlignment="Left" Margin="10,231,0,0" VerticalAlignment="Top"/>
+
+        </Grid>
+
+        <Grid x:Name="gridMain" Visibility="Hidden" Margin="0,0,0,274">
+            <TabControl x:Name="tabControl">
+                <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
+                    <Grid Background="#FFE5E5E5" Height="269" VerticalAlignment="Top" HorizontalAlignment="Left" Width="788">
+                        <GroupBox Header="Add Customer" Margin="0,0,538,64">
+                            <Grid>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Country:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                                <Label Content="City:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_addCustomer_country" HorizontalAlignment="Left" Height="23" Margin="88,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_addCustomer_city" HorizontalAlignment="Left" Height="23" Margin="88,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="49,145,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
+                                <DatePicker x:Name="datepicker" HorizontalAlignment="Left" Margin="88,116,0,0" VerticalAlignment="Top"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="277" Margin="250,0,0,0">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
+                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="Employee" IsSelected="True"/>
+                                    <ComboBoxItem Content="Manager"/>
+                                </ComboBox>
+                                <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="121,90,0,0" VerticalAlignment="Top"/>
+                                <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="121,116,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="121,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,171,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
+
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Update Customer BonusPoints" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="251" Margin="527,0,0,0">
+                            <Grid>
+                                <TextBlock TextWrapping="Wrap"><Run Text="Double-click on a customer in the datagrid to increment his/her bonuspoints by 1. "/><Run Text="Just a demonstration on how to use the double-click on the datagrid. Cool stuff..."/></TextBlock>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddCustomer" Header="Add Customer">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddOrder" Header="Add Order">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddComment" Header="Add Comment">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddEmployee" Header="Add Employee">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddReports" Header="Produce Reports">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+                <TabItem Header="And so on...">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Grid>
+</Window>
