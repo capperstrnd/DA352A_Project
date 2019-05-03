@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -222,6 +223,18 @@ namespace NoSQL_0._0
             Info.FileName = "cmd.exe";
             Process.Start(Info);
             Application.Current.Shutdown();
+        }
+        private void Copy_cell_event(object sender, DataGridRowClipboardEventArgs e)
+        {
+            var currentCell = e.ClipboardRowContent[dataGrid.CurrentCell.Column.DisplayIndex];
+            e.ClipboardRowContent.Clear();
+            e.ClipboardRowContent.Add(currentCell);
+        }
+
+        private void btn_test_add_comment_Click(object sender, RoutedEventArgs e)
+        {
+            ObjectId id = new ObjectId(txt_test_add_comment_id.Text);
+            db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_test_add_comment.Text, "NOW"));
         }
     }
 }

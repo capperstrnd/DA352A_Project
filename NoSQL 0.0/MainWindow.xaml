@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoSQL_0._0"
         mc:Ignorable="d"
-        Title="BeaverCoffee AB" Height="600" Width="800" ResizeMode="NoResize">
+        Title="BeaverCoffee AB" Height="700" Width="800" >
     <Grid>
         <Grid Margin="299,244,261,227" x:Name="gridLogin" Visibility="Hidden">
             <Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -14,31 +14,79 @@
             <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
             <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
         </Grid>
-        <Grid x:Name="gridDataGrid" Margin="0,295,0,0" Visibility="Hidden" Height="274" VerticalAlignment="Top" HorizontalAlignment="Left" Width="792" >
-            <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" Height="224" VerticalAlignment="Top" HorizontalAlignment="Left" Width="792">
+        <Grid x:Name="gridDataGrid" Margin="0,295,0,0" Visibility="Hidden" >
+            <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Margin="0,0,0,100">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="gridMain_DoubleClick"/>
                     </Style>
                 </DataGrid.Resources>
             </DataGrid>
-            <Button x:Name="btnLogout" Content="Logout" Margin="706,229,0,0" Click="btnLogout_Click" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="76"/>
-            <ComboBox x:Name="comboShowAll" HorizontalAlignment="Left" Margin="72,231,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboShowAll_SelectionChanged">
+            <Button x:Name="btnLogout" Content="Logout" Margin="706,346,8,8" Click="btnLogout_Click"/>
+            <ComboBox x:Name="comboShowAll" Margin="72,344,598,8" SelectionChanged="comboShowAll_SelectionChanged">
                 <ComboBoxItem Content="Customers"/>
                 <ComboBoxItem Content="Employees"/>
                 <ComboBoxItem Content="Items"/>
                 <ComboBoxItem Content="Orders"/>
                 <ComboBoxItem Content="Comments"/>
             </ComboBox>
-            <Label Content="Show all:" HorizontalAlignment="Left" Margin="10,231,0,0" VerticalAlignment="Top"/>
+            <Label Content="Show all:" Margin="10,340,723,8"/>
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Hidden" Margin="0,0,0,274">
+        <Grid x:Name="gridMain" Visibility="Hidden" Margin="0,0,0,374">
             <TabControl x:Name="tabControl">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
-                    <Grid Background="#FFE5E5E5" Height="269" VerticalAlignment="Top" HorizontalAlignment="Left" Width="788">
-                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="259" VerticalAlignment="Top" Width="277" Margin="10,0,0,0">
+                    <Grid Background="#FFE5E5E5" Margin="0,0,0,0">
+                        <GroupBox Header="Update Customer BonusPoints" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="251" Margin="10,10,0,0">
+                            <Grid>
+                                <TextBlock TextWrapping="Wrap"><Run Text="Double-click on a customer in the datagrid to increment his/her bonuspoints by 1. "/><Run Text="Just a demonstration on how to use the double-click on the datagrid. Cool stuff..."/></TextBlock>
+                            </Grid>
+                        </GroupBox>
+                        <TextBox x:Name="txt_test_add_comment" HorizontalAlignment="Left" Height="165" Margin="419,19,0,0" TextWrapping="Wrap" Text="Add comment to employee" VerticalAlignment="Top" Width="233"/>
+                        <Button x:Name="btn_test_add_comment" Content="Add Comment" Margin="499,237,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
+                        <TextBox x:Name="txt_test_add_comment_id" HorizontalAlignment="Left" Height="23" Margin="481,189,0,0" TextWrapping="Wrap" Text="EmplyeeId" VerticalAlignment="Top" Width="120"/>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddCustomer" Header="Add Customer">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Add Customer" Margin="10,10,535,10">
+                            <Grid>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <Label Content="City:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="72,197,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
+                                <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_addCustomer_location" Margin="88,41,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                    <ComboBoxItem Content="Malmö"/>
+                                    <ComboBoxItem Content="London"/>
+                                    <ComboBoxItem Content="Minneapolis"/>
+                                    <ComboBoxItem Content="Chicago"/>
+                                </ComboBox>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddOrder" Header="Add Order">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="216" VerticalAlignment="Top" Width="243">
+                            <Grid>
+                                <Label Content="Customer Id:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="92,13,0,0"/>
+                            </Grid>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddComment" Header="Add Comment">
+                    <Grid Background="#FFE5E5E5">
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabAddEmployee" Header="Add Employee">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="259" VerticalAlignment="Top" Width="277" Margin="10,10,0,0">
                             <Grid>
                                 <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                                 <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
@@ -66,45 +114,6 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Update Customer BonusPoints" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="251" Margin="292,0,0,0">
-                            <Grid>
-                                <TextBlock TextWrapping="Wrap"><Run Text="Double-click on a customer in the datagrid to increment his/her bonuspoints by 1. "/><Run Text="Just a demonstration on how to use the double-click on the datagrid. Cool stuff..."/></TextBlock>
-                            </Grid>
-                        </GroupBox>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddCustomer" Header="Add Customer">
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Add Customer" Margin="10,10,535,10">
-                            <Grid>
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <Label Content="City:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="72,197,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
-                                <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_addCustomer_location" Margin="88,41,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-                                    <ComboBoxItem Content="Malmö"/>
-                                    <ComboBoxItem Content="London"/>
-                                    <ComboBoxItem Content="Minneapolis"/>
-                                    <ComboBoxItem Content="Chicago"/>
-                                </ComboBox>
-                            </Grid>
-                        </GroupBox>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddOrder" Header="Add Order">
-                    <Grid Background="#FFE5E5E5">
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddComment" Header="Add Comment">
-                    <Grid Background="#FFE5E5E5">
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddEmployee" Header="Add Employee">
-                    <Grid Background="#FFE5E5E5">
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddReports" Header="Produce Reports">

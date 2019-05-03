@@ -10,15 +10,17 @@ namespace NoSQL_0._0
     class Order
     {
         public ObjectId Id { get; set; }
-        public Customer Costumer { get; set; }
-        public Employee Employee { get; set; }
+        public ObjectId CostumerId { get; set; }
+        public ObjectId EmployeeId { get; set; }
         public List<Item> Items { get; set; }
+        public string Date { get; set; }
+        public string City { get; set; }
         public int TotalCost { get; set; }
 
-        public Order(Customer costumer, Employee employee, List<Item> items, int totalCost)
+        public Order(ObjectId costumerId, ObjectId employeeId, List<Item> items, string date, string City, int totalCost)
         {
-            Costumer = costumer;
-            Employee = employee;
+            CostumerId = costumerId;
+            EmployeeId = employeeId;
             Items = items;
             TotalCost = totalCost;
         }

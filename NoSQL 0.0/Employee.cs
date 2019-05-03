@@ -19,7 +19,7 @@ namespace NoSQL_0._0
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int WorkingCapacity { get; set; }
-        public List<string> Comments { get; set; }
+        public List<Comment> Comments { get; set; }
 
         public Employee(string name, string password, string sSN, string position, string city, string startDate, string endDate, int workingCapacity)
         {
@@ -31,6 +31,7 @@ namespace NoSQL_0._0
             StartDate = startDate;
             EndDate = endDate;
             WorkingCapacity = workingCapacity;
+            Comments = new List<Comment>();
         }
     }
 }

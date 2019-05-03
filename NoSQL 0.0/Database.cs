@@ -159,6 +159,13 @@ namespace NoSQL_0._0
             var result = colCustomer.UpdateOne(filter, update);
         }
 
+        public void UpdateEmployeeAddComment(ObjectId employeeId, Comment comment)
+        {
+            var filter = Builders<Employee>.Filter.Eq("_id", employeeId);
+            var update = Builders<Employee>.Update.AddToSet("Comments", comment);
+            var result = colEmployee.UpdateOne(filter, update);
+        }
+
         /*
          * DEBUG STUFF
          */
