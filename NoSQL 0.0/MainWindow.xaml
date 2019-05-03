@@ -34,7 +34,7 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Hidden" Margin="0,0,0,274">
+        <Grid x:Name="gridMain" Visibility="Visible" Margin="0,0,0,274">
             <TabControl x:Name="tabControl">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5" Height="269" VerticalAlignment="Top" HorizontalAlignment="Left" Width="788">
@@ -53,24 +53,31 @@
                                 <DatePicker x:Name="datepicker" HorizontalAlignment="Left" Margin="88,116,0,0" VerticalAlignment="Top"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="277" Margin="250,0,0,0">
+                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="259" VerticalAlignment="Top" Width="277" Margin="250,0,0,0">
                             <Grid>
                                 <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                                 <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
                                 <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
-                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Label Content="Location:" Margin="10,88,194,123"/>
+                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
+                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                                 <TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                                 <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120">
                                     <ComboBoxItem Content="Employee" IsSelected="True"/>
                                     <ComboBoxItem Content="Manager"/>
                                 </ComboBox>
-                                <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="121,90,0,0" VerticalAlignment="Top"/>
-                                <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="121,116,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="121,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,171,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
+                                <ComboBox x:Name="combo_addEmployee_location" Margin="121,92,24,123">
+                                    <ComboBoxItem Content="Malmö"/>
+                                    <ComboBoxItem Content="London"/>
+                                    <ComboBoxItem Content="Minneapolis"/>
+                                    <ComboBoxItem Content="Chicago"/>
+                                </ComboBox>
+                                <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="121,117,0,0" VerticalAlignment="Top"/>
+                                <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="121,146,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="121,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,207,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
 
                             </Grid>
                         </GroupBox>

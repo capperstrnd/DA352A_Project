@@ -168,6 +168,7 @@ namespace NoSQL_0._0
                 "admin",
                 txt_addEmployee_SSN.Text,
                 combo_addEmployee_postition.Text,
+                combo_addEmployee_location.Text,
                 datepicker_addEmployee_startDate.ToString().Split(' ')[0],
                 datepicker_addEmployee_endDate.ToString().Split(' ')[0],
                 capacity);
