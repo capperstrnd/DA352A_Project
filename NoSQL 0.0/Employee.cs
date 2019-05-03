@@ -15,19 +15,19 @@ namespace NoSQL_0._0
         public string Password { get; set; }
         public string SSN { get; set; }
         public string Position { get; set; }
-        public string location { get; set; }
+        public string City { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int WorkingCapacity { get; set; }
         public List<string> Comments { get; set; }
 
-        public Employee(string name, string password, string sSN, string position, string location, string startDate, string endDate, int workingCapacity)
+        public Employee(string name, string password, string sSN, string position, string city, string startDate, string endDate, int workingCapacity)
         {
             Name = name;
             Password = password;
             SSN = sSN;
             Position = position;
-            this.location = location;
+            City = city;
             StartDate = startDate;
             EndDate = endDate;
             WorkingCapacity = workingCapacity;

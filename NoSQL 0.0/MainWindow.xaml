@@ -34,31 +34,16 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Visible" Margin="0,0,0,274">
+        <Grid x:Name="gridMain" Visibility="Hidden" Margin="0,0,0,274">
             <TabControl x:Name="tabControl">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5" Height="269" VerticalAlignment="Top" HorizontalAlignment="Left" Width="788">
-                        <GroupBox Header="Add Customer" Margin="0,0,538,64">
-                            <Grid>
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Country:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-                                <Label Content="City:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_addCustomer_country" HorizontalAlignment="Left" Height="23" Margin="88,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_addCustomer_city" HorizontalAlignment="Left" Height="23" Margin="88,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="49,145,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
-                                <DatePicker x:Name="datepicker" HorizontalAlignment="Left" Margin="88,116,0,0" VerticalAlignment="Top"/>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="259" VerticalAlignment="Top" Width="277" Margin="250,0,0,0">
+                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="259" VerticalAlignment="Top" Width="277" Margin="10,0,0,0">
                             <Grid>
                                 <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                                 <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
                                 <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Location:" Margin="10,88,194,123"/>
+                                <Label Content="City:" Margin="10,88,194,123"/>
                                 <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
                                 <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
                                 <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
@@ -81,7 +66,7 @@
 
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Update Customer BonusPoints" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="251" Margin="527,0,0,0">
+                        <GroupBox Header="Update Customer BonusPoints" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="251" Margin="292,0,0,0">
                             <Grid>
                                 <TextBlock TextWrapping="Wrap"><Run Text="Double-click on a customer in the datagrid to increment his/her bonuspoints by 1. "/><Run Text="Just a demonstration on how to use the double-click on the datagrid. Cool stuff..."/></TextBlock>
                             </Grid>
@@ -90,6 +75,24 @@
                 </TabItem>
                 <TabItem x:Name="tabAddCustomer" Header="Add Customer">
                     <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Add Customer" Margin="10,10,535,10">
+                            <Grid>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <Label Content="City:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="72,197,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
+                                <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_addCustomer_location" Margin="88,41,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                    <ComboBoxItem Content="Malmö"/>
+                                    <ComboBoxItem Content="London"/>
+                                    <ComboBoxItem Content="Minneapolis"/>
+                                    <ComboBoxItem Content="Chicago"/>
+                                </ComboBox>
+                            </Grid>
+                        </GroupBox>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddOrder" Header="Add Order">

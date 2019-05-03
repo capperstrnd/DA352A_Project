@@ -134,18 +134,17 @@ namespace NoSQL_0._0
         private void btn_addCustomer_add_Click(object sender, RoutedEventArgs e)
         {
             Customer c = new Customer(
-                txt_addCustomer_ssn.Text, 
-                txt_addCustomer_country.Text, 
-                txt_addCustomer_city.Text, 
+                txt_addCustomer_ssn.Text,
+                combo_addCustomer_location.Text, 
                 txt_addCustomer_occupation.Text, 
-                0, 
-                datepicker.ToString().Split(' ')[0]);
+                0,
+                datepicker_addCustomer.ToString().Split(' ')[0]);
 
             db.AddCustomer(c);
             txt_addCustomer_ssn.Text = "";
-            txt_addCustomer_country.Text = "";
-            txt_addCustomer_city.Text = "";
             txt_addCustomer_occupation.Text = "";
+            combo_addCustomer_location.SelectedIndex = 0;
+            datepicker_addCustomer.SelectedDate = null;
 
             List<Customer> cs = new List<Customer>();
             cs.Add(c);

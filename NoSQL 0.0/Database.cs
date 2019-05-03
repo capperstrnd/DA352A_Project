@@ -178,8 +178,8 @@ namespace NoSQL_0._0
             /*
              * Insert two costumers
              */
-            Customer c1 = new Customer("884579-4568", "Sweden", "Malmö", "Bricklayer", 4, "2017-08/20");
-            Customer c2 = new Customer("915384-7538", "North Korea", "PlingPlong", "Ping pong player", 2, "2019-05/01");
+            Customer c1 = new Customer("884579-4568", "Malmö", "Bricklayer", 4, "2017-08/20");
+            Customer c2 = new Customer("915384-7538", "PlingPlong", "Ping pong player", 2, "2019-05/01");
             colCustomer.InsertOne(c1);
             colCustomer.InsertOne(c2);
 
