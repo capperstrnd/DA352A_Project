@@ -14,106 +14,124 @@
             <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
             <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
         </Grid>
-        <Grid x:Name="gridDataGrid" Margin="0,295,0,0" Visibility="Hidden" Height="376" VerticalAlignment="Top" HorizontalAlignment="Left" Width="794" >
-            <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="276" VerticalAlignment="Top" HorizontalAlignment="Left" Width="794">
+        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="313" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
+            <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="272" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="gridMain_DoubleClick"/>
                     </Style>
                 </DataGrid.Resources>
             </DataGrid>
-            <Button x:Name="btnLogout" Content="Logout" Margin="704,281,0,0" Click="btnLogout_Click" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="80"/>
-            <ComboBox x:Name="comboShowAll" Margin="71,281,0,0" SelectionChanged="comboShowAll_SelectionChanged" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="124">
+            <Button x:Name="btnLogout" Content="Logout" Margin="684,0,0,10" Click="btnLogout_Click" HorizontalAlignment="Left" Width="80" Height="22" VerticalAlignment="Bottom"/>
+            <Grid Margin="0,0,612,315"/>
+            <ComboBox x:Name="comboShowAll" Margin="72,0,0,10" SelectionChanged="comboShowAll_SelectionChanged" HorizontalAlignment="Left" Width="124" Height="24" VerticalAlignment="Bottom">
                 <ComboBoxItem Content="Customers"/>
                 <ComboBoxItem Content="Employees"/>
                 <ComboBoxItem Content="Items"/>
                 <ComboBoxItem Content="Orders"/>
                 <ComboBoxItem Content="Comments"/>
             </ComboBox>
-            <Label Content="Show all:" Margin="10,281,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="61"/>
+            <Label Content="Show all:" HorizontalAlignment="Left" Margin="10,0,0,10" Height="26" VerticalAlignment="Bottom"/>
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Visible" Height="297" VerticalAlignment="Top" HorizontalAlignment="Left" Width="794">
-            <TabControl x:Name="tabControl" Height="297" VerticalAlignment="Top" HorizontalAlignment="Left" Width="794">
+        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+            <TabControl x:Name="tabControl" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
-                    <Grid Background="#FFE5E5E5" Margin="0,0,0,0" Height="269" VerticalAlignment="Top" HorizontalAlignment="Left" Width="788">
+                    <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Update Customer BonusPoints" HorizontalAlignment="Left" Height="227" VerticalAlignment="Top" Width="251" Margin="10,10,0,0">
                             <Grid>
                                 <TextBlock TextWrapping="Wrap" Height="205" VerticalAlignment="Top" HorizontalAlignment="Left" Width="239"><Run Text="Double-click on a customer in the datagrid to increment his/her bonuspoints by 1. "/><Run Text="Just a demonstration on how to use the double-click on the datagrid. Cool stuff..."/></TextBlock>
                             </Grid>
                         </GroupBox>
-                        <TextBox x:Name="txt_test_add_comment" HorizontalAlignment="Left" Height="165" Margin="419,19,0,0" TextWrapping="Wrap" Text="Add comment to employee" VerticalAlignment="Top" Width="233"/>
-                        <Button x:Name="btn_test_add_comment" Content="Add Comment" Margin="499,237,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
-                        <TextBox x:Name="txt_test_add_comment_id" HorizontalAlignment="Left" Height="23" Margin="481,189,0,0" TextWrapping="Wrap" Text="EmplyeeId" VerticalAlignment="Top" Width="120"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddCustomer" Header="Add Customer">
-                    <Grid Background="#FFE5E5E5" Height="269" VerticalAlignment="Top" HorizontalAlignment="Left" Width="788">
-                        <GroupBox Header="Add Customer" Margin="10,10,0,0" Height="249" VerticalAlignment="Top" HorizontalAlignment="Left" Width="243">
-                            <Grid Height="227" VerticalAlignment="Top" HorizontalAlignment="Left" Width="231">
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <Label Content="City:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="72,197,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
-                                <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_addCustomer_location" Margin="88,41,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-                                    <ComboBoxItem Content="Malmö"/>
-                                    <ComboBoxItem Content="London"/>
-                                    <ComboBoxItem Content="Minneapolis"/>
-                                    <ComboBoxItem Content="Chicago"/>
-                                </ComboBox>
-                            </Grid>
-                        </GroupBox>
+                    <Grid Background="#FFE5E5E5">
+                        <Grid>
+                            <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                            <Label Content="City:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <ComboBox x:Name="combo_addCustomer_location" Margin="88,41,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                <ComboBoxItem Content="Malmö"/>
+                                <ComboBoxItem Content="London"/>
+                                <ComboBoxItem Content="Minneapolis"/>
+                                <ComboBoxItem Content="Chicago"/>
+                            </ComboBox>
+                            <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="65,126,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
+                            <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddOrder" Header="Add Order">
                     <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="GroupBox" HorizontalAlignment="Left" Height="216" VerticalAlignment="Top" Width="243">
+                        <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
                             <Grid>
-                                <Label Content="Customer Id:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="92,13,0,0"/>
+                                <Label Content="Query:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                <TextBox x:Name="txt_addOrder_searchCustomer" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_addOrder_searchCustomer" HorizontalAlignment="Left" Margin="82,45,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="SSN"/>
+                                    <ComboBoxItem Content="City"/>
+                                    <ComboBoxItem Content="Occupation"/>
+                                </ComboBox>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" Text="Double click a customer in the datagrid to add him/her to the order" VerticalAlignment="Top" Height="50" Width="192"/>
+                                <Button x:Name="btn_addOrder_searchCustomer" Content="Search" HorizontalAlignment="Left" Margin="64,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_searchCustomer_Click"/>
+                            </Grid>
+                        </GroupBox>
+                        <ScrollViewer Margin="468,10,0,0">
+                            <TextBlock x:Name="txt_addOrder_order" FontFamily="Consolas"/>
+                        </ScrollViewer>
+                        <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="239,10,0,0" VerticalAlignment="Top" Width="224">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                <TextBox x:Name="txt_addOrder_addItem" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" Text="Double click an item in the datagrid to add the item to the order" VerticalAlignment="Top" Height="76" Width="192"/>
+                                <Button x:Name="btn_addOrder_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75"/>
                             </Grid>
                         </GroupBox>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddComment" Header="Add Comment">
                     <Grid Background="#FFE5E5E5">
+                        <TextBox x:Name="txt_addComment_comment" HorizontalAlignment="Left" Height="175" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+                        <TextBox x:Name="txt_addComment_id" HorizontalAlignment="Left" Height="23" Margin="94,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+                        <Button x:Name="btn_addComment_add" Content="Add Comment" Margin="139,239,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
+                        <Label Content="Comment:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Employee ID:" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddEmployee" Header="Add Employee">
                     <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Add Employee" HorizontalAlignment="Left" Height="259" VerticalAlignment="Top" Width="277" Margin="10,10,0,0">
-                            <Grid>
-                                <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                                <Label Content="City:" Margin="10,88,194,123"/>
-                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
-                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="Employee" IsSelected="True"/>
-                                    <ComboBoxItem Content="Manager"/>
-                                </ComboBox>
-                                <ComboBox x:Name="combo_addEmployee_location" Margin="121,92,24,123">
-                                    <ComboBoxItem Content="Malmö"/>
-                                    <ComboBoxItem Content="London"/>
-                                    <ComboBoxItem Content="Minneapolis"/>
-                                    <ComboBoxItem Content="Chicago"/>
-                                </ComboBox>
-                                <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="121,117,0,0" VerticalAlignment="Top"/>
-                                <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="121,146,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="121,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,207,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
+                        <Grid>
+                            <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                            <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                            <Label Content="City:" Margin="10,88,194,123"/>
+                            <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
+                            <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120">
+                                <ComboBoxItem Content="Employee" IsSelected="True"/>
+                                <ComboBoxItem Content="Manager"/>
+                            </ComboBox>
+                            <ComboBox x:Name="combo_addEmployee_location" Margin="121,92,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                <ComboBoxItem Content="Malmö"/>
+                                <ComboBoxItem Content="London"/>
+                                <ComboBoxItem Content="Minneapolis"/>
+                                <ComboBoxItem Content="Chicago"/>
+                            </ComboBox>
+                            <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="121,117,0,0" VerticalAlignment="Top"/>
+                            <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="121,146,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="121,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,207,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
 
-                            </Grid>
-                        </GroupBox>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddReports" Header="Produce Reports">

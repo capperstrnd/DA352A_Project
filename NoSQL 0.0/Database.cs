@@ -96,6 +96,11 @@ namespace NoSQL_0._0
          * GET EMPLOYEES BY FIELDS THAT MATCHES EXACTLY 
          */
 
+        public List<Employee> GetEmployeesById(ObjectId id)
+        {
+            return colEmployee.Find(x => x.Id == id).ToList();
+        }
+
         public List<Employee> GetEmployeesByName(string name)
         {
             return colEmployee.Find(x => x.Name == name).ToList();
@@ -135,6 +140,16 @@ namespace NoSQL_0._0
             return colCustomer.Find(x => x.Id == id).ToList();
         }
 
+        public List<Customer> GetCostumerBySSN(string ssn)
+        {
+            return colCustomer.Find(x => x.SSN == ssn).ToList();
+        }
+
+        public List<Customer> GetCostumerByCity(string city)
+        {
+            return colCustomer.Find(x => x.City == city).ToList();
+        }
+
         public List<Customer> GetCostumerByOccupation(string occupation)
         {
             return colCustomer.Find(x => x.Occupation == occupation).ToList();
@@ -159,11 +174,15 @@ namespace NoSQL_0._0
             var result = colCustomer.UpdateOne(filter, update);
         }
 
-        public void UpdateEmployeeAddComment(ObjectId employeeId, Comment comment)
+        public Boolean UpdateEmployeeAddComment(ObjectId employeeId, Comment comment)
         {
+            if (GetEmployeesById(employeeId).Capacity == 0)
+                return false;
+
             var filter = Builders<Employee>.Filter.Eq("_id", employeeId);
             var update = Builders<Employee>.Update.AddToSet("Comments", comment);
             var result = colEmployee.UpdateOne(filter, update);
+            return true;
         }
 
         /*

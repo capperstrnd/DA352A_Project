@@ -27,7 +27,7 @@ namespace NoSQL_0._0
 
         private Database db;
         private Employee currentUser;
-        private List<Item> addedItems = new List<Item>();
+        private Order currenOrder;
 
         public MainWindow()
         {
@@ -41,6 +41,9 @@ namespace NoSQL_0._0
 
             // Connect to database.
             db = new Database();
+
+            // Fill datagrid with all customers
+            dataGrid.ItemsSource = db.GetAllCostumers();
         }
 
         /*
@@ -91,6 +94,8 @@ namespace NoSQL_0._0
 
             // Keep a variable of the logged in employee.
             currentUser = emp;
+            currenOrder = new Order();
+            currenOrder.EmployeeId = currentUser.Id;
         }
 
         /*
@@ -106,17 +111,17 @@ namespace NoSQL_0._0
                 case 0:
                     if (row.Item is Customer)
                     {
-                        Customer c = (Customer)row.Item;
-                        db.UpdateCustomerBonusPoints(c);
-                        dataGrid.ItemsSource = db.GetCustomerById(c.Id);
+                        Customer customer = (Customer)row.Item;
+                        db.UpdateCustomerBonusPoints(customer);
+                        dataGrid.ItemsSource = db.GetCustomerById(customer.Id);
                     }
                     else if (row.Item is Item)
                     {
-                        Item c = (Item)row.Item;
+                        Item item = (Item)row.Item;
                     }
                     else if (row.Item is Employee)
                     {
-                        Employee c = (Employee)row.Item;
+                        Employee employee = (Employee)row.Item;
                     }
                         break;
 
@@ -124,8 +129,20 @@ namespace NoSQL_0._0
                 case 1:
                     break;
 
-                // And so on...
+                // Currently Add Order
                 case 2:
+                    if (row.Item is Customer)
+                    {
+                        Customer customer = (Customer)row.Item;
+                        currenOrder.CustomerId = customer.Id;
+                        txt_addOrder_order.Text = currenOrder.ToString();
+                    }
+                    else if (row.Item is Item)
+                    {
+                        Item item = (Item)row.Item;
+                        currenOrder.Items.Add(item);
+                        txt_addOrder_order.Text = currenOrder.ToString();
+                    }
                     break;
             }
 
@@ -188,6 +205,29 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = empList;
         }
 
+        private void Copy_cell_event(object sender, DataGridRowClipboardEventArgs e)
+        {
+            var currentCell = e.ClipboardRowContent[dataGrid.CurrentCell.Column.DisplayIndex];
+            e.ClipboardRowContent.Clear();
+            e.ClipboardRowContent.Add(currentCell);
+        }
+
+        private void btn_addOrder_searchCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            switch (combo_addOrder_searchCustomer.SelectedIndex)
+            {
+                case 0:
+                    dataGrid.ItemsSource = db.GetCostumerBySSN(txt_addOrder_searchCustomer.Text);
+                    break;
+                case 1:
+                    dataGrid.ItemsSource = db.GetCostumerByCity(txt_addOrder_searchCustomer.Text);
+                    break;
+                case 2:
+                    dataGrid.ItemsSource = db.GetCostumerByOccupation(txt_addOrder_searchCustomer.Text);
+                    break;
+            }
+        }
+
         /*
          * Methods for the buttons at the bottom of the GUI
          */
@@ -224,17 +264,23 @@ namespace NoSQL_0._0
             Process.Start(Info);
             Application.Current.Shutdown();
         }
-        private void Copy_cell_event(object sender, DataGridRowClipboardEventArgs e)
-        {
-            var currentCell = e.ClipboardRowContent[dataGrid.CurrentCell.Column.DisplayIndex];
-            e.ClipboardRowContent.Clear();
-            e.ClipboardRowContent.Add(currentCell);
-        }
 
         private void btn_test_add_comment_Click(object sender, RoutedEventArgs e)
         {
-            ObjectId id = new ObjectId(txt_test_add_comment_id.Text);
-            db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_test_add_comment.Text, "NOW"));
+            ObjectId id = new ObjectId(txt_addComment_id.Text);
+            Boolean commentAdded = db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_addComment_comment.Text, "NOW"));
+            if (!commentAdded)
+                MessageBox.Show("No employee with Id " + id);
+            else
+            {
+                txt_addComment_comment.Text = "";
+                txt_addComment_id.Text = "";
+            }
+        }
+
+        private void txt_addOrder_order_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
         }
     }
 }
