@@ -196,10 +196,12 @@ namespace NoSQL_0._0
              */
             Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08/23", null, 100);
             Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03/01", null, 100);
-            Employee e3 = new Employee("admin", "admin", null, "Manager", null, null, null, 0);
+            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05/04", null, 100);
+            Employee e4 = new Employee("admin", "admin", null, "Manager", null, null, null, 0);
             colEmployee.InsertOne(e1);
             colEmployee.InsertOne(e2);
             colEmployee.InsertOne(e3);
+            colEmployee.InsertOne(e4);
 
             /*
              * Insert two costumers
