@@ -144,7 +144,7 @@ namespace NoSQL_0._0
         {
             // Input check
             if (txt_addCustomer_ssn.Text.Length < 1
-                || combo_addCustomer_location.SelectedIndex == 0
+                || combo_addCustomer_location.SelectedIndex == -1
                 || txt_addCustomer_occupation.Text.Length < 1
                 || datepicker_addCustomer.SelectedDate == null)
             {
@@ -166,7 +166,7 @@ namespace NoSQL_0._0
             // Reset input fields
             txt_addCustomer_ssn.Text = "";
             txt_addCustomer_occupation.Text = "";
-            combo_addCustomer_location.SelectedIndex = 0;
+            combo_addCustomer_location.SelectedIndex = -1;
             datepicker_addCustomer.SelectedDate = null;
 
             // Display new customer in datagrid
@@ -189,8 +189,8 @@ namespace NoSQL_0._0
                 || capacity < 0
                 || txt_addEmployee_name.Text.Length < 1
                 || txt_addEmployee_SSN.Text.Length < 1
-                || combo_addEmployee_postition.SelectedIndex == 0
-                || combo_addEmployee_location.SelectedIndex == 0
+                || combo_addEmployee_postition.SelectedIndex == -1
+                || combo_addEmployee_location.SelectedIndex == -1
                 || datepicker_addEmployee_startDate.SelectedDate == null
                 || datepicker_addEmployee_endDate.SelectedDate == null)
             {
@@ -216,7 +216,8 @@ namespace NoSQL_0._0
             txt_addEmployee_name.Text = "";
             txt_addEmployee_SSN.Text = "";
             txt_addEmployee_capacity.Text = "";
-            combo_addEmployee_postition.SelectedIndex = 0;
+            combo_addEmployee_postition.SelectedIndex = -1;
+            combo_addEmployee_location.SelectedIndex = -1;
             datepicker_addEmployee_startDate.SelectedDate = null;
             datepicker_addEmployee_endDate.SelectedDate = null;
 
@@ -337,6 +338,14 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = db.GetAllItems();
         }
 
+        /// <summary>
+        /// Adds an item to the current order.
+        /// TODO: Date for the order.
+        /// TODO: City for the order.
+        /// TODO: Add to customer bonus points.
+        /// TODO: Is customer employee?
+        /// </summary>
+        /// <param name="item"></param>
         private void UpdateCurrentOrder(Item item)
         {
             int quantity = 0;

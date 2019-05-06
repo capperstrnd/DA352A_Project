@@ -44,6 +44,7 @@ namespace NoSQL_0._0
                     totCost += item.Price;
                 }
                 str += "Total cost: " + totCost;
+                TotalCost = totCost;
             }
             return str;
         }
