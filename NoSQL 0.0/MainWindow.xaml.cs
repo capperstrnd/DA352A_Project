@@ -161,7 +161,7 @@ namespace NoSQL_0._0
                 || txt_addCustomer_occupation.Text.Length < 1
                 || datepicker_addCustomer.SelectedDate == null)
             {
-                MessageBox.Show("All fields are not filled in.");
+                MessageBox.Show("All fields are not correct.");
                 return;
             }
 
@@ -173,7 +173,7 @@ namespace NoSQL_0._0
                 0,
                 datepicker_addCustomer.ToString().Split(' ')[0]);
 
-            // Add customer to db
+            // Add customer to database
             db.AddCustomer(c);
 
             // Reset input fields
@@ -188,16 +188,30 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = newCustomer;
         }
 
-        // Temporary method to show how to add employee
+        /// <summary>
+        /// This method is called when the user clicks on the 'Add Employee' button in the 'Add Employee' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_addEmployee_Click(object sender, RoutedEventArgs e)
         {
+            // Input check
             int capacity = 0;
-            if (!Int32.TryParse(txt_addEmployee_capacity.Text, out capacity) || capacity < 0 || capacity > 100)
+            if (!Int32.TryParse(txt_addEmployee_capacity.Text, out capacity) 
+                || capacity > 100
+                || capacity < 0
+                || txt_addEmployee_name.Text.Length < 1
+                || txt_addEmployee_SSN.Text.Length < 1
+                || combo_addEmployee_postition.SelectedIndex == 0
+                || combo_addEmployee_location.SelectedIndex == 0
+                || datepicker_addEmployee_startDate.SelectedDate == null
+                || datepicker_addEmployee_endDate.SelectedDate == null)
             {
-                MessageBox.Show("Working capacity incorrect");
+                MessageBox.Show("All fields are not correct.");
                 return;
             }
-
+            
+            // Create new Employee
             Employee emp = new Employee(
                 txt_addEmployee_name.Text,
                 "admin",
@@ -208,8 +222,10 @@ namespace NoSQL_0._0
                 datepicker_addEmployee_endDate.ToString().Split(' ')[0],
                 capacity);
 
+            // Add Employee to database
             db.AddEmployee(emp);
 
+            // Reset input fields
             txt_addEmployee_name.Text = "";
             txt_addEmployee_SSN.Text = "";
             txt_addEmployee_capacity.Text = "";
@@ -217,9 +233,9 @@ namespace NoSQL_0._0
             datepicker_addEmployee_startDate.SelectedDate = null;
             datepicker_addEmployee_endDate.SelectedDate = null;
 
+            // Display new employee in datagrid
             List<Employee> empList = new List<Employee>();
             empList.Add(emp);
-
             dataGrid.ItemsSource = empList;
         }
 
