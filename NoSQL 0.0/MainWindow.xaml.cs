@@ -250,13 +250,13 @@ namespace NoSQL_0._0
             switch (combo_addOrder_searchCustomer.SelectedIndex)
             {
                 case 0:
-                    dataGrid.ItemsSource = db.GetCostumerBySSN(txt_addOrder_searchCustomer.Text);
+                    dataGrid.ItemsSource = db.GetCustomerBySSN(txt_addOrder_searchCustomer.Text);
                     break;
                 case 1:
-                    dataGrid.ItemsSource = db.GetCostumerByCity(txt_addOrder_searchCustomer.Text);
+                    dataGrid.ItemsSource = db.GetCustomerByCity(txt_addOrder_searchCustomer.Text);
                     break;
                 case 2:
-                    dataGrid.ItemsSource = db.GetCostumerByOccupation(txt_addOrder_searchCustomer.Text);
+                    dataGrid.ItemsSource = db.GetCustomerByOccupation(txt_addOrder_searchCustomer.Text);
                     break;
             }
         }
@@ -324,26 +324,62 @@ namespace NoSQL_0._0
 
         /// <summary>
         /// Method is called when the 'Add Order' button is clicked in the 'Add Order' tab.
-        /// NOT DONE!!!
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btn_addOrder_add_Click(object sender, RoutedEventArgs e)
         {
+
+            // If no items is in the order...
+            if (currentOrder.Items.Count == 0)
+            {
+                MessageBox.Show("No items in the order.");
+                return;
+            }
+
+            // Update stock quantity and update customer bonus points
             foreach (Item item in currentOrder.Items)
             {
+                if (item.BonusItem)
+                {
+                    int currentBonus = db.GetCustomerById(currentOrder.CustomerId)[0].BonusCounter;
+                    int bonusItems = item.Quantity;
+                    while (currentBonus + bonusItems > 9)
+                    {
+                        currentOrder.TotalCost -= db.GetItemById(item.Id).Price;
+                        bonusItems -= (10 - currentBonus);
+                        currentBonus = 0;
+                    }
+                    currentBonus = bonusItems;
+                    db.UpdateCustomerBonusPoints(db.GetCustomerById(currentOrder.CustomerId)[0], currentBonus + 1);
+                }
                 db.UpdateItemStockQuantity(item.Id, item.Quantity);
             }
+
+            // If buying customer is an employee.
+            List<Employee> eList = db.GetEmployeesBySSN(currentOrder.CustomerId.ToString());
+            if (eList.Count > 0)
+            {
+                // Remove 10% from total cost.
+                currentOrder.TotalCost *= 0.9;
+            }
+
+            // Add todays date to the order.
+            currentOrder.Date = DateTime.Today.ToString("yyyy-MM-dd");
+
+            // Add current user city as Order city
+            currentOrder.City = currentUser.City;
+
+            // Add order to the database
             db.AddOrder(currentOrder);
+
+            // Reset view
+            txt_addOrder_order.Text = "";
             dataGrid.ItemsSource = db.GetAllItems();
         }
 
         /// <summary>
         /// Adds an item to the current order.
-        /// TODO: Date for the order.
-        /// TODO: City for the order.
-        /// TODO: Add to customer bonus points.
-        /// TODO: Is customer employee?
         /// </summary>
         /// <param name="item"></param>
         private void UpdateCurrentOrder(Item item)
@@ -356,6 +392,8 @@ namespace NoSQL_0._0
                 txt_addOrder_order.Text = currentOrder.ToString();
                 return;
             }
+
+            // If item already exist in order...
             Item stockItem = db.GetItemById(item.Id);
             if (currentOrder.Items.Contains(item))
             {
@@ -369,12 +407,21 @@ namespace NoSQL_0._0
                 item.Price = item.Price * item.Quantity;
                 currentOrder.Items.Add(item);
             }
+
+            // If stock items are out...
             if (stockItem.Quantity - item.Quantity < 0)
             {
                 MessageBox.Show("Not enough " + item.Name + " in stock!");
                 return;
             }
+
+            // Reset view.
             txt_addOrder_order.Text = currentOrder.ToString();
+        }
+
+        private void btn_addOrder_resetOrder_Click(object sender, RoutedEventArgs e)
+        {
+            txt_addOrder_order.Text = "";
         }
     }
 }

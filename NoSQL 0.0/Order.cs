@@ -15,7 +15,7 @@ namespace NoSQL_0._0
         public List<Item> Items { get; set; }
         public string Date { get; set; }
         public string City { get; set; }
-        public int TotalCost { get; set; }
+        public double TotalCost { get; set; }
 
         public Order()
         {
@@ -37,7 +37,7 @@ namespace NoSQL_0._0
             string str = String.Format("Customer ID: {0,0}\nEmployee ID: {1,0}\nItems:\n", CustomerId, EmployeeId);
             if (Items.Capacity > 0)
             {
-                var totCost = 0;
+                double totCost = 0;
                 foreach (Item item in Items)
                 {
                     str += String.Format("{0,-25} | {1,0} | {2,0}\n", item.Name, "x" + item.Quantity, item.Price);

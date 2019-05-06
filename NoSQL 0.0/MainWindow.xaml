@@ -35,7 +35,7 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
             <TabControl x:Name="tabControl" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">
@@ -77,7 +77,7 @@
                                 <Button x:Name="btn_addOrder_searchCustomer" Content="Search" HorizontalAlignment="Left" Margin="64,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_searchCustomer_Click"/>
                             </Grid>
                         </GroupBox>
-                        <ScrollViewer Margin="468,10,0,0">
+                        <ScrollViewer Margin="468,10,0,35">
                             <TextBlock x:Name="txt_addOrder_order" FontFamily="Consolas" Background="White"/>
                         </ScrollViewer>
                         <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="239,10,0,0" VerticalAlignment="Top" Width="224">
@@ -88,7 +88,8 @@
                                 <Button x:Name="btn_addOrder_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75"/>
                             </Grid>
                         </GroupBox>
-                        <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="198,290,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
+                        <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,290,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
+                        <Button x:Name="btn_addOrder_resetOrder" Content="Reset Order" HorizontalAlignment="Left" Margin="548,290,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_resetOrder_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddComment" Header="Add Comment">
@@ -140,5 +141,6 @@
                 </TabItem>
             </TabControl>
         </Grid>
+        <Label Content="Ahem... User = admin. Pass = admin" HorizontalAlignment="Left" Margin="299,150,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

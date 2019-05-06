@@ -149,17 +149,17 @@ namespace NoSQL_0._0
             return colCustomer.Find(x => x.Id == id).ToList();
         }
 
-        public List<Customer> GetCostumerBySSN(string ssn)
+        public List<Customer> GetCustomerBySSN(string ssn)
         {
             return colCustomer.Find(x => x.SSN == ssn).ToList();
         }
 
-        public List<Customer> GetCostumerByCity(string city)
+        public List<Customer> GetCustomerByCity(string city)
         {
             return colCustomer.Find(x => x.City == city).ToList();
         }
 
-        public List<Customer> GetCostumerByOccupation(string occupation)
+        public List<Customer> GetCustomerByOccupation(string occupation)
         {
             return colCustomer.Find(x => x.Occupation == occupation).ToList();
         }
@@ -168,16 +168,13 @@ namespace NoSQL_0._0
          * UPDATE
          */
 
-        public void UpdateCustomerBonusPoints(Customer customer, int incrementBy)
+        public void UpdateCustomerBonusPoints(Customer customer, int newBonusPoints)
         {
-            // Increment bonus and save as variable
-            int updatedBonus = customer.BonusCounter + incrementBy;
-
             // Chose to find customer by "_id"
             var filter = Builders<Customer>.Filter.Eq("_id", customer.Id);
 
             // Chose which field to update and what to update it with
-            var update = Builders<Customer>.Update.Set("BonusCounter", updatedBonus);
+            var update = Builders<Customer>.Update.Set("BonusCounter", newBonusPoints);
 
             // Update...
             var result = colCustomer.UpdateOne(filter, update);
@@ -208,11 +205,11 @@ namespace NoSQL_0._0
         {
 
             /*
-             * Insert two employees
+             * Insert employees
              */
-            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08/23", null, 100);
-            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03/01", null, 100);
-            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05/04", null, 100);
+            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08-23", null, 100);
+            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03-01", null, 100);
+            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05-04", null, 100);
             Employee e4 = new Employee("admin", "admin", null, "Manager", null, null, null, 0);
             colEmployee.InsertOne(e1);
             colEmployee.InsertOne(e2);
@@ -220,10 +217,10 @@ namespace NoSQL_0._0
             colEmployee.InsertOne(e4);
 
             /*
-             * Insert two costumers
+             * Insert costumers
              */
-            Customer c1 = new Customer("884579-4568", "Malmö", "Bricklayer", 4, "2017-08/20");
-            Customer c2 = new Customer("915384-7538", "PlingPlong", "Ping pong player", 2, "2019-05/01");
+            Customer c1 = new Customer("884579-4568", "Malmö", "Bricklayer", 4, "2017-08-20");
+            Customer c2 = new Customer("915384-7538", "PlingPlong", "Ping pong player", 2, "2019-05-01");
             colCustomer.InsertOne(c1);
             colCustomer.InsertOne(c2);
 
