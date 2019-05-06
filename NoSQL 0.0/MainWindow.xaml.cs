@@ -148,9 +148,24 @@ namespace NoSQL_0._0
 
         }
 
-        // Temporary method to show how to add customer
+        /// <summary>
+        /// This method is called when the user clicks on the 'Add Customer' button in the 'Add Customer' tab. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_addCustomer_add_Click(object sender, RoutedEventArgs e)
         {
+            // Input check
+            if (txt_addCustomer_ssn.Text.Length < 1
+                || combo_addCustomer_location.SelectedIndex == 0
+                || txt_addCustomer_occupation.Text.Length < 1
+                || datepicker_addCustomer.SelectedDate == null)
+            {
+                MessageBox.Show("All fields are not filled in.");
+                return;
+            }
+
+            // Create new customer
             Customer c = new Customer(
                 txt_addCustomer_ssn.Text,
                 combo_addCustomer_location.Text, 
@@ -158,16 +173,19 @@ namespace NoSQL_0._0
                 0,
                 datepicker_addCustomer.ToString().Split(' ')[0]);
 
+            // Add customer to db
             db.AddCustomer(c);
+
+            // Reset input fields
             txt_addCustomer_ssn.Text = "";
             txt_addCustomer_occupation.Text = "";
             combo_addCustomer_location.SelectedIndex = 0;
             datepicker_addCustomer.SelectedDate = null;
 
-            List<Customer> cs = new List<Customer>();
-            cs.Add(c);
-
-            dataGrid.ItemsSource = cs;
+            // Display new customer in datagrid
+            List<Customer> newCustomer = new List<Customer>();
+            newCustomer.Add(c);
+            dataGrid.ItemsSource = newCustomer;
         }
 
         // Temporary method to show how to add employee
