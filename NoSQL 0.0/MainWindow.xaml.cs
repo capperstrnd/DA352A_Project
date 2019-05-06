@@ -1,21 +1,11 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace NoSQL_0._0
 {
@@ -27,7 +17,7 @@ namespace NoSQL_0._0
 
         private Database db;
         private Employee currentUser;
-        private Order currenOrder;
+        private Order currentOrder;
 
         public MainWindow()
         {
@@ -94,8 +84,8 @@ namespace NoSQL_0._0
 
             // Keep a variable of the logged in employee.
             currentUser = emp;
-            currenOrder = new Order();
-            currenOrder.EmployeeId = currentUser.Id;
+            currentOrder = new Order();
+            currentOrder.EmployeeId = currentUser.Id;
         }
 
         /*
@@ -112,8 +102,6 @@ namespace NoSQL_0._0
                     if (row.Item is Customer)
                     {
                         Customer customer = (Customer)row.Item;
-                        db.UpdateCustomerBonusPoints(customer);
-                        dataGrid.ItemsSource = db.GetCustomerById(customer.Id);
                     }
                     else if (row.Item is Item)
                     {
@@ -134,14 +122,13 @@ namespace NoSQL_0._0
                     if (row.Item is Customer)
                     {
                         Customer customer = (Customer)row.Item;
-                        currenOrder.CustomerId = customer.Id;
-                        txt_addOrder_order.Text = currenOrder.ToString();
+                        currentOrder.CustomerId = customer.Id;
+                        txt_addOrder_order.Text = currentOrder.ToString();
                     }
                     else if (row.Item is Item)
                     {
                         Item item = (Item)row.Item;
-                        currenOrder.Items.Add(item);
-                        txt_addOrder_order.Text = currenOrder.ToString();
+                        UpdateCurrentOrder(item);
                     }
                     break;
             }
@@ -239,6 +226,12 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = empList;
         }
 
+        /// <summary>
+        /// Method is called when user ctrl+c on a cell in the datagrid.
+        /// Makes it possible to copy the value of the cell to clipboard.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Copy_cell_event(object sender, DataGridRowClipboardEventArgs e)
         {
             var currentCell = e.ClipboardRowContent[dataGrid.CurrentCell.Column.DisplayIndex];
@@ -246,6 +239,11 @@ namespace NoSQL_0._0
             e.ClipboardRowContent.Add(currentCell);
         }
 
+        /// <summary>
+        /// Method is called when the 'Search Customer' button is clicked in the 'Add Order' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_addOrder_searchCustomer_Click(object sender, RoutedEventArgs e)
         {
             switch (combo_addOrder_searchCustomer.SelectedIndex)
@@ -262,10 +260,11 @@ namespace NoSQL_0._0
             }
         }
 
-        /*
-         * Methods for the buttons at the bottom of the GUI
-         */
-
+        /// <summary>
+        /// Method is called when the combobox below the datagrid is changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboShowAll_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (comboShowAll.SelectedIndex)
@@ -288,6 +287,11 @@ namespace NoSQL_0._0
             }
         }
 
+        /// <summary>
+        /// Method is called when the 'Logout' button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
             ProcessStartInfo Info = new ProcessStartInfo();
@@ -299,6 +303,11 @@ namespace NoSQL_0._0
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// Method is called when the 'Add Comment' button is clicked in the 'Add Comment' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_test_add_comment_Click(object sender, RoutedEventArgs e)
         {
             ObjectId id = new ObjectId(txt_addComment_id.Text);
@@ -312,9 +321,51 @@ namespace NoSQL_0._0
             }
         }
 
-        private void txt_addOrder_order_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        /// <summary>
+        /// Method is called when the 'Add Order' button is clicked in the 'Add Order' tab.
+        /// NOT DONE!!!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_addOrder_add_Click(object sender, RoutedEventArgs e)
         {
+            foreach (Item item in currentOrder.Items)
+            {
+                db.UpdateItemStockQuantity(item.Id, item.Quantity);
+            }
+            db.AddOrder(currentOrder);
+            dataGrid.ItemsSource = db.GetAllItems();
+        }
 
+        private void UpdateCurrentOrder(Item item)
+        {
+            int quantity = 0;
+            Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + "?\n'-1' deletes all " + item.Name + " from the order.", "Add/Delete items", "1"), out quantity);
+            if (quantity == -1)
+            {
+                currentOrder.Items.Remove(item);
+                txt_addOrder_order.Text = currentOrder.ToString();
+                return;
+            }
+            Item stockItem = db.GetItemById(item.Id);
+            if (currentOrder.Items.Contains(item))
+            {
+                int index = currentOrder.Items.IndexOf(item);
+                currentOrder.Items[index].Quantity += quantity;
+                currentOrder.Items[index].Price += stockItem.Price * quantity;
+            }
+            else
+            {
+                item.Quantity = quantity;
+                item.Price = item.Price * item.Quantity;
+                currentOrder.Items.Add(item);
+            }
+            if (stockItem.Quantity - item.Quantity < 0)
+            {
+                MessageBox.Show("Not enough " + item.Name + " in stock!");
+                return;
+            }
+            txt_addOrder_order.Text = currentOrder.ToString();
         }
     }
 }

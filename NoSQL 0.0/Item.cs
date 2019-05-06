@@ -9,7 +9,6 @@ namespace NoSQL_0._0
 {
     class Item
     {
-
         public ObjectId Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }

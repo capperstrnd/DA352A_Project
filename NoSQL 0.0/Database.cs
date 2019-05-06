@@ -132,6 +132,15 @@ namespace NoSQL_0._0
         }
 
         /*
+         * GET ITEMS BY FIELDS THAT MATCHES EXACTLY
+         */
+
+        public Item GetItemById(ObjectId id)
+        {
+            return colItem.Find(x => x.Id == id).ToList()[0];
+        }
+
+        /*
          * GET CUSTOMERS BY FIELDS THAT MATCHES EXACTLY 
          */
 
@@ -159,10 +168,10 @@ namespace NoSQL_0._0
          * UPDATE
          */
 
-        public void UpdateCustomerBonusPoints(Customer customer)
+        public void UpdateCustomerBonusPoints(Customer customer, int incrementBy)
         {
             // Increment bonus and save as variable
-            int updatedBonus = customer.BonusCounter + 1;
+            int updatedBonus = customer.BonusCounter + incrementBy;
 
             // Chose to find customer by "_id"
             var filter = Builders<Customer>.Filter.Eq("_id", customer.Id);
@@ -172,6 +181,13 @@ namespace NoSQL_0._0
 
             // Update...
             var result = colCustomer.UpdateOne(filter, update);
+        }
+
+        public void UpdateItemStockQuantity(ObjectId itemId, int decrementBy)
+        {
+            var filter = Builders<Item>.Filter.Eq("_id", itemId);
+            var update = Builders<Item>.Update.Set("Quantity", GetItemById(itemId).Quantity - decrementBy);
+            var result = colItem.UpdateOne(filter, update);
         }
 
         public Boolean UpdateEmployeeAddComment(ObjectId employeeId, Comment comment)
@@ -223,10 +239,10 @@ namespace NoSQL_0._0
             items.Add(new Item("Latte", 10, 1000, true));
             items.Add(new Item("Capucccino", 10, 1000, true));
             items.Add(new Item("Hot Chocolate", 10, 1000, true));
-            items.Add(new Item("Skim Milk,", 10, 1000, true));
-            items.Add(new Item("Soy Milk,", 10, 1000, true));
+            items.Add(new Item("Skim Milk", 10, 1000, true));
+            items.Add(new Item("Soy Milk", 10, 1000, true));
             items.Add(new Item("Whole Milk", 10, 1000, true));
-            items.Add(new Item("2%Milk)", 10, 1000, true));
+            items.Add(new Item("2%Milk", 10, 1000, true));
             items.Add(new Item("Whipped Cream", 10, 1000, false));
             items.Add(new Item("Vanilla Syrup", 10, 1000, false));
             items.Add(new Item("Caramel Syrup", 10, 1000, false));
