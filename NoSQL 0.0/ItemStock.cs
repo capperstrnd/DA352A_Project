@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace NoSQL_0._0
 {
-    class StockLog
+    class ItemStock
     {
         public ObjectId Id { get; set; }
-        public string Date { get; set; }
         public string City { get; set; }
-        public ItemStock CurrentStock { get; set; }
+        public List<Item> Items { get; set; }
 
-        public StockLog(string date, string city, ItemStock currentStock)
+        public ItemStock(string city, List<Item> items)
         {
-            Date = date;
             City = city;
-            CurrentStock = currentStock;
+            Items = items;
         }
     }
 }

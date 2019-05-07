@@ -277,7 +277,8 @@ namespace NoSQL_0._0
                     dataGrid.ItemsSource = db.GetAllEmployees();
                     break;
                 case 2:
-                    dataGrid.ItemsSource = db.GetAllItems();
+                    ItemStock itemStock = db.GetItemInItemStockByCity(currentUser.City);
+                    dataGrid.ItemsSource = itemStock.Items;
                     break;
                 case 3:
                     dataGrid.ItemsSource = db.GetAllOrders();
@@ -324,6 +325,7 @@ namespace NoSQL_0._0
 
         /// <summary>
         /// Method is called when the 'Add Order' button is clicked in the 'Add Order' tab.
+        /// TODO: ADD A STOCKLOG!
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -338,22 +340,22 @@ namespace NoSQL_0._0
             }
 
             // Update stock quantity and update customer bonus points
-            foreach (Item item in currentOrder.Items)
+            foreach (Item addedItem in currentOrder.Items)
             {
-                if (item.BonusItem)
+                if (addedItem.BonusItem)
                 {
                     int currentBonus = db.GetCustomerById(currentOrder.CustomerId)[0].BonusCounter;
-                    int bonusItems = item.Quantity;
-                    while (currentBonus + bonusItems > 9)
+                    int bonusItems = addedItem.Quantity;
+                    while (currentBonus + bonusItems >= 10)
                     {
-                        currentOrder.TotalCost -= db.GetItemById(item.Id).Price;
-                        bonusItems -= (10 - currentBonus);
+                        currentOrder.TotalCost -= db.GetItemInItemStockByCityAndName(currentUser.City, addedItem.Name).Price;
+                        bonusItems -= (11 - currentBonus);
                         currentBonus = 0;
                     }
                     currentBonus = bonusItems;
                     db.UpdateCustomerBonusPoints(db.GetCustomerById(currentOrder.CustomerId)[0], currentBonus + 1);
                 }
-                db.UpdateItemStockQuantity(item.Id, item.Quantity);
+                db.UpdateItemQuantityInItemStock(currentUser.City, addedItem.Name, addedItem.Quantity);
             }
 
             // If buying customer is an employee.
@@ -373,9 +375,16 @@ namespace NoSQL_0._0
             // Add order to the database
             db.AddOrder(currentOrder);
 
+            // Add a StockLog
+            ItemStock itemStock = db.GetItemInItemStockByCity(currentUser.City);
+            db.AddStockLog(new StockLog(DateTime.Today.ToString(), currentUser.City, itemStock));
+
+            // Reset currentOrder
+            currentOrder.Items = new List<Item>();
+
             // Reset view
             txt_addOrder_order.Text = "";
-            dataGrid.ItemsSource = db.GetAllItems();
+            dataGrid.ItemsSource = itemStock.Items;
         }
 
         /// <summary>
@@ -384,8 +393,11 @@ namespace NoSQL_0._0
         /// <param name="item"></param>
         private void UpdateCurrentOrder(Item item)
         {
+            // How many quantities of the item to add?
             int quantity = 0;
             Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + "?\n'-1' deletes all " + item.Name + " from the order.", "Add/Delete items", "1"), out quantity);
+
+            // If quantity to add == -1 then remove that item from order.
             if (quantity == -1)
             {
                 currentOrder.Items.Remove(item);
@@ -394,13 +406,16 @@ namespace NoSQL_0._0
             }
 
             // If item already exist in order...
-            Item stockItem = db.GetItemById(item.Id);
+            //Item stockItem = db.GetItemById(item.Id);
+            Item stockItem = db.GetItemInItemStockByCityAndName(currentUser.City, item.Name);
             if (currentOrder.Items.Contains(item))
             {
                 int index = currentOrder.Items.IndexOf(item);
                 currentOrder.Items[index].Quantity += quantity;
                 currentOrder.Items[index].Price += stockItem.Price * quantity;
             }
+
+            // Else, just add it to order.
             else
             {
                 item.Quantity = quantity;

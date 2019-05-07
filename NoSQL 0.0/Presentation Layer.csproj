@@ -78,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Comment.cs" />
     <Compile Include="Database.cs" />
+    <Compile Include="ItemStock.cs" />
     <Compile Include="StockLog.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

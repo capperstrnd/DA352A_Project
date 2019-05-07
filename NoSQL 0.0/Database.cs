@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,9 @@ namespace NoSQL_0._0
         private IMongoCollection<Employee> colEmployee;
         private IMongoCollection<Customer> colCustomer;
         private IMongoCollection<Order> colOrder;
-        private IMongoCollection<Item> colItem;
+        private IMongoCollection<StockLog> colStockLog;
+        private IMongoCollection<ItemStock> colItemStock;
+        //private IMongoCollection<Item> colItem;
         private IMongoCollection<Comment> colComment;
 
         public Database()
@@ -27,20 +30,26 @@ namespace NoSQL_0._0
             colEmployee = db.GetCollection<Employee>("Employee");
             colCustomer = db.GetCollection<Customer>("Customer");
             colOrder = db.GetCollection<Order>("Order");
-            colItem = db.GetCollection<Item>("Item");
+            colItemStock = db.GetCollection<ItemStock>("ItemStock");
             colComment = db.GetCollection<Comment>("Comment");
+            colStockLog = db.GetCollection<StockLog>("StockLog");
 
             // Testing and debug stuff
             //addStuffToDB();
         }
 
         /*
-         *  GET EVERY DOCUMENT FROM EVERY COLLECTION
+         *  EMPLOYEE QUERIES!
          */
 
         public List<Employee> GetAllEmployees()
         {
             return colEmployee.Find(x => true).ToList();
+        }
+
+        public void AddEmployee(Employee employee)
+        {
+            colEmployee.InsertOne(employee);
         }
 
         public List<Customer> GetAllCostumers()
@@ -52,49 +61,6 @@ namespace NoSQL_0._0
         {
             return colOrder.Find(x => true).ToList();
         }
-
-        public List<Item> GetAllItems()
-        {
-            return colItem.Find(x => true).ToList();
-        }
-
-        public List<Comment> GetAllComments()
-        {
-            return colComment.Find(x => true).ToList();
-        }
-
-        /*
-         *  ADD TO EVERY COLLECTION
-         */
-
-        public void AddCustomer(Customer customer)
-        {
-            colCustomer.InsertOne(customer);
-        }
-
-        public void AddEmployee(Employee employee)
-        {
-            colEmployee.InsertOne(employee);
-        }
-
-        public void AddItem(Item item)
-        {
-            colItem.InsertOne(item);
-        }
-
-        public void AddOrder(Order order)
-        {
-            colOrder.InsertOne(order);
-        }
-
-        public void AddComment(Comment comment)
-        {
-            colComment.InsertOne(comment);
-        }
-
-        /*
-         * GET EMPLOYEES BY FIELDS THAT MATCHES EXACTLY 
-         */
 
         public List<Employee> GetEmployeesById(ObjectId id)
         {
@@ -131,18 +97,25 @@ namespace NoSQL_0._0
             return colEmployee.Find(x => x.WorkingCapacity == capacity).ToList();
         }
 
-        /*
-         * GET ITEMS BY FIELDS THAT MATCHES EXACTLY
-         */
-
-        public Item GetItemById(ObjectId id)
+        public Boolean UpdateEmployeeAddComment(ObjectId employeeId, Comment comment)
         {
-            return colItem.Find(x => x.Id == id).ToList()[0];
+            if (GetEmployeesById(employeeId).Capacity == 0)
+                return false;
+
+            var filter = Builders<Employee>.Filter.Eq("_id", employeeId);
+            var update = Builders<Employee>.Update.AddToSet("Comments", comment);
+            var result = colEmployee.UpdateOne(filter, update);
+            return true;
         }
 
         /*
-         * GET CUSTOMERS BY FIELDS THAT MATCHES EXACTLY 
+         * CUSTOMER QUERIES!
          */
+
+        public void AddCustomer(Customer customer)
+        {
+            colCustomer.InsertOne(customer);
+        }
 
         public List<Customer> GetCustomerById(ObjectId id)
         {
@@ -164,10 +137,6 @@ namespace NoSQL_0._0
             return colCustomer.Find(x => x.Occupation == occupation).ToList();
         }
 
-        /*
-         * UPDATE
-         */
-
         public void UpdateCustomerBonusPoints(Customer customer, int newBonusPoints)
         {
             // Chose to find customer by "_id"
@@ -180,22 +149,80 @@ namespace NoSQL_0._0
             var result = colCustomer.UpdateOne(filter, update);
         }
 
-        public void UpdateItemStockQuantity(ObjectId itemId, int decrementBy)
+        /*
+         * ITEMSTOCK QUERIES!
+         */
+
+        public ItemStock GetItemInItemStockByCity(string city)
         {
-            var filter = Builders<Item>.Filter.Eq("_id", itemId);
-            var update = Builders<Item>.Update.Set("Quantity", GetItemById(itemId).Quantity - decrementBy);
-            var result = colItem.UpdateOne(filter, update);
+            List<ItemStock> itemStock = colItemStock.Find(x => x.City == city).ToList();
+            if (itemStock.Count > 0)
+                return itemStock[0];
+            else
+                return null;
         }
 
-        public Boolean UpdateEmployeeAddComment(ObjectId employeeId, Comment comment)
+        public void UpdateItemQuantityInItemStock(string city, string itemName, int removeQuantity)
         {
-            if (GetEmployeesById(employeeId).Capacity == 0)
-                return false;
+            List<ItemStock> itemStocks = colItemStock.Find(x => x.City == city).ToList();
+            ItemStock itemStock = null;
+            if (itemStocks.Count < 1)
+                return;
+            else
+                itemStock = itemStocks[0];
 
-            var filter = Builders<Employee>.Filter.Eq("_id", employeeId);
-            var update = Builders<Employee>.Update.AddToSet("Comments", comment);
-            var result = colEmployee.UpdateOne(filter, update);
-            return true;
+            foreach (Item item in itemStock.Items)
+            {
+                if (itemName.Equals(item.Name))
+                    item.Quantity -= removeQuantity;
+            }
+
+            var filter = Builders<ItemStock>.Filter.Eq("_id", itemStock.Id);
+
+            var update = Builders<ItemStock>.Update.Set("Items", itemStock.Items);
+
+            var result = colItemStock.UpdateOne(filter, update);
+        }
+
+        public Item GetItemInItemStockByCityAndName(string city, string itemName)
+        {
+            List<ItemStock> itemStocks = colItemStock.Find(x => x.City == city).ToList();
+            ItemStock itemStock = null;
+            if (itemStocks.Count < 1)
+                return null;
+            else
+                itemStock = itemStocks[0];
+
+            foreach (Item item in itemStock.Items)
+            {
+                if (itemName.Equals(item.Name))
+                    return item;
+            }
+            return null;
+        }
+
+        /*
+         * STOCKLOG QUERIES!
+         */
+
+        public void AddStockLog(StockLog stockLog)
+        {
+            colStockLog.InsertOne(stockLog);
+        }
+
+        public List<Comment> GetAllComments()
+        {
+            return colComment.Find(x => true).ToList();
+        }
+
+        public void AddOrder(Order order)
+        {
+            colOrder.InsertOne(order);
+        }
+
+        public void AddComment(Comment comment)
+        {
+            colComment.InsertOne(comment);
         }
 
         /*
@@ -210,7 +237,7 @@ namespace NoSQL_0._0
             Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08-23", null, 100);
             Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03-01", null, 100);
             Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05-04", null, 100);
-            Employee e4 = new Employee("admin", "admin", null, "Manager", null, null, null, 0);
+            Employee e4 = new Employee("admin", "admin", "880604-1234", "Manager", "Malmö", "2018-08-23", null, 100);
             colEmployee.InsertOne(e1);
             colEmployee.InsertOne(e2);
             colEmployee.InsertOne(e3);
@@ -244,8 +271,8 @@ namespace NoSQL_0._0
             items.Add(new Item("Vanilla Syrup", 10, 1000, false));
             items.Add(new Item("Caramel Syrup", 10, 1000, false));
             items.Add(new Item("Irish Cream Syrup", 10, 1000, false));
-            colItem.InsertMany(items);
+            ItemStock itemStock = new ItemStock("Malmö", items);
+            colItemStock.InsertOne(itemStock);
         }
-
     }
 }
