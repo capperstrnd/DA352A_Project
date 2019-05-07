@@ -52,14 +52,9 @@ namespace NoSQL_0._0
             colEmployee.InsertOne(employee);
         }
 
-        public List<Customer> GetAllCostumers()
+        public List<Employee> GetEmployeesByCity(string employeeCity)
         {
-            return colCustomer.Find(x => true).ToList();
-        }
-
-        public List<Order> GetAllOrders()
-        {
-            return colOrder.Find(x => true).ToList();
+            return colEmployee.Find(x => x.City == employeeCity).ToList();
         }
 
         public List<Employee> GetEmployeesById(ObjectId id)
@@ -108,9 +103,19 @@ namespace NoSQL_0._0
             return true;
         }
 
+        public void DeleteEmployee(Employee employee)
+        {
+            colEmployee.DeleteOneAsync(Builders<Employee>.Filter.Eq("_id", employee.Id));
+        }
+
         /*
          * CUSTOMER QUERIES!
          */
+
+        public List<Customer> GetAllCostumers()
+        {
+            return colCustomer.Find(x => true).ToList();
+        }
 
         public void AddCustomer(Customer customer)
         {
@@ -210,14 +215,32 @@ namespace NoSQL_0._0
             colStockLog.InsertOne(stockLog);
         }
 
-        public List<Comment> GetAllComments()
-        {
-            return colComment.Find(x => true).ToList();
-        }
+        /*
+         * ORDER QUERIES!
+         */ 
 
         public void AddOrder(Order order)
         {
             colOrder.InsertOne(order);
+        }
+
+        public List<Order> GetAllOrders()
+        {
+            return colOrder.Find(x => true).ToList();
+        }
+
+        public List<Order> GetOrderById(ObjectId orderId)
+        {
+            return colOrder.Find(x => x.Id == orderId).ToList();
+        }
+
+        /*
+         * COMMENT QUERIES!
+         */
+
+        public List<Comment> GetAllComments()
+        {
+            return colComment.Find(x => true).ToList();
         }
 
         public void AddComment(Comment comment)

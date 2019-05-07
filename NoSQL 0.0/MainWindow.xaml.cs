@@ -99,19 +99,7 @@ namespace NoSQL_0._0
             {
                 // Currently debug/testing
                 case 0:
-                    if (row.Item is Customer)
-                    {
-                        Customer customer = (Customer)row.Item;
-                    }
-                    else if (row.Item is Item)
-                    {
-                        Item item = (Item)row.Item;
-                    }
-                    else if (row.Item is Employee)
-                    {
-                        Employee employee = (Employee)row.Item;
-                    }
-                        break;
+                    break;
 
                 // Currently Add Customer
                 case 1:
@@ -129,6 +117,29 @@ namespace NoSQL_0._0
                     {
                         Item item = (Item)row.Item;
                         UpdateCurrentOrder(item);
+                    }
+                    break;
+
+                // Currently Add Comment
+                case 3:
+                    break;
+                
+                // Currently Add Employee
+                case 4:
+                    break;
+                
+                // Currently Delete Employee
+                case 5:
+                    if (row.Item is Employee)
+                    {
+                        Employee employee = (Employee)row.Item;
+                        var result = MessageBox.Show("Are you sure that you want to delete " + employee.Name + "?", "WARNING!", MessageBoxButton.YesNo);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            db.DeleteEmployee(employee);
+                            dataGrid.ItemsSource = db.GetAllEmployees();
+                            break;
+                        }
                     }
                     break;
             }
@@ -367,7 +378,7 @@ namespace NoSQL_0._0
             }
 
             // Add todays date to the order.
-            currentOrder.Date = DateTime.Today.ToString("yyyy-MM-dd");
+            currentOrder.Date = DateTime.Now.ToString();
 
             // Add current user city as Order city
             currentOrder.City = currentUser.City;
@@ -377,14 +388,14 @@ namespace NoSQL_0._0
 
             // Add a StockLog
             ItemStock itemStock = db.GetItemInItemStockByCity(currentUser.City);
-            db.AddStockLog(new StockLog(DateTime.Today.ToString(), currentUser.City, itemStock));
+            db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock));
 
             // Reset currentOrder
             currentOrder.Items = new List<Item>();
 
             // Reset view
             txt_addOrder_order.Text = "";
-            dataGrid.ItemsSource = itemStock.Items;
+            dataGrid.ItemsSource = db.GetOrderById(currentOrder.Id);
         }
 
         /// <summary>
@@ -437,6 +448,29 @@ namespace NoSQL_0._0
         private void btn_addOrder_resetOrder_Click(object sender, RoutedEventArgs e)
         {
             txt_addOrder_order.Text = "";
+        }
+
+        private void btn_addOrder_searchItem_Click(object sender, RoutedEventArgs e)
+        {
+            List<Item> itemResults = new List<Item>();
+            itemResults.Add(db.GetItemInItemStockByCityAndName(currentUser.City, txt_addOrder_addItem.Text));
+            dataGrid.ItemsSource = itemResults;
+        }
+
+        private void btn_deleteEmployee_search_Click(object sender, RoutedEventArgs e)
+        {
+            switch (combo_deleteEmployee_searchBy.SelectedIndex)
+            {
+                case 0:
+                    dataGrid.ItemsSource = db.GetEmployeesByName(txt_deleteEmployee_query.Text);
+                    break;
+                case 1:
+                    dataGrid.ItemsSource = db.GetEmployeesBySSN(txt_deleteEmployee_query.Text);
+                    break;
+                case 2:
+                    dataGrid.ItemsSource = db.GetEmployeesByCity(txt_deleteEmployee_query.Text);
+                    break;
+            }
         }
     }
 }

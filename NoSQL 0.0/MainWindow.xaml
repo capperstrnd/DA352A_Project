@@ -36,7 +36,7 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
             <TabControl x:Name="tabControl" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">
@@ -86,7 +86,7 @@
                                 <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
                                 <TextBox x:Name="txt_addOrder_addItem" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                                 <TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="76" Width="192"><Run Text="Double click an item in the datagrid to add"/><Run Text=" the item to the order"/></TextBlock>
-                                <Button x:Name="btn_addOrder_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75"/>
+                                <Button x:Name="btn_addOrder_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_searchItem_Click"/>
                             </Grid>
                         </GroupBox>
                         <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,290,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
@@ -130,6 +130,25 @@
                             <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,207,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
 
                         </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabDeleteEmployee" Header="Delete Employee">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
+                            <Grid>
+                                <Label Content="Query:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_deleteEmployee_query" HorizontalAlignment="Left" Height="23" Margin="79,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_deleteEmployee_searchBy" HorizontalAlignment="Left" Margin="79,41,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="Name"/>
+                                    <ComboBoxItem Content="SSN"/>
+                                    <ComboBoxItem Content="City"/>
+                                </ComboBox>
+                                <Button x:Name="btn_deleteEmployee_search" Content="Search" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_deleteEmployee_search_Click"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,97,0,0" TextWrapping="Wrap" Text="Double-click on an employee in the datagrid the delete them." VerticalAlignment="Top" Height="41" Width="202"/>
+                            </Grid>
+                        </GroupBox>
+
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddReports" Header="Produce Reports">
