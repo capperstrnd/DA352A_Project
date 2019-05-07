@@ -142,6 +142,20 @@ namespace NoSQL_0._0
                         }
                     }
                     break;
+
+                // Currently Add To Stock
+                case 6:
+                    if (row.Item is Item)
+                    {
+                        Item item = (Item)row.Item;
+                        int quantity = 0;
+                        Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + " to add to stock?", "Add " + item.Name + " to stock"), out quantity);
+                        db.UpdateItemQuantityInItemStock(currentUser.City, item.Name, quantity, false);
+                        ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
+                        db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock));
+                        dataGrid.ItemsSource = itemStock.Items;
+                    }
+                    break;
             }
 
         }
@@ -288,7 +302,7 @@ namespace NoSQL_0._0
                     dataGrid.ItemsSource = db.GetAllEmployees();
                     break;
                 case 2:
-                    ItemStock itemStock = db.GetItemInItemStockByCity(currentUser.City);
+                    ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
                     dataGrid.ItemsSource = itemStock.Items;
                     break;
                 case 3:
@@ -366,7 +380,7 @@ namespace NoSQL_0._0
                     currentBonus = bonusItems;
                     db.UpdateCustomerBonusPoints(db.GetCustomerById(currentOrder.CustomerId)[0], currentBonus + 1);
                 }
-                db.UpdateItemQuantityInItemStock(currentUser.City, addedItem.Name, addedItem.Quantity);
+                db.UpdateItemQuantityInItemStock(currentUser.City, addedItem.Name, addedItem.Quantity, true);
             }
 
             // If buying customer is an employee.
@@ -387,7 +401,7 @@ namespace NoSQL_0._0
             db.AddOrder(currentOrder);
 
             // Add a StockLog
-            ItemStock itemStock = db.GetItemInItemStockByCity(currentUser.City);
+            ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
             db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock));
 
             // Reset currentOrder
@@ -406,7 +420,7 @@ namespace NoSQL_0._0
         {
             // How many quantities of the item to add?
             int quantity = 0;
-            Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + "?\n'-1' deletes all " + item.Name + " from the order.", "Add/Delete items", "1"), out quantity);
+            Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + "?\n'-1' deletes all " + item.Name + " from the order.", "Add/Delete items"), out quantity);
 
             // If quantity to add == -1 then remove that item from order.
             if (quantity == -1)
@@ -471,6 +485,13 @@ namespace NoSQL_0._0
                     dataGrid.ItemsSource = db.GetEmployeesByCity(txt_deleteEmployee_query.Text);
                     break;
             }
+        }
+
+        private void btn_addToStock_searchItem_Click(object sender, RoutedEventArgs e)
+        {
+            List<Item> itemResults = new List<Item>();
+            itemResults.Add(db.GetItemInItemStockByCityAndName(currentUser.City, txt_addToStock_searchName.Text));
+            dataGrid.ItemsSource = itemResults;
         }
     }
 }

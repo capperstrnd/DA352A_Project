@@ -151,6 +151,19 @@
 
                     </Grid>
                 </TabItem>
+                <TabItem x:Name="tabAddToStock" Header="Add To Stock">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                <TextBox x:Name="txt_addToStock_searchName" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="76" Width="192"><Run Text="Double click "/><Run Text="the item in the datagrid to increase its stock quantity."/></TextBlock>
+                                <Button x:Name="btn_addToStock_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75" Click="btn_addToStock_searchItem_Click"/>
+                            </Grid>
+                        </GroupBox>
+
+                    </Grid>
+                </TabItem>
                 <TabItem x:Name="tabAddReports" Header="Produce Reports">
                     <Grid Background="#FFE5E5E5">
                     </Grid>

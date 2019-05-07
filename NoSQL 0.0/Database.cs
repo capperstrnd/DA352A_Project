@@ -158,7 +158,7 @@ namespace NoSQL_0._0
          * ITEMSTOCK QUERIES!
          */
 
-        public ItemStock GetItemInItemStockByCity(string city)
+        public ItemStock GetItemStockByCity(string city)
         {
             List<ItemStock> itemStock = colItemStock.Find(x => x.City == city).ToList();
             if (itemStock.Count > 0)
@@ -167,7 +167,7 @@ namespace NoSQL_0._0
                 return null;
         }
 
-        public void UpdateItemQuantityInItemStock(string city, string itemName, int removeQuantity)
+        public void UpdateItemQuantityInItemStock(string city, string itemName, int quantity, bool remove)
         {
             List<ItemStock> itemStocks = colItemStock.Find(x => x.City == city).ToList();
             ItemStock itemStock = null;
@@ -179,7 +179,10 @@ namespace NoSQL_0._0
             foreach (Item item in itemStock.Items)
             {
                 if (itemName.Equals(item.Name))
-                    item.Quantity -= removeQuantity;
+                    if (remove)
+                        item.Quantity -= quantity;
+                    else
+                        item.Quantity += quantity;
             }
 
             var filter = Builders<ItemStock>.Filter.Eq("_id", itemStock.Id);
