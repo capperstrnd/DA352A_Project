@@ -89,8 +89,8 @@
                                 <Button x:Name="btn_addOrder_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_searchItem_Click"/>
                             </Grid>
                         </GroupBox>
-                        <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,290,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
-                        <Button x:Name="btn_addOrder_resetOrder" Content="Reset Order" HorizontalAlignment="Left" Margin="548,290,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_resetOrder_Click"/>
+                        <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
+                        <Button x:Name="btn_addOrder_resetOrder" Content="Reset Order" HorizontalAlignment="Left" Margin="548,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_resetOrder_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddComment" Header="Add Comment">
@@ -108,7 +108,7 @@
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                             <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
                             <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                            <Label Content="City:" Margin="10,88,714,205"/>
+                            <Label Content="City:" Margin="10,88,693,188"/>
                             <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
                             <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
                             <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
@@ -145,7 +145,54 @@
                                     <ComboBoxItem Content="City"/>
                                 </ComboBox>
                                 <Button x:Name="btn_deleteEmployee_search" Content="Search" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_deleteEmployee_search_Click"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,97,0,0" TextWrapping="Wrap" Text="Double-click on an employee in the datagrid the delete them." VerticalAlignment="Top" Height="41" Width="202"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,97,0,0" TextWrapping="Wrap" Text="Double-click on an employee in the datagrid to delete them." VerticalAlignment="Top" Height="41" Width="202"/>
+                            </Grid>
+                        </GroupBox>
+
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tabUpdateEmployee" Header="Update Employee">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="188" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
+                            <Grid>
+                                <Label Content="Query:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_updateEmployee_query" HorizontalAlignment="Left" Height="23" Margin="79,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_updateEmployee_searchBy" HorizontalAlignment="Left" Margin="79,41,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="Name"/>
+                                    <ComboBoxItem Content="SSN"/>
+                                    <ComboBoxItem Content="City"/>
+                                </ComboBox>
+                                <Button x:Name="btn_updateEmployee_search" Content="Search" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_search_Click"/>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,97,0,10" TextWrapping="Wrap" Text="Double-click on an employee in the datagrid and then update the info in the 'Update' box." Width="202"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Update" HorizontalAlignment="Left" Height="280" VerticalAlignment="Top" Width="280" Margin="249,10,0,0">
+                            <Grid>
+                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,12,0,0"/>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="13,38,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Position:" HorizontalAlignment="Left" Margin="13,64,0,0" VerticalAlignment="Top"/>
+                                <Label Content="City:" Margin="13,90,163,99"/>
+                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="13,117,0,0" VerticalAlignment="Top"/>
+                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="13,146,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="13,174,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_updateEmployee_name" HorizontalAlignment="Left" Height="23" Margin="124,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <TextBox x:Name="txt_updateEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="124,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <ComboBox x:Name="combo_updateEmployee_postition" HorizontalAlignment="Left" Margin="124,68,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="Employee" IsSelected="True"/>
+                                    <ComboBoxItem Content="Manager"/>
+                                </ComboBox>
+                                <ComboBox x:Name="combo_updateEmployee_city" Margin="124,94,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                    <ComboBoxItem Content="Malmö"/>
+                                    <ComboBoxItem Content="London"/>
+                                    <ComboBoxItem Content="Minneapolis"/>
+                                    <ComboBoxItem Content="Chicago"/>
+                                </ComboBox>
+                                <DatePicker x:Name="datepicker_updateEmployee_startDate" HorizontalAlignment="Left" Margin="124,119,0,0" VerticalAlignment="Top"/>
+                                <DatePicker x:Name="datepicker_updateEmployee_endDate" HorizontalAlignment="Left" Margin="124,148,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_updateEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="124,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_updateEmployee_update" Content="Update info" HorizontalAlignment="Left" Margin="89,205,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_update_Click"/>
+
                             </Grid>
                         </GroupBox>
 

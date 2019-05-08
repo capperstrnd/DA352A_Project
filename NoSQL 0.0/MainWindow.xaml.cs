@@ -18,6 +18,7 @@ namespace NoSQL_0._0
         private Database db;
         private Employee currentUser;
         private Order currentOrder;
+        private Employee employeeToUpdate;
 
         public MainWindow()
         {
@@ -143,8 +144,24 @@ namespace NoSQL_0._0
                     }
                     break;
 
-                // Currently Add To Stock
+                // Currently Update Employee
                 case 6:
+                    if (row.Item is Employee)
+                    {
+                        Employee emp = (Employee)row.Item;
+                        txt_updateEmployee_name.Text = emp.Name;
+                        txt_updateEmployee_SSN.Text = emp.SSN;
+                        combo_updateEmployee_postition.Text = emp.Position;
+                        combo_updateEmployee_city.Text = emp.City;
+                        datepicker_updateEmployee_startDate.Text = emp.StartDate;
+                        datepicker_updateEmployee_endDate.Text = emp.EndDate;
+                        txt_updateEmployee_capacity.Text = emp.WorkingCapacity.ToString();
+                        employeeToUpdate = emp;
+                    }
+                    break;
+
+                // Currently Add To Stock
+                case 7:
                     if (row.Item is Item)
                     {
                         Item item = (Item)row.Item;
@@ -338,7 +355,7 @@ namespace NoSQL_0._0
         private void btn_test_add_comment_Click(object sender, RoutedEventArgs e)
         {
             ObjectId id = new ObjectId(txt_addComment_id.Text);
-            Boolean commentAdded = db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_addComment_comment.Text, "NOW"));
+            Boolean commentAdded = db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_addComment_comment.Text, DateTime.Now.ToString()));
             if (!commentAdded)
                 MessageBox.Show("No employee with Id " + id);
             else
@@ -459,11 +476,23 @@ namespace NoSQL_0._0
             txt_addOrder_order.Text = currentOrder.ToString();
         }
 
+        /// <summary>
+        /// Method is called when the 'Add Order' button is clicked in the 'Add Order' tab.
+        /// Clears all text in the order textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_addOrder_resetOrder_Click(object sender, RoutedEventArgs e)
         {
             txt_addOrder_order.Text = "";
         }
 
+        /// <summary>
+        /// Method is called when the user searches for items in the 'Add Order' tab.
+        /// Fills the datagrid with all items matching the query.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_addOrder_searchItem_Click(object sender, RoutedEventArgs e)
         {
             List<Item> itemResults = new List<Item>();
@@ -471,6 +500,12 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = itemResults;
         }
 
+        /// <summary>
+        /// Method is called when the user searches for employees in the 'Delete Employee' tab.
+        /// Fills the datagrid with all employees matching the query.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_deleteEmployee_search_Click(object sender, RoutedEventArgs e)
         {
             switch (combo_deleteEmployee_searchBy.SelectedIndex)
@@ -487,11 +522,97 @@ namespace NoSQL_0._0
             }
         }
 
+        /// <summary>
+        /// Method is called when the user searches for items in the 'Add To Stock' tab.
+        /// Fills the datagrid with all items matching the query.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_addToStock_searchItem_Click(object sender, RoutedEventArgs e)
         {
             List<Item> itemResults = new List<Item>();
             itemResults.Add(db.GetItemInItemStockByCityAndName(currentUser.City, txt_addToStock_searchName.Text));
             dataGrid.ItemsSource = itemResults;
+        }
+
+        /// <summary>
+        /// Method is called when the user searches for employees in the 'Update Employee' tab.
+        /// Fills the datagrid with all employees matching the query.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_updateEmployee_search_Click(object sender, RoutedEventArgs e)
+        {
+            switch (combo_updateEmployee_searchBy.SelectedIndex)
+            {
+                case 0:
+                    dataGrid.ItemsSource = db.GetEmployeesByName(txt_updateEmployee_query.Text);
+                    break;
+                case 1:
+                    dataGrid.ItemsSource = db.GetEmployeesBySSN(txt_updateEmployee_query.Text);
+                    break;
+                case 2:
+                    dataGrid.ItemsSource = db.GetEmployeesByCity(txt_updateEmployee_query.Text);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Method is called when the user clicks on the 'Update' button in the 'Update Employee' tab.
+        /// Updates the information of an employee.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_updateEmployee_update_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            int capacity = 0;
+            if (!Int32.TryParse(txt_updateEmployee_capacity.Text, out capacity)
+                || capacity > 100
+                || capacity < 0
+                || txt_updateEmployee_name.Text.Length < 1
+                || txt_updateEmployee_SSN.Text.Length < 1
+                || combo_updateEmployee_postition.SelectedIndex == -1
+                || combo_updateEmployee_city.SelectedIndex == -1
+                || datepicker_updateEmployee_startDate.SelectedDate == null
+                || datepicker_updateEmployee_endDate.SelectedDate == null)
+            {
+                MessageBox.Show("All fields are not correct.");
+                return;
+            }
+
+            // Create new Employee
+            Employee emp = new Employee(
+                txt_updateEmployee_name.Text,
+                "admin",
+                txt_updateEmployee_SSN.Text,
+                combo_updateEmployee_postition.Text,
+                combo_updateEmployee_city.Text,
+                datepicker_updateEmployee_startDate.Text,
+                datepicker_updateEmployee_endDate.Text,
+                capacity);
+            emp.Comments = employeeToUpdate.Comments;
+            Console.WriteLine("\n" + employeeToUpdate.Comments.Count + "\n");
+
+            // Delete current employee
+            db.DeleteEmployee(employeeToUpdate);
+
+            // Add employee
+            db.AddEmployee(emp);
+
+            // Reset input fields
+            txt_updateEmployee_name.Text = "";
+            txt_updateEmployee_SSN.Text = "";
+            txt_updateEmployee_capacity.Text = "";
+            combo_updateEmployee_postition.SelectedIndex = -1;
+            combo_updateEmployee_city.SelectedIndex = -1;
+            datepicker_updateEmployee_startDate.SelectedDate = null;
+            datepicker_updateEmployee_endDate.SelectedDate = null;
+
+            // Show updated Employee in datagrid
+            List<Employee> empList = new List<Employee>();
+            empList.Add(emp);
+            dataGrid.ItemsSource = empList;
         }
     }
 }
