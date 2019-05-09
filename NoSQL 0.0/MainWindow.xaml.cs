@@ -19,6 +19,7 @@ namespace NoSQL_0._0
         private Employee currentUser;
         private Order currentOrder;
         private Employee employeeToUpdate;
+        private Customer customerToUpdate;
 
         public MainWindow()
         {
@@ -160,8 +161,22 @@ namespace NoSQL_0._0
                     }
                     break;
 
-                // Currently Add To Stock
+                // Currently Update Customer
                 case 7:
+                    if (row.Item is Customer)
+                    {
+                        Customer cus = (Customer)row.Item;
+                        txt_updateCustomer_ssn.Text = cus.SSN;
+                        combo_updateCustomer_location.Text = cus.City;
+                        txt_updateCustomer_occupation.Text = cus.Occupation;
+                        combo_updateCustomer_bonusPoints.Text = cus.BonusCounter.ToString();
+                        datepicker_updateCustomer.Text = cus.MembershipDate;
+                        customerToUpdate = cus;
+                    }
+                    break;
+
+                // Currently Add To Stock
+                case 8:
                     if (row.Item is Item)
                     {
                         Item item = (Item)row.Item;
@@ -591,7 +606,6 @@ namespace NoSQL_0._0
                 datepicker_updateEmployee_endDate.Text,
                 capacity);
             emp.Comments = employeeToUpdate.Comments;
-            Console.WriteLine("\n" + employeeToUpdate.Comments.Count + "\n");
 
             // Delete current employee
             db.DeleteEmployee(employeeToUpdate);
@@ -612,6 +626,62 @@ namespace NoSQL_0._0
             List<Employee> empList = new List<Employee>();
             empList.Add(emp);
             dataGrid.ItemsSource = empList;
+        }
+
+        private void btn_UpdateCustomer_searchCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            switch (combo_UpdateCustomer_searchCustomer.SelectedIndex)
+            {
+                case 0:
+                    dataGrid.ItemsSource = db.GetCustomerBySSN(txt_UpdateCustomer_searchCustomer.Text);
+                    break;
+                case 1:
+                    dataGrid.ItemsSource = db.GetCustomerByCity(txt_UpdateCustomer_searchCustomer.Text);
+                    break;
+                case 2:
+                    dataGrid.ItemsSource = db.GetCustomerByOccupation(txt_UpdateCustomer_searchCustomer.Text);
+                    break;
+            }
+        }
+
+        private void btn_updateCustomer_add_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (txt_updateCustomer_ssn.Text.Length < 1
+                || combo_updateCustomer_location.SelectedIndex == -1
+                || txt_updateCustomer_occupation.Text.Length < 1
+                || datepicker_updateCustomer.SelectedDate == null)
+            {
+                MessageBox.Show("All fields are not correct.");
+                return;
+            }
+
+            // Create new customer
+            int bonusPoints = 0;
+            Int32.TryParse(combo_updateCustomer_bonusPoints.Text, out bonusPoints);
+            Customer c = new Customer(
+                txt_updateCustomer_ssn.Text,
+                combo_updateCustomer_location.Text,
+                txt_updateCustomer_occupation.Text,
+                bonusPoints,
+                datepicker_updateCustomer.ToString().Split(' ')[0]);
+
+            // Delete current customer
+            db.DeleteCustomer(customerToUpdate);
+
+            // Add customer to database
+            db.AddCustomer(c);
+
+            // Reset input fields
+            txt_updateCustomer_ssn.Text = "";
+            txt_updateCustomer_occupation.Text = "";
+            combo_updateCustomer_location.SelectedIndex = -1;
+            datepicker_updateCustomer.SelectedDate = null;
+
+            // Display new customer in datagrid
+            List<Customer> newCustomer = new List<Customer>();
+            newCustomer.Add(c);
+            dataGrid.ItemsSource = newCustomer;
         }
     }
 }

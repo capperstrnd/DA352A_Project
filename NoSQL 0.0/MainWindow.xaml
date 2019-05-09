@@ -198,6 +198,56 @@
 
                     </Grid>
                 </TabItem>
+                <TabItem Header="Update Customer">
+                    <Grid Background="#FFE5E5E5">
+                        <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+                            <Grid>
+                                <Label Content="Query:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+                                <TextBox x:Name="txt_UpdateCustomer_searchCustomer" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_UpdateCustomer_searchCustomer" HorizontalAlignment="Left" Margin="82,45,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="SSN"/>
+                                    <ComboBoxItem Content="City"/>
+                                    <ComboBoxItem Content="Occupation"/>
+                                </ComboBox>
+                                <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" Text="Double click a customer in the datagrid to add him/her to the order" VerticalAlignment="Top" Height="50" Width="192"/>
+                                <Button x:Name="btn_UpdateCustomer_searchCustomer" Content="Search" HorizontalAlignment="Left" Margin="64,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_UpdateCustomer_searchCustomer_Click"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Update Customer" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="248" Margin="239,10,0,0">
+                            <Grid>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                <Label Content="City:" HorizontalAlignment="Left" Margin="11,34,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Date:" HorizontalAlignment="Left" Margin="11,119,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_updateCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <ComboBox x:Name="combo_updateCustomer_location" Margin="100,38,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                    <ComboBoxItem Content="Malmö"/>
+                                    <ComboBoxItem Content="London"/>
+                                    <ComboBoxItem Content="Minneapolis"/>
+                                    <ComboBoxItem Content="Chicago"/>
+                                </ComboBox>
+                                <TextBox x:Name="txt_updateCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="100,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_updateCustomer_add" Content="Update Customer" HorizontalAlignment="Left" Margin="63,150,0,0" VerticalAlignment="Top" Click="btn_updateCustomer_add_Click"/>
+                                <DatePicker x:Name="datepicker_updateCustomer" HorizontalAlignment="Left" Margin="100,121,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Bonuspoints:" HorizontalAlignment="Left" Margin="11,90,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_updateCustomer_bonusPoints" HorizontalAlignment="Left" Margin="100,94,0,0" VerticalAlignment="Top" Width="120">
+                                    <ComboBoxItem Content="0"/>
+                                    <ComboBoxItem Content="1"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="3"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="5"/>
+                                    <ComboBoxItem Content="6"/>
+                                    <ComboBoxItem Content="7"/>
+                                    <ComboBoxItem Content="8"/>
+                                    <ComboBoxItem Content="9"/>
+                                </ComboBox>
+                            </Grid>
+                        </GroupBox>
+
+                    </Grid>
+                </TabItem>
                 <TabItem x:Name="tabAddToStock" Header="Add To Stock">
                     <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
@@ -212,10 +262,6 @@
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddReports" Header="Produce Reports">
-                    <Grid Background="#FFE5E5E5">
-                    </Grid>
-                </TabItem>
-                <TabItem Header="And so on...">
                     <Grid Background="#FFE5E5E5">
                     </Grid>
                 </TabItem>

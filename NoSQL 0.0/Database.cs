@@ -154,6 +154,11 @@ namespace NoSQL_0._0
             var result = colCustomer.UpdateOne(filter, update);
         }
 
+        public void DeleteCustomer(Customer customer)
+        {
+            colCustomer.DeleteOneAsync(Builders<Customer>.Filter.Eq("_id", customer.Id));
+        }
+
         /*
          * ITEMSTOCK QUERIES!
          */
