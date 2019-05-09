@@ -33,5 +33,9 @@ namespace NoSQL_0._0
             WorkingCapacity = workingCapacity;
             Comments = new List<Comment>();
         }
+
+        public Employee()
+        {
+        }
     }
 }

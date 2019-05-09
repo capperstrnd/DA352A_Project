@@ -21,5 +21,9 @@ namespace NoSQL_0._0
             Quantity = quantity;
             BonusItem = bonusItem;
         }
+
+        public Item()
+        {
+        }
     }
 }

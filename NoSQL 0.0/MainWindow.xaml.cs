@@ -20,6 +20,7 @@ namespace NoSQL_0._0
         private Order currentOrder;
         private Employee employeeToUpdate;
         private Customer customerToUpdate;
+        private Object searchForCollection;
 
         public MainWindow()
         {
@@ -124,6 +125,11 @@ namespace NoSQL_0._0
 
                 // Currently Add Comment
                 case 3:
+                    if (row.Item is Employee)
+                    {
+                        Employee emp = (Employee)row.Item;
+                        txt_addComment_id.Text = emp.Id.ToString();
+                    }
                     break;
                 
                 // Currently Add Employee
@@ -313,27 +319,6 @@ namespace NoSQL_0._0
         }
 
         /// <summary>
-        /// Method is called when the 'Search Customer' button is clicked in the 'Add Order' tab.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_addOrder_searchCustomer_Click(object sender, RoutedEventArgs e)
-        {
-            switch (combo_addOrder_searchCustomer.SelectedIndex)
-            {
-                case 0:
-                    dataGrid.ItemsSource = db.GetCustomerBySSN(txt_addOrder_searchCustomer.Text);
-                    break;
-                case 1:
-                    dataGrid.ItemsSource = db.GetCustomerByCity(txt_addOrder_searchCustomer.Text);
-                    break;
-                case 2:
-                    dataGrid.ItemsSource = db.GetCustomerByOccupation(txt_addOrder_searchCustomer.Text);
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Method is called when the combobox below the datagrid is changed.
         /// </summary>
         /// <param name="sender"></param>
@@ -452,7 +437,8 @@ namespace NoSQL_0._0
             db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
 
             // Reset currentOrder
-            currentOrder.Items = new List<Item>();
+            currentOrder = new Order();
+            currentOrder.EmployeeId = currentUser.Id;
 
             // Reset view
             txt_addOrder_order.Text = "";
@@ -517,76 +503,6 @@ namespace NoSQL_0._0
         }
 
         /// <summary>
-        /// Method is called when the user searches for items in the 'Add Order' tab.
-        /// Fills the datagrid with all items matching the query.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_addOrder_searchItem_Click(object sender, RoutedEventArgs e)
-        {
-            List<Item> itemResults = new List<Item>();
-            itemResults.Add(db.GetItemInItemStockByCityAndName(currentUser.City, txt_addOrder_addItem.Text));
-            dataGrid.ItemsSource = itemResults;
-        }
-
-        /// <summary>
-        /// Method is called when the user searches for employees in the 'Delete Employee' tab.
-        /// Fills the datagrid with all employees matching the query.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_deleteEmployee_search_Click(object sender, RoutedEventArgs e)
-        {
-            switch (combo_deleteEmployee_searchBy.SelectedIndex)
-            {
-                case 0:
-                    dataGrid.ItemsSource = db.GetEmployeesByName(txt_deleteEmployee_query.Text);
-                    break;
-                case 1:
-                    dataGrid.ItemsSource = db.GetEmployeesBySSN(txt_deleteEmployee_query.Text);
-                    break;
-                case 2:
-                    dataGrid.ItemsSource = db.GetEmployeesByCity(txt_deleteEmployee_query.Text);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Method is called when the user searches for items in the 'Add To Stock' tab.
-        /// Fills the datagrid with all items matching the query.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_addToStock_searchItem_Click(object sender, RoutedEventArgs e)
-        {
-            List<Item> itemResults = new List<Item>();
-            itemResults.Add(db.GetItemInItemStockByCityAndName(currentUser.City, txt_addToStock_searchName.Text));
-            dataGrid.ItemsSource = itemResults;
-        }
-
-        /// <summary>
-        /// Method is called when the user searches for employees in the 'Update Employee' tab.
-        /// Fills the datagrid with all employees matching the query.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_updateEmployee_search_Click(object sender, RoutedEventArgs e)
-        {
-            switch (combo_updateEmployee_searchBy.SelectedIndex)
-            {
-                case 0:
-                    dataGrid.ItemsSource = db.GetEmployeesByName(txt_updateEmployee_query.Text);
-                    break;
-                case 1:
-                    dataGrid.ItemsSource = db.GetEmployeesBySSN(txt_updateEmployee_query.Text);
-                    break;
-                case 2:
-                    dataGrid.ItemsSource = db.GetEmployeesByCity(txt_updateEmployee_query.Text);
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Method is called when the user clicks on the 'Update' button in the 'Update Employee' tab.
         /// Updates the information of an employee.
         /// </summary>
@@ -643,22 +559,6 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = empList;
         }
 
-        private void btn_UpdateCustomer_searchCustomer_Click(object sender, RoutedEventArgs e)
-        {
-            switch (combo_UpdateCustomer_searchCustomer.SelectedIndex)
-            {
-                case 0:
-                    dataGrid.ItemsSource = db.GetCustomerBySSN(txt_UpdateCustomer_searchCustomer.Text);
-                    break;
-                case 1:
-                    dataGrid.ItemsSource = db.GetCustomerByCity(txt_UpdateCustomer_searchCustomer.Text);
-                    break;
-                case 2:
-                    dataGrid.ItemsSource = db.GetCustomerByOccupation(txt_UpdateCustomer_searchCustomer.Text);
-                    break;
-            }
-        }
-
         private void btn_updateCustomer_add_Click(object sender, RoutedEventArgs e)
         {
             // Input check
@@ -708,9 +608,83 @@ namespace NoSQL_0._0
                 MessageBox.Show("Please fill in both datepickers");
                 return;
             }
+
             DateTime start = (DateTime)datepicker_produceReports_salesPerDate_startdate.SelectedDate;
             DateTime end = (DateTime)datepicker_produceReports_salesPerDate_enddate.SelectedDate;
             dataGrid.ItemsSource = db.GetOrderBetweenDates(start, end);
+        }
+
+        private void btn_produceReports_salesPerItemAndDate_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (datepicker_produceReports_salesPerItemAndDate_startdate.SelectedDate == null
+                || datepicker_produceReports_salesPerItemAndDate_enddate.SelectedDate == null)
+            {
+                MessageBox.Show("Please fill in both datepickers");
+                return;
+            }
+
+            DateTime start = (DateTime)datepicker_produceReports_salesPerItemAndDate_startdate.SelectedDate;
+            DateTime end = (DateTime)datepicker_produceReports_salesPerItemAndDate_enddate.SelectedDate;
+            List<Order> orders = db.GetOrderBetweenDates(start, end);
+            Dictionary<string, Item> soldItems = new Dictionary<string, Item>();
+            foreach (Order order in orders)
+            {
+                foreach (Item item in order.Items)
+                {
+                    if (soldItems.ContainsKey(item.Name))
+                    {
+                        soldItems[item.Name].Quantity += item.Quantity;
+                        soldItems[item.Name].Price += item.Price;
+                    }
+                    else
+                    {
+                        soldItems.Add(item.Name, item);
+                    }
+                }
+            }
+            List<Item> toShow = new List<Item>();
+            foreach (Item item in soldItems.Values)
+            {
+                toShow.Add(item);
+            }
+            dataGrid.ItemsSource = toShow;
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            combo_search_attribute.Items.Clear();
+            switch (combo_search_collection.SelectedIndex)
+            {
+                // Customer
+                case 0:
+                    searchForCollection = new Customer();
+                    combo_search_attribute.Items.Add("SSN");
+                    combo_search_attribute.Items.Add("City");
+                    combo_search_attribute.Items.Add("Occupation");
+                    break;
+
+                // Employee
+                case 1:
+                    searchForCollection = new Employee();
+                    combo_search_attribute.Items.Add("Name");
+                    combo_search_attribute.Items.Add("SSN");
+                    combo_search_attribute.Items.Add("Position");
+                    combo_search_attribute.Items.Add("City");
+                    break;
+                
+                // Item
+                case 2:
+                    searchForCollection = new Item();
+                    combo_search_attribute.Items.Add("Name");
+                    combo_search_attribute.SelectedIndex = 0;
+                    break;
+            }
+        }
+
+        private void btn_search_Click(object sender, RoutedEventArgs e)
+        {
+            dataGrid.ItemsSource = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City);
         }
     }
 }

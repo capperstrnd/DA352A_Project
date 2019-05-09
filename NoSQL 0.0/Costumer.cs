@@ -28,5 +28,9 @@ namespace NoSQL_0._0
             BonusCounter = bonusCounter;
             MembershipDate = membershipDate;
         }
+
+        public Customer()
+        {
+        }
     }
 }

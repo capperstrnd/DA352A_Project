@@ -310,5 +310,42 @@ namespace NoSQL_0._0
             ItemStock itemStock = new ItemStock("Malmö", items);
             colItemStock.InsertOne(itemStock);
         }
+
+        internal IEnumerable AllInOneSearch(object classType, string attribute, string query, string city)
+        {
+            if (classType is Customer)
+            {
+                switch (attribute)
+                {
+                    case "SSN":
+                        return GetCustomerBySSN(query);
+                    case "City":
+                        return GetCustomerByCity(query);
+                    case "Occupation":
+                        return GetCustomerByOccupation(query);
+                }
+            }
+            else if (classType is Employee)
+            {
+                switch (attribute)
+                {
+                    case "Name":
+                        return GetEmployeesByName(query);
+                    case "SSN":
+                        return GetEmployeesBySSN(query);
+                    case "Position":
+                        return GetEmployeesByPosition(query);
+                    case "City":
+                        return GetEmployeesByCity(query);
+                }
+            }
+            else if (classType is Item)
+            {
+                List<Item> items = new List<Item>();
+                items.Add(GetItemInItemStockByCityAndName(city, query));
+                return items;
+            }
+            return null;
+        }
     }
 }

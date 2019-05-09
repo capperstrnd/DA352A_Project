@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoSQL_0._0"
         mc:Ignorable="d"
-        Title="BeaverCoffee AB" Height="700" Width="800" ResizeMode="NoResize">
-    <Grid Height="671" VerticalAlignment="Top" HorizontalAlignment="Left" Width="794">
+        Title="BeaverCoffee AB" Height="775" Width="800" ResizeMode="NoResize">
+    <Grid>
         <Grid Margin="299,244,0,0" x:Name="gridLogin" Visibility="Hidden" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
             <Label Content="Ahem... User = admin. Pass = admin" HorizontalAlignment="Left" Margin="0,-83,0,0" VerticalAlignment="Top"/>
             <Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -15,7 +15,7 @@
             <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
             <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
         </Grid>
-        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="313" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
+        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
             <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="272" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
@@ -23,20 +23,31 @@
                     </Style>
                 </DataGrid.Resources>
             </DataGrid>
-            <Button x:Name="btnLogout" Content="Logout" Margin="684,0,0,10" Click="btnLogout_Click" HorizontalAlignment="Left" Width="80" Height="22" VerticalAlignment="Bottom"/>
+            <Button x:Name="btnLogout" Content="Logout" Margin="684,0,0,16" Click="btnLogout_Click" HorizontalAlignment="Left" Width="80" Height="22" VerticalAlignment="Bottom"/>
             <Grid Margin="0,0,612,315"/>
-            <ComboBox x:Name="comboShowAll" Margin="72,0,0,10" SelectionChanged="comboShowAll_SelectionChanged" HorizontalAlignment="Left" Width="124" Height="24" VerticalAlignment="Bottom">
+            <ComboBox x:Name="comboShowAll" Margin="640,0,0,95" SelectionChanged="comboShowAll_SelectionChanged" HorizontalAlignment="Left" Width="124" VerticalAlignment="Bottom">
                 <ComboBoxItem Content="Customers"/>
                 <ComboBoxItem Content="Employees"/>
                 <ComboBoxItem Content="Items"/>
                 <ComboBoxItem Content="Orders"/>
                 <ComboBoxItem Content="Comments"/>
             </ComboBox>
-            <Label Content="Show all:" HorizontalAlignment="Left" Margin="10,0,0,10" Height="26" VerticalAlignment="Bottom"/>
+            <Label Content="Show all:" HorizontalAlignment="Left" Margin="578,0,0,91" Height="26" VerticalAlignment="Bottom"/>
+            <Label Content="Search for:" HorizontalAlignment="Left" Margin="10,277,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="combo_search_collection" HorizontalAlignment="Left" Margin="128,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Customer"/>
+                <ComboBoxItem Content="Employee"/>
+                <ComboBoxItem Content="Item"/>
+            </ComboBox>
+            <Label Content="By attribute:" HorizontalAlignment="Left" Margin="10,304,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="combo_search_attribute" HorizontalAlignment="Left" Margin="128,308,0,0" VerticalAlignment="Top" Width="120"/>
+            <Label Content="With query:" HorizontalAlignment="Left" Margin="10,331,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="txt_search_query" HorizontalAlignment="Left" Height="23" Margin="128,334,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="btn_search" Content="Search" HorizontalAlignment="Left" Margin="173,362,0,0" VerticalAlignment="Top" Width="75" Click="btn_search_Click"/>
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
             <TabControl x:Name="tabControlMain" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">
@@ -65,29 +76,13 @@
                 <TabItem x:Name="tabAddOrder" Header="Add Order">
                     <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <Grid>
-                                <Label Content="Query:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                                <TextBox x:Name="txt_addOrder_searchCustomer" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_addOrder_searchCustomer" HorizontalAlignment="Left" Margin="82,45,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="SSN"/>
-                                    <ComboBoxItem Content="City"/>
-                                    <ComboBoxItem Content="Occupation"/>
-                                </ComboBox>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" Text="Double click a customer in the datagrid to add him/her to the order" VerticalAlignment="Top" Height="50" Width="192"/>
-                                <Button x:Name="btn_addOrder_searchCustomer" Content="Search" HorizontalAlignment="Left" Margin="64,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_searchCustomer_Click"/>
-                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to add him/her to the order" VerticalAlignment="Top" Height="160" Width="204"/>
                         </GroupBox>
                         <ScrollViewer Margin="468,10,0,35">
                             <TextBlock x:Name="txt_addOrder_order" FontFamily="Consolas" Background="White"/>
                         </ScrollViewer>
                         <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="239,10,0,0" VerticalAlignment="Top" Width="224">
-                            <Grid>
-                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                                <TextBox x:Name="txt_addOrder_addItem" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="76" Width="192"><Run Text="Double click an item in the datagrid to add"/><Run Text=" the item to the order"/></TextBlock>
-                                <Button x:Name="btn_addOrder_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_searchItem_Click"/>
-                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click an item to add it to the order" VerticalAlignment="Top" Height="160" Width="204"/>
                         </GroupBox>
                         <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
                         <Button x:Name="btn_addOrder_resetOrder" Content="Reset Order" HorizontalAlignment="Left" Margin="548,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_resetOrder_Click"/>
@@ -95,11 +90,14 @@
                 </TabItem>
                 <TabItem x:Name="tabAddComment" Header="Add Comment">
                     <Grid Background="#FFE5E5E5">
-                        <TextBox x:Name="txt_addComment_comment" HorizontalAlignment="Left" Height="175" Margin="94,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
-                        <TextBox x:Name="txt_addComment_id" HorizontalAlignment="Left" Height="23" Margin="94,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
-                        <Button x:Name="btn_addComment_add" Content="Add Comment" Margin="139,239,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
-                        <Label Content="Comment:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Employee ID:" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="txt_addComment_comment" HorizontalAlignment="Left" Height="175" Margin="327,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+                        <TextBox x:Name="txt_addComment_id" HorizontalAlignment="Left" Height="23" Margin="327,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+                        <Button x:Name="btn_addComment_add" Content="Add Comment" Margin="421,229,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
+                        <Label Content="Comment:" HorizontalAlignment="Left" Margin="239,21,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Employee ID:" HorizontalAlignment="Left" Margin="239,201,0,0" VerticalAlignment="Top"/>
+                        <GroupBox Header="Search employee" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to add his/her Id to the comment. Alternatively, ctrl+c on the id you wish to copy then ctrl+v in the 'Employee ID:' textbox." VerticalAlignment="Top" Height="160" Width="204"/>
+                        </GroupBox>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabAddEmployee" Header="Add Employee">
@@ -135,18 +133,7 @@
                 <TabItem x:Name="tabDeleteEmployee" Header="Delete Employee">
                     <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
-                            <Grid>
-                                <Label Content="Query:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_deleteEmployee_query" HorizontalAlignment="Left" Height="23" Margin="79,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_deleteEmployee_searchBy" HorizontalAlignment="Left" Margin="79,41,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="Name"/>
-                                    <ComboBoxItem Content="SSN"/>
-                                    <ComboBoxItem Content="City"/>
-                                </ComboBox>
-                                <Button x:Name="btn_deleteEmployee_search" Content="Search" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_deleteEmployee_search_Click"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,97,0,0" TextWrapping="Wrap" Text="Double-click on an employee in the datagrid to delete them." VerticalAlignment="Top" Height="41" Width="202"/>
-                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,-22" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to "/><Run Text="delete him/her."/></TextBlock>
                         </GroupBox>
 
                     </Grid>
@@ -154,18 +141,7 @@
                 <TabItem x:Name="tabUpdateEmployee" Header="Update Employee">
                     <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="188" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
-                            <Grid>
-                                <Label Content="Query:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_updateEmployee_query" HorizontalAlignment="Left" Height="23" Margin="79,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_updateEmployee_searchBy" HorizontalAlignment="Left" Margin="79,41,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="Name"/>
-                                    <ComboBoxItem Content="SSN"/>
-                                    <ComboBoxItem Content="City"/>
-                                </ComboBox>
-                                <Button x:Name="btn_updateEmployee_search" Content="Search" HorizontalAlignment="Left" Margin="60,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_search_Click"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,97,0,10" TextWrapping="Wrap" Text="Double-click on an employee in the datagrid and then update the info in the 'Update' box." Width="202"/>
-                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,-4" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to "/><Run Text="transfer his/her info to the 'Update' box to the right."/></TextBlock>
                         </GroupBox>
                         <GroupBox Header="Update" HorizontalAlignment="Left" Height="280" VerticalAlignment="Top" Width="280" Margin="249,10,0,0">
                             <Grid>
@@ -201,18 +177,7 @@
                 <TabItem Header="Update Customer">
                     <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <Grid>
-                                <Label Content="Query:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                                <TextBox x:Name="txt_UpdateCustomer_searchCustomer" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Label Content="Search by:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_UpdateCustomer_searchCustomer" HorizontalAlignment="Left" Margin="82,45,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="SSN"/>
-                                    <ComboBoxItem Content="City"/>
-                                    <ComboBoxItem Content="Occupation"/>
-                                </ComboBox>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,98,0,0" TextWrapping="Wrap" Text="Double click a customer in the datagrid to add him/her to the order" VerticalAlignment="Top" Height="50" Width="192"/>
-                                <Button x:Name="btn_UpdateCustomer_searchCustomer" Content="Search" HorizontalAlignment="Left" Margin="64,72,0,0" VerticalAlignment="Top" Width="75" Click="btn_UpdateCustomer_searchCustomer_Click"/>
-                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to "/><Run Text="transfer"/><Run Text=" him/her "/><Run Text="info to the 'Update Customer' box to the right."/></TextBlock>
                         </GroupBox>
                         <GroupBox Header="Update Customer" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="248" Margin="239,10,0,0">
                             <Grid>
@@ -251,12 +216,7 @@
                 <TabItem x:Name="tabAddToStock" Header="Add To Stock">
                     <Grid Background="#FFE5E5E5">
                         <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <Grid>
-                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
-                                <TextBox x:Name="txt_addToStock_searchName" HorizontalAlignment="Left" Height="23" Margin="82,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBlock HorizontalAlignment="Left" Margin="10,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="76" Width="192"><Run Text="Double click "/><Run Text="the item in the datagrid to increase its stock quantity."/></TextBlock>
-                                <Button x:Name="btn_addToStock_searchItem" Content="Search" HorizontalAlignment="Left" Margin="64,41,0,0" VerticalAlignment="Top" Width="75" Click="btn_addToStock_searchItem_Click"/>
-                            </Grid>
+                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for "/><Run Text="an item "/><Run Text="with the search functions below the datagrid to view "/><Run Text="items"/><Run Text=" in the datagrid. Double-click a"/><Run Text="n item"/><Run Text=" to "/><Run Text="add to its stock."/></TextBlock>
                         </GroupBox>
 
                     </Grid>
@@ -275,8 +235,22 @@
 
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Sales per item">
-                                <Grid Background="#FFE5E5E5"/>
+                            <TabItem Header="Sales per item and date">
+                                <Grid Background="#FFE5E5E5">
+                                    <DatePicker x:Name="datepicker_produceReports_salesPerItemAndDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+                                    <DatePicker x:Name="datepicker_produceReports_salesPerItemAndDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+                                    <Button x:Name="btn_produceReports_salesPerItemAndDate" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerItemAndDate_Click"/>
+                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Sales per customer">
+                                <Grid Background="#FFE5E5E5">
+                                    <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+                                        <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to"/><Run Text="... JADU"/></TextBlock>
+                                    </GroupBox>
+
+                                </Grid>
                             </TabItem>
                         </TabControl>
                     </Grid>
