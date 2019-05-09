@@ -169,7 +169,7 @@ namespace NoSQL_0._0
                         Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + " to add to stock?", "Add " + item.Name + " to stock"), out quantity);
                         db.UpdateItemQuantityInItemStock(currentUser.City, item.Name, quantity, false);
                         ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
-                        db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock));
+                        db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
                         dataGrid.ItemsSource = itemStock.Items;
                     }
                     break;
@@ -419,7 +419,7 @@ namespace NoSQL_0._0
 
             // Add a StockLog
             ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
-            db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock));
+            db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
 
             // Reset currentOrder
             currentOrder.Items = new List<Item>();
@@ -448,7 +448,6 @@ namespace NoSQL_0._0
             }
 
             // If item already exist in order...
-            //Item stockItem = db.GetItemById(item.Id);
             Item stockItem = db.GetItemInItemStockByCityAndName(currentUser.City, item.Name);
             if (currentOrder.Items.Contains(item))
             {

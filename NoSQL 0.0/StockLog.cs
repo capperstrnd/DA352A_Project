@@ -12,9 +12,9 @@ namespace NoSQL_0._0
         public ObjectId Id { get; set; }
         public string Date { get; set; }
         public string City { get; set; }
-        public ItemStock CurrentStock { get; set; }
+        public List<Item> CurrentStock { get; set; }
 
-        public StockLog(string date, string city, ItemStock currentStock)
+        public StockLog(string date, string city, List<Item> currentStock)
         {
             Date = date;
             City = city;
