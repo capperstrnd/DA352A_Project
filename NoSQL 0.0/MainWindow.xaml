@@ -36,8 +36,8 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
-            <TabControl x:Name="tabControl" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
+        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+            <TabControl x:Name="tabControlMain" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">
                     </Grid>
@@ -263,6 +263,22 @@
                 </TabItem>
                 <TabItem x:Name="tabAddReports" Header="Produce Reports">
                     <Grid Background="#FFE5E5E5">
+                        <TabControl x:Name="tabControlReports">
+                            <TabItem Header="Sales per date">
+                                <Grid Background="#FFE5E5E5">
+                                    <DatePicker x:Name="datepicker_produceReports_salesPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+                                    <DatePicker x:Name="datepicker_produceReports_salesPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+                                    <Button x:Name="btn_produceReports_salesPerDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
+                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                                    <TextBlock HorizontalAlignment="Left" Margin="10,93,0,0" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
+
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Sales per item">
+                                <Grid Background="#FFE5E5E5"/>
+                            </TabItem>
+                        </TabControl>
                     </Grid>
                 </TabItem>
             </TabControl>

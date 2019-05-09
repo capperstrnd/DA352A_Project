@@ -242,6 +242,11 @@ namespace NoSQL_0._0
             return colOrder.Find(x => x.Id == orderId).ToList();
         }
 
+        public List<Order> GetOrderBetweenDates(DateTime startDate, DateTime endDate)
+        {
+            return colOrder.Find(x => x.Date >= startDate & x.Date <= endDate).ToList();
+        }
+
         /*
          * COMMENT QUERIES!
          */

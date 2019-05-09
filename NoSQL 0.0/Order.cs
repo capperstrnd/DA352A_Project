@@ -13,7 +13,7 @@ namespace NoSQL_0._0
         public ObjectId CustomerId { get; set; }
         public ObjectId EmployeeId { get; set; }
         public List<Item> Items { get; set; }
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         public string City { get; set; }
         public double TotalCost { get; set; }
 

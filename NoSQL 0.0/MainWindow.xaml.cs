@@ -75,7 +75,7 @@ namespace NoSQL_0._0
             // If the user is only an employee, and not a manager, then restrict what that employee can do by disabling some tabs
             if (emp.Position.Equals("Employee"))
             {
-                foreach (var tabItem in tabControl.Items)
+                foreach (var tabItem in tabControlMain.Items)
                 {
                     (tabItem as TabItem).IsEnabled = false;
                 }
@@ -97,7 +97,7 @@ namespace NoSQL_0._0
         {
             DataGridRow row = sender as DataGridRow;
 
-            switch (tabControl.SelectedIndex)
+            switch (tabControlMain.SelectedIndex)
             {
                 // Currently debug/testing
                 case 0:
@@ -186,6 +186,21 @@ namespace NoSQL_0._0
                         ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
                         db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
                         dataGrid.ItemsSource = itemStock.Items;
+                    }
+                    break;
+
+                // Currently Produce Reports
+                case 9:
+                    switch (tabControlReports.SelectedIndex)
+                    {
+                        // Currently Sales per date
+                        case 0:
+                            if (row.Item is Order && dataGrid.CurrentCell.Column.DisplayIndex == 3)
+                            {
+                                Order order = (Order)row.Item;
+                                dataGrid.ItemsSource = order.Items;
+                            }
+                            break;
                     }
                     break;
             }
@@ -424,7 +439,7 @@ namespace NoSQL_0._0
             }
 
             // Add todays date to the order.
-            currentOrder.Date = DateTime.Now.ToString();
+            currentOrder.Date = DateTime.Now;
 
             // Add current user city as Order city
             currentOrder.City = currentUser.City;
@@ -682,6 +697,20 @@ namespace NoSQL_0._0
             List<Customer> newCustomer = new List<Customer>();
             newCustomer.Add(c);
             dataGrid.ItemsSource = newCustomer;
+        }
+
+        private void btn_produceReports_salesPerDate_search_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (datepicker_produceReports_salesPerDate_startdate.SelectedDate == null
+                || datepicker_produceReports_salesPerDate_enddate.SelectedDate == null)
+            {
+                MessageBox.Show("Please fill in both datepickers");
+                return;
+            }
+            DateTime start = (DateTime)datepicker_produceReports_salesPerDate_startdate.SelectedDate;
+            DateTime end = (DateTime)datepicker_produceReports_salesPerDate_enddate.SelectedDate;
+            dataGrid.ItemsSource = db.GetOrderBetweenDates(start, end);
         }
     }
 }
