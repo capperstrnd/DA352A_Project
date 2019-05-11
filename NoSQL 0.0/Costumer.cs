@@ -14,11 +14,63 @@ namespace NoSQL_0._0
     class Customer
     {
         public ObjectId Id { get; set; }
-        public string SSN { get; set; }
-        public string City { get; set; }
-        public string Occupation { get; set; }
+        private string ssn;
+        public string SSN
+        {
+            get { return ssn; }
+            set
+            {
+                if (value.Length != 11 || !value.Contains('-'))
+                    throw new Exception("SSN is not correct! Must be numeric in the form: xxxxxx-xxxx");
+                string[] dateAndLastFour = value.Split('-');
+                bool isNumeric1 = int.TryParse(dateAndLastFour[0], out int n1);
+                bool isNumeric2 = int.TryParse(dateAndLastFour[1], out int n2);
+                bool isCorrectLength = dateAndLastFour[0].Length == 6 && dateAndLastFour[1].Length == 4;
+                if (isNumeric1 && isNumeric2 && isCorrectLength)
+                {
+                    ssn = value;
+                }
+                else
+                    throw new Exception("SSN is not correct! Must be numeric in the form: xxxxxx-xxxx");
+            }
+        }
+        private string city;
+        public string City
+        {
+            get { return city; }
+            set
+            {
+                if (value.Length > 0)
+                    city = value;
+                else
+                    throw new Exception("City must be selected");
+            }
+        }
+        private string occupation;
+        public string Occupation
+        {
+            get { return occupation; }
+            set
+            {
+                if (value.Length > 0)
+                    occupation = value;
+                else
+                    throw new Exception("Occupation must be filled");
+            }
+        }
         public int BonusCounter { get; set; }
-        public string MembershipDate { get; set; }
+        private string membershipDate;
+        public string MembershipDate
+        {
+            get { return membershipDate; }
+            set
+            {
+                if (value.Length > 0)
+                    membershipDate = value;
+                else
+                    throw new Exception("The date must be filled.");
+            } 
+        }
 
         public Customer(string sSN, string city, string occupation, int bonusCounter, string membershipDate)
         {

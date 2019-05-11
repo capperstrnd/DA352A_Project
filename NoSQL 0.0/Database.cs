@@ -35,7 +35,7 @@ namespace NoSQL_0._0
             colStockLog = db.GetCollection<StockLog>("StockLog");
 
             // Testing and debug stuff
-            //addStuffToDB();
+            addStuffToDB();
         }
 
         /*
@@ -270,10 +270,10 @@ namespace NoSQL_0._0
             /*
              * Insert employees
              */
-            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08-23", null, 100);
-            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03-01", null, 100);
-            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05-04", null, 100);
-            Employee e4 = new Employee("admin", "admin", "880604-1234", "Manager", "Malmö", "2018-08-23", null, 100);
+            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08-23", "2019-08-23", 100);
+            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03-01", "2020-03-01", 100);
+            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05-04", "2020-05-04", 100);
+            Employee e4 = new Employee("admin", "admin", "880604-1234", "Manager", "Malmö", "2018-08-23", "2019-08-12", 100);
             colEmployee.InsertOne(e1);
             colEmployee.InsertOne(e2);
             colEmployee.InsertOne(e3);

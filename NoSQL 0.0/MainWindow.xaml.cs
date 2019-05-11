@@ -39,9 +39,11 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = db.GetAllCostumers();
         }
 
-        /*
-         * Login and change view
-         */
+        /// <summary>
+        /// Method is called when the 'Login' button is clicked on the login page.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string user = txtUser.Text;
@@ -63,7 +65,7 @@ namespace NoSQL_0._0
             // If the password typen in 'txtPass' matches the employees password...
             if (pass == emp.Password)
             {
-                // Hide the login view and show the datagrid view and the main view with the tabs.
+                // Hide the login view, show the datagrid view and the main view with the tabs.
                 gridLogin.Visibility = System.Windows.Visibility.Hidden;
                 gridDataGrid.Visibility = System.Windows.Visibility.Visible;
                 gridMain.Visibility = System.Windows.Visibility.Visible;
@@ -85,15 +87,19 @@ namespace NoSQL_0._0
                 tabAddOrder.IsEnabled = true;
             }
 
-            // Keep a variable of the logged in employee.
+            // Store current user as field
             currentUser = emp;
+            
+            // Store current order as field
             currentOrder = new Order();
             currentOrder.EmployeeId = currentUser.Id;
         }
 
-        /*
-         * Do stuff with the double clicked row in the datagrid depending on which tab you're in and which Class you clicked on.
-         */
+        /// <summary>
+        /// Method is called when the user double-clicks an element in the datagrid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gridMain_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
@@ -220,23 +226,22 @@ namespace NoSQL_0._0
         /// <param name="e"></param>
         private void btn_addCustomer_add_Click(object sender, RoutedEventArgs e)
         {
-            // Input check
-            if (txt_addCustomer_ssn.Text.Length < 1
-                || combo_addCustomer_location.SelectedIndex == -1
-                || txt_addCustomer_occupation.Text.Length < 1
-                || datepicker_addCustomer.SelectedDate == null)
-            {
-                MessageBox.Show("All fields are not correct.");
-                return;
-            }
-
             // Create new customer
-            Customer c = new Customer(
+            Customer c = null;
+            try
+            {
+                c = new Customer(
                 txt_addCustomer_ssn.Text,
-                combo_addCustomer_location.Text, 
-                txt_addCustomer_occupation.Text, 
+                combo_addCustomer_location.Text,
+                txt_addCustomer_occupation.Text,
                 0,
                 datepicker_addCustomer.ToString().Split(' ')[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not create new Customer.\nReason:\n" + ex.Message);
+                return;
+            }
 
             // Add customer to database
             db.AddCustomer(c);
@@ -260,24 +265,13 @@ namespace NoSQL_0._0
         /// <param name="e"></param>
         private void btn_addEmployee_Click(object sender, RoutedEventArgs e)
         {
-            // Input check
-            int capacity = 0;
-            if (!Int32.TryParse(txt_addEmployee_capacity.Text, out capacity) 
-                || capacity > 100
-                || capacity < 0
-                || txt_addEmployee_name.Text.Length < 1
-                || txt_addEmployee_SSN.Text.Length < 1
-                || combo_addEmployee_postition.SelectedIndex == -1
-                || combo_addEmployee_location.SelectedIndex == -1
-                || datepicker_addEmployee_startDate.SelectedDate == null
-                || datepicker_addEmployee_endDate.SelectedDate == null)
-            {
-                MessageBox.Show("All fields are not correct.");
-                return;
-            }
-            
             // Create new Employee
-            Employee emp = new Employee(
+            Employee emp = null;
+            try
+            {
+                int capacity = 0;
+                int.TryParse(txt_addEmployee_capacity.Text, out capacity);
+                emp = new Employee(
                 txt_addEmployee_name.Text,
                 "admin",
                 txt_addEmployee_SSN.Text,
@@ -286,6 +280,12 @@ namespace NoSQL_0._0
                 datepicker_addEmployee_startDate.ToString().Split(' ')[0],
                 datepicker_addEmployee_endDate.ToString().Split(' ')[0],
                 capacity);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not create new Employee.\nReason:\n" + ex.Message);
+                return;
+            }
 
             // Add Employee to database
             db.AddEmployee(emp);
@@ -319,7 +319,7 @@ namespace NoSQL_0._0
         }
 
         /// <summary>
-        /// Method is called when the combobox below the datagrid is changed.
+        /// Method is called when the 'Show all' combobox below the datagrid is changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -492,7 +492,7 @@ namespace NoSQL_0._0
         }
 
         /// <summary>
-        /// Method is called when the 'Add Order' button is clicked in the 'Add Order' tab.
+        /// Method is called when the 'Reset Order' button is clicked in the 'Add Order' tab.
         /// Clears all text in the order textbox
         /// </summary>
         /// <param name="sender"></param>
@@ -510,33 +510,28 @@ namespace NoSQL_0._0
         /// <param name="e"></param>
         private void btn_updateEmployee_update_Click(object sender, RoutedEventArgs e)
         {
-            // Input check
-            int capacity = 0;
-            if (!Int32.TryParse(txt_updateEmployee_capacity.Text, out capacity)
-                || capacity > 100
-                || capacity < 0
-                || txt_updateEmployee_name.Text.Length < 1
-                || txt_updateEmployee_SSN.Text.Length < 1
-                || combo_updateEmployee_postition.SelectedIndex == -1
-                || combo_updateEmployee_city.SelectedIndex == -1
-                || datepicker_updateEmployee_startDate.SelectedDate == null
-                || datepicker_updateEmployee_endDate.SelectedDate == null)
+            // Create new Employee
+            Employee emp = null;
+            try
             {
-                MessageBox.Show("All fields are not correct.");
+                int capacity = 0;
+                Int32.TryParse(txt_updateEmployee_capacity.Text, out capacity);
+                emp = new Employee(
+                    txt_updateEmployee_name.Text,
+                    "admin",
+                    txt_updateEmployee_SSN.Text,
+                    combo_updateEmployee_postition.Text,
+                    combo_updateEmployee_city.Text,
+                    datepicker_updateEmployee_startDate.Text,
+                    datepicker_updateEmployee_endDate.Text,
+                    capacity);
+                emp.Comments = employeeToUpdate.Comments;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not update Employee.\nReason:\n" + ex.Message);
                 return;
             }
-
-            // Create new Employee
-            Employee emp = new Employee(
-                txt_updateEmployee_name.Text,
-                "admin",
-                txt_updateEmployee_SSN.Text,
-                combo_updateEmployee_postition.Text,
-                combo_updateEmployee_city.Text,
-                datepicker_updateEmployee_startDate.Text,
-                datepicker_updateEmployee_endDate.Text,
-                capacity);
-            emp.Comments = employeeToUpdate.Comments;
 
             // Delete current employee
             db.DeleteEmployee(employeeToUpdate);
@@ -559,27 +554,32 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = empList;
         }
 
+        /// <summary>
+        /// Method is called when the user clicks on the 'Update Customer' button is clicked in the 'Update Customer' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_updateCustomer_add_Click(object sender, RoutedEventArgs e)
         {
-            // Input check
-            if (txt_updateCustomer_ssn.Text.Length < 1
-                || combo_updateCustomer_location.SelectedIndex == -1
-                || txt_updateCustomer_occupation.Text.Length < 1
-                || datepicker_updateCustomer.SelectedDate == null)
+            // Create new customer
+            
+            Customer c = null;
+            try
             {
-                MessageBox.Show("All fields are not correct.");
+                int bonusPoints = 0;
+                Int32.TryParse(combo_updateCustomer_bonusPoints.Text, out bonusPoints);
+                c = new Customer(
+                    txt_updateCustomer_ssn.Text,
+                    combo_updateCustomer_location.Text,
+                    txt_updateCustomer_occupation.Text,
+                    bonusPoints,
+                    datepicker_updateCustomer.ToString().Split(' ')[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not update Customer.\nReason:\n" + ex.Message);
                 return;
             }
-
-            // Create new customer
-            int bonusPoints = 0;
-            Int32.TryParse(combo_updateCustomer_bonusPoints.Text, out bonusPoints);
-            Customer c = new Customer(
-                txt_updateCustomer_ssn.Text,
-                combo_updateCustomer_location.Text,
-                txt_updateCustomer_occupation.Text,
-                bonusPoints,
-                datepicker_updateCustomer.ToString().Split(' ')[0]);
 
             // Delete current customer
             db.DeleteCustomer(customerToUpdate);
@@ -599,6 +599,11 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = newCustomer;
         }
 
+        /// <summary>
+        /// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Sales per date' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_produceReports_salesPerDate_search_Click(object sender, RoutedEventArgs e)
         {
             // Input check
@@ -614,6 +619,11 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = db.GetOrderBetweenDates(start, end);
         }
 
+        /// <summary>
+        /// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Sales per item and date' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_produceReports_salesPerItemAndDate_Click(object sender, RoutedEventArgs e)
         {
             // Input check
@@ -651,6 +661,11 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = toShow;
         }
 
+        /// <summary>
+        /// Method is called when the 'Collection' combobox is changed below the datagrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             combo_search_attribute.Items.Clear();
@@ -682,6 +697,11 @@ namespace NoSQL_0._0
             }
         }
 
+        /// <summary>
+        /// Method is called when the user clicks on the 'Search' button below the datagrid.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
             dataGrid.ItemsSource = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City);
