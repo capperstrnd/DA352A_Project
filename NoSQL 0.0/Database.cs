@@ -35,7 +35,7 @@ namespace NoSQL_0._0
             colStockLog = db.GetCollection<StockLog>("StockLog");
 
             // Testing and debug stuff
-            addStuffToDB();
+            //addStuffToDB();
         }
 
         /*
@@ -52,9 +52,14 @@ namespace NoSQL_0._0
             colEmployee.InsertOne(employee);
         }
 
-        public List<Employee> GetEmployeesByCity(string employeeCity)
+        public List<Employee> GetEmployeesByCity(City employeeCity)
         {
             return colEmployee.Find(x => x.City == employeeCity).ToList();
+        }
+
+        public List<Employee> GetEmployeesByCountry(Country employeeCountry)
+        {
+            return colEmployee.Find(x => x.Country == employeeCountry).ToList();
         }
 
         public List<Employee> GetEmployeesById(ObjectId id)
@@ -72,7 +77,7 @@ namespace NoSQL_0._0
             return colEmployee.Find(x => x.SSN == SSN).ToList();
         }
 
-        public List<Employee> GetEmployeesByPosition(string position)
+        public List<Employee> GetEmployeesByPosition(Position position)
         {
             return colEmployee.Find(x => x.Position == position).ToList();
         }
@@ -132,9 +137,9 @@ namespace NoSQL_0._0
             return colCustomer.Find(x => x.SSN == ssn).ToList();
         }
 
-        public List<Customer> GetCustomerByCity(string city)
+        public List<Customer> GetCustomerByCountry(Country country)
         {
-            return colCustomer.Find(x => x.City == city).ToList();
+            return colCustomer.Find(x => x.Country == country).ToList();
         }
 
         public List<Customer> GetCustomerByOccupation(string occupation)
@@ -163,7 +168,7 @@ namespace NoSQL_0._0
          * ITEMSTOCK QUERIES!
          */
 
-        public ItemStock GetItemStockByCity(string city)
+        public ItemStock GetItemStockByCity(City city)
         {
             List<ItemStock> itemStock = colItemStock.Find(x => x.City == city).ToList();
             if (itemStock.Count > 0)
@@ -172,7 +177,7 @@ namespace NoSQL_0._0
                 return null;
         }
 
-        public void UpdateItemQuantityInItemStock(string city, string itemName, int quantity, bool remove)
+        public void UpdateItemQuantityInItemStock(City city, string itemName, int quantity, bool remove)
         {
             List<ItemStock> itemStocks = colItemStock.Find(x => x.City == city).ToList();
             ItemStock itemStock = null;
@@ -197,7 +202,7 @@ namespace NoSQL_0._0
             var result = colItemStock.UpdateOne(filter, update);
         }
 
-        public Item GetItemInItemStockByCityAndName(string city, string itemName)
+        public Item GetItemInItemStockByCityAndName(City city, string itemName)
         {
             List<ItemStock> itemStocks = colItemStock.Find(x => x.City == city).ToList();
             ItemStock itemStock = null;
@@ -261,6 +266,50 @@ namespace NoSQL_0._0
             colComment.InsertOne(comment);
         }
 
+        internal IEnumerable AllInOneSearch(object classType, string attribute, string query, City city, Country country)
+        {
+            if (classType is Customer)
+            {
+                switch (attribute)
+                {
+                    case "SSN":
+                        return GetCustomerBySSN(query);
+                    case "Occupation":
+                        return GetCustomerByOccupation(query);
+                    case "All":
+                        return GetAllCostumers();
+                }
+            }
+            else if (classType is Employee)
+            {
+                switch (attribute)
+                {
+                    case "Name":
+                        return GetEmployeesByName(query);
+                    case "SSN":
+                        return GetEmployeesBySSN(query);
+                    case "All in city":
+                        return GetEmployeesByCity(city);
+                    case "All":
+                        return GetAllEmployees();
+                }
+            }
+            else if (classType is Item)
+            {
+                switch (attribute)
+                {
+                    case "Name":
+                        List<Item> items = new List<Item>();
+                        items.Add(GetItemInItemStockByCityAndName(city, query));
+                        return items;
+                    case "All in city":
+                        return GetItemStockByCity(city).Items;
+                }
+                
+            }
+            return null;
+        }
+
         /*
          * DEBUG STUFF
          */
@@ -270,10 +319,10 @@ namespace NoSQL_0._0
             /*
              * Insert employees
              */
-            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", "Manager", "Malmö", "2018-08-23", "2019-08-23", 100);
-            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", "Employee", "Malmö", "2019-03-01", "2020-03-01", 100);
-            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", "Employee", "Malmö", "2019-05-04", "2020-05-04", 100);
-            Employee e4 = new Employee("admin", "admin", "880604-1234", "Manager", "Malmö", "2018-08-23", "2019-08-12", 100);
+            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", Position.Location_Manager, Country.Sweden, City.Malmö1, "2018-08-23", "2019-08-23", 100);
+            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", Position.Employee, Country.Sweden, City.Malmö2, "2019-03-01", "2020-03-01", 100);
+            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", Position.Employee, Country.Sweden, City.Malmö3, "2019-05-04", "2020-05-04", 100);
+            Employee e4 = new Employee("admin", "admin", "880604-1234", Position.Corporate_Sales_Manager, Country.England, City.London, "2018-08-23", "2019-08-12", 100);
             colEmployee.InsertOne(e1);
             colEmployee.InsertOne(e2);
             colEmployee.InsertOne(e3);
@@ -282,8 +331,8 @@ namespace NoSQL_0._0
             /*
              * Insert costumers
              */
-            Customer c1 = new Customer("884579-4568", "Malmö", "Bricklayer", 4, "2017-08-20");
-            Customer c2 = new Customer("915384-7538", "PlingPlong", "Ping pong player", 2, "2019-05-01");
+            Customer c1 = new Customer("884579-4568", Country.Sweden, "Bricklayer", 4, "2017-08-20");
+            Customer c2 = new Customer("915384-7538", Country.England, "Ping pong player", 2, "2019-05-01");
             colCustomer.InsertOne(c1);
             colCustomer.InsertOne(c2);
 
@@ -307,45 +356,18 @@ namespace NoSQL_0._0
             items.Add(new Item("Vanilla Syrup", 10, 1000, false));
             items.Add(new Item("Caramel Syrup", 10, 1000, false));
             items.Add(new Item("Irish Cream Syrup", 10, 1000, false));
-            ItemStock itemStock = new ItemStock("Malmö", items);
+            ItemStock itemStock = new ItemStock(City.Malmö1, items);
+            ItemStock itemStock1 = new ItemStock(City.Malmö2, items);
+            ItemStock itemStock2 = new ItemStock(City.Malmö3, items);
+            ItemStock itemStock3 = new ItemStock(City.London, items);
+            ItemStock itemStock4 = new ItemStock(City.Chicago, items);
+            ItemStock itemStock5 = new ItemStock(City.Minneapolis, items);
             colItemStock.InsertOne(itemStock);
-        }
-
-        internal IEnumerable AllInOneSearch(object classType, string attribute, string query, string city)
-        {
-            if (classType is Customer)
-            {
-                switch (attribute)
-                {
-                    case "SSN":
-                        return GetCustomerBySSN(query);
-                    case "City":
-                        return GetCustomerByCity(query);
-                    case "Occupation":
-                        return GetCustomerByOccupation(query);
-                }
-            }
-            else if (classType is Employee)
-            {
-                switch (attribute)
-                {
-                    case "Name":
-                        return GetEmployeesByName(query);
-                    case "SSN":
-                        return GetEmployeesBySSN(query);
-                    case "Position":
-                        return GetEmployeesByPosition(query);
-                    case "City":
-                        return GetEmployeesByCity(query);
-                }
-            }
-            else if (classType is Item)
-            {
-                List<Item> items = new List<Item>();
-                items.Add(GetItemInItemStockByCityAndName(city, query));
-                return items;
-            }
-            return null;
+            colItemStock.InsertOne(itemStock1);
+            colItemStock.InsertOne(itemStock2);
+            colItemStock.InsertOne(itemStock3);
+            colItemStock.InsertOne(itemStock4);
+            colItemStock.InsertOne(itemStock5);
         }
     }
 }

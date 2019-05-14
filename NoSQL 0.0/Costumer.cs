@@ -34,18 +34,7 @@ namespace NoSQL_0._0
                     throw new Exception("SSN is not correct! Must be numeric in the form: xxxxxx-xxxx");
             }
         }
-        private string city;
-        public string City
-        {
-            get { return city; }
-            set
-            {
-                if (value.Length > 0)
-                    city = value;
-                else
-                    throw new Exception("City must be selected");
-            }
-        }
+        public Country Country { get; set; }
         private string occupation;
         public string Occupation
         {
@@ -72,10 +61,10 @@ namespace NoSQL_0._0
             } 
         }
 
-        public Customer(string sSN, string city, string occupation, int bonusCounter, string membershipDate)
+        public Customer(string sSN, Country country, string occupation, int bonusCounter, string membershipDate)
         {
             SSN = sSN;
-            City = city;
+            Country = country;
             Occupation = occupation;
             BonusCounter = bonusCounter;
             MembershipDate = membershipDate;

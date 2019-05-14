@@ -15,7 +15,7 @@
             <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
             <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
         </Grid>
-        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
+        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Visible" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
             <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="272" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
@@ -25,19 +25,11 @@
             </DataGrid>
             <Button x:Name="btnLogout" Content="Logout" Margin="684,0,0,16" Click="btnLogout_Click" HorizontalAlignment="Left" Width="80" Height="22" VerticalAlignment="Bottom"/>
             <Grid Margin="0,0,612,315"/>
-            <ComboBox x:Name="comboShowAll" Margin="640,0,0,95" SelectionChanged="comboShowAll_SelectionChanged" HorizontalAlignment="Left" Width="124" VerticalAlignment="Bottom">
-                <ComboBoxItem Content="Customers"/>
-                <ComboBoxItem Content="Employees"/>
-                <ComboBoxItem Content="Items"/>
-                <ComboBoxItem Content="Orders"/>
-                <ComboBoxItem Content="Comments"/>
-            </ComboBox>
-            <Label Content="Show all:" HorizontalAlignment="Left" Margin="578,0,0,91" Height="26" VerticalAlignment="Bottom"/>
             <Label Content="Search for:" HorizontalAlignment="Left" Margin="10,277,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="combo_search_collection" HorizontalAlignment="Left" Margin="128,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="Customer"/>
-                <ComboBoxItem Content="Employee"/>
-                <ComboBoxItem Content="Item"/>
+                <ComboBoxItem Content="Customers"/>
+                <ComboBoxItem Content="Employees"/>
+                <ComboBoxItem Content="Itemstocks"/>
             </ComboBox>
             <Label Content="By attribute:" HorizontalAlignment="Left" Margin="10,304,0,0" VerticalAlignment="Top"/>
             <ComboBox x:Name="combo_search_attribute" HorizontalAlignment="Left" Margin="128,308,0,0" VerticalAlignment="Top" Width="120"/>
@@ -47,7 +39,7 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
             <TabControl x:Name="tabControlMain" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">
@@ -57,19 +49,12 @@
                     <Grid Background="#FFE5E5E5">
                         <Grid>
                             <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                            <Label Content="City:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Date:" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Date:" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <ComboBox x:Name="combo_addCustomer_location" Margin="88,41,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-                                <ComboBoxItem Content="Malmö"/>
-                                <ComboBoxItem Content="London"/>
-                                <ComboBoxItem Content="Minneapolis"/>
-                                <ComboBoxItem Content="Chicago"/>
-                            </ComboBox>
-                            <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="65,126,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
-                            <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,97,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="56,98,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
+                            <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,69,0,0" VerticalAlignment="Top"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -106,26 +91,16 @@
                             <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                             <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
                             <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                            <Label Content="City:" Margin="10,88,693,188"/>
-                            <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top"/>
-                            <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,172,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Start Date:" HorizontalAlignment="Left" Margin="11,91,0,0" VerticalAlignment="Top"/>
+                            <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
+                            <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top"/>
                             <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                             <TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120">
-                                <ComboBoxItem Content="Employee" IsSelected="True"/>
-                                <ComboBoxItem Content="Manager"/>
-                            </ComboBox>
-                            <ComboBox x:Name="combo_addEmployee_location" Margin="121,92,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-                                <ComboBoxItem Content="Malmö"/>
-                                <ComboBoxItem Content="London"/>
-                                <ComboBoxItem Content="Minneapolis"/>
-                                <ComboBoxItem Content="Chicago"/>
-                            </ComboBox>
-                            <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="121,117,0,0" VerticalAlignment="Top"/>
-                            <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="121,146,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="121,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="85,207,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
+                            <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120"/>
+                            <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="122,93,0,0" VerticalAlignment="Top"/>
+                            <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="122,122,0,0" VerticalAlignment="Top"/>
+                            <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="122,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                            <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="79,179,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
 
                         </Grid>
                     </Grid>
@@ -145,29 +120,19 @@
                         </GroupBox>
                         <GroupBox Header="Update" HorizontalAlignment="Left" Height="280" VerticalAlignment="Top" Width="280" Margin="249,10,0,0">
                             <Grid>
-                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,12,0,0"/>
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="13,38,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Position:" HorizontalAlignment="Left" Margin="13,64,0,0" VerticalAlignment="Top"/>
-                                <Label Content="City:" Margin="13,90,163,99"/>
-                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="13,117,0,0" VerticalAlignment="Top"/>
-                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="13,146,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="13,174,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0"/>
+                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Position:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top"/>
+                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="txt_updateEmployee_name" HorizontalAlignment="Left" Height="23" Margin="124,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                                 <TextBox x:Name="txt_updateEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="124,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <ComboBox x:Name="combo_updateEmployee_postition" HorizontalAlignment="Left" Margin="124,68,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="Employee" IsSelected="True"/>
-                                    <ComboBoxItem Content="Manager"/>
-                                </ComboBox>
-                                <ComboBox x:Name="combo_updateEmployee_city" Margin="124,94,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-                                    <ComboBoxItem Content="Malmö"/>
-                                    <ComboBoxItem Content="London"/>
-                                    <ComboBoxItem Content="Minneapolis"/>
-                                    <ComboBoxItem Content="Chicago"/>
-                                </ComboBox>
-                                <DatePicker x:Name="datepicker_updateEmployee_startDate" HorizontalAlignment="Left" Margin="124,119,0,0" VerticalAlignment="Top"/>
-                                <DatePicker x:Name="datepicker_updateEmployee_endDate" HorizontalAlignment="Left" Margin="124,148,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_updateEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="124,177,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_updateEmployee_update" Content="Update info" HorizontalAlignment="Left" Margin="89,205,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_update_Click"/>
+                                <ComboBox x:Name="combo_updateEmployee_postition" HorizontalAlignment="Left" Margin="124,68,0,0" VerticalAlignment="Top" Width="120"/>
+                                <DatePicker x:Name="datepicker_updateEmployee_startDate" HorizontalAlignment="Left" Margin="124,95,0,0" VerticalAlignment="Top"/>
+                                <DatePicker x:Name="datepicker_updateEmployee_endDate" HorizontalAlignment="Left" Margin="124,124,0,0" VerticalAlignment="Top"/>
+                                <TextBox x:Name="txt_updateEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="124,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_updateEmployee_update" Content="Update info" HorizontalAlignment="Left" Margin="82,181,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_update_Click"/>
 
                             </Grid>
                         </GroupBox>
@@ -182,21 +147,14 @@
                         <GroupBox Header="Update Customer" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="248" Margin="239,10,0,0">
                             <Grid>
                                 <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <Label Content="City:" HorizontalAlignment="Left" Margin="11,34,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Date:" HorizontalAlignment="Left" Margin="11,119,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>
                                 <TextBox x:Name="txt_updateCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <ComboBox x:Name="combo_updateCustomer_location" Margin="100,38,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-                                    <ComboBoxItem Content="Malmö"/>
-                                    <ComboBoxItem Content="London"/>
-                                    <ComboBoxItem Content="Minneapolis"/>
-                                    <ComboBoxItem Content="Chicago"/>
-                                </ComboBox>
-                                <TextBox x:Name="txt_updateCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="100,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_updateCustomer_add" Content="Update Customer" HorizontalAlignment="Left" Margin="63,150,0,0" VerticalAlignment="Top" Click="btn_updateCustomer_add_Click"/>
-                                <DatePicker x:Name="datepicker_updateCustomer" HorizontalAlignment="Left" Margin="100,121,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Bonuspoints:" HorizontalAlignment="Left" Margin="11,90,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_updateCustomer_bonusPoints" HorizontalAlignment="Left" Margin="100,94,0,0" VerticalAlignment="Top" Width="120">
+                                <TextBox x:Name="txt_updateCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="100,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                                <Button x:Name="btn_updateCustomer_add" Content="Update Customer" HorizontalAlignment="Left" Margin="54,122,0,0" VerticalAlignment="Top" Click="btn_updateCustomer_add_Click"/>
+                                <DatePicker x:Name="datepicker_updateCustomer" HorizontalAlignment="Left" Margin="100,93,0,0" VerticalAlignment="Top"/>
+                                <Label Content="Bonuspoints:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                                <ComboBox x:Name="combo_updateCustomer_bonusPoints" HorizontalAlignment="Left" Margin="100,66,0,0" VerticalAlignment="Top" Width="120">
                                     <ComboBoxItem Content="0"/>
                                     <ComboBoxItem Content="1"/>
                                     <ComboBoxItem Content="2"/>

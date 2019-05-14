@@ -14,7 +14,7 @@ namespace NoSQL_0._0
         public ObjectId EmployeeId { get; set; }
         public List<Item> Items { get; set; }
         public DateTime Date { get; set; }
-        public string City { get; set; }
+        public City City { get; set; }
         public double TotalCost { get; set; }
 
         public Order()
@@ -22,11 +22,12 @@ namespace NoSQL_0._0
             Items = new List<Item>();
         }
 
-        public Order(ObjectId customerId, ObjectId employeeId, List<Item> items, string date, string City, int totalCost)
+        public Order(ObjectId customerId, ObjectId employeeId, List<Item> items, string date, City city, int totalCost)
         {
             CustomerId = customerId;
             EmployeeId = employeeId;
             Items = items;
+            City = city;
             TotalCost = totalCost;
             Items = new List<Item>();
         }

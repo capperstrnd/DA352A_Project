@@ -34,9 +34,6 @@ namespace NoSQL_0._0
 
             // Connect to database.
             db = new Database();
-
-            // Fill datagrid with all customers
-            dataGrid.ItemsSource = db.GetAllCostumers();
         }
 
         /// <summary>
@@ -75,8 +72,8 @@ namespace NoSQL_0._0
                 return;
             }
 
-            // If the user is only an employee, and not a manager, then restrict what that employee can do by disabling some tabs
-            if (emp.Position.Equals("Employee"))
+            // If the user is only an employee then restrict what that employee can do by disabling some tabs
+            if (emp.Position.Equals(Position.Employee))
             {
                 foreach (var tabItem in tabControlMain.Items)
                 {
@@ -87,12 +84,24 @@ namespace NoSQL_0._0
                 tabAddOrder.IsEnabled = true;
             }
 
+            // If the user is a location manager then restrict from producing reports.
+            if (emp.Position.Equals(Position.Location_Manager))
+            {
+                tabAddReports.IsEnabled = false;
+            }
+
             // Store current user as field
             currentUser = emp;
             
             // Store current order as field
             currentOrder = new Order();
             currentOrder.EmployeeId = currentUser.Id;
+            
+            combo_addEmployee_postition.ItemsSource = Enum.GetValues(typeof(Position));
+            combo_updateEmployee_postition.ItemsSource = Enum.GetValues(typeof(Position));
+
+            // Fill datagrid with all customers from the same country
+            dataGrid.ItemsSource = db.GetItemStockByCity(currentUser.City).Items;
         }
 
         /// <summary>
@@ -164,8 +173,7 @@ namespace NoSQL_0._0
                         Employee emp = (Employee)row.Item;
                         txt_updateEmployee_name.Text = emp.Name;
                         txt_updateEmployee_SSN.Text = emp.SSN;
-                        combo_updateEmployee_postition.Text = emp.Position;
-                        combo_updateEmployee_city.Text = emp.City;
+                        combo_updateEmployee_postition.SelectedItem = emp.Position;
                         datepicker_updateEmployee_startDate.Text = emp.StartDate;
                         datepicker_updateEmployee_endDate.Text = emp.EndDate;
                         txt_updateEmployee_capacity.Text = emp.WorkingCapacity.ToString();
@@ -179,7 +187,6 @@ namespace NoSQL_0._0
                     {
                         Customer cus = (Customer)row.Item;
                         txt_updateCustomer_ssn.Text = cus.SSN;
-                        combo_updateCustomer_location.Text = cus.City;
                         txt_updateCustomer_occupation.Text = cus.Occupation;
                         combo_updateCustomer_bonusPoints.Text = cus.BonusCounter.ToString();
                         datepicker_updateCustomer.Text = cus.MembershipDate;
@@ -232,7 +239,7 @@ namespace NoSQL_0._0
             {
                 c = new Customer(
                 txt_addCustomer_ssn.Text,
-                combo_addCustomer_location.Text,
+                currentUser.Country,
                 txt_addCustomer_occupation.Text,
                 0,
                 datepicker_addCustomer.ToString().Split(' ')[0]);
@@ -249,7 +256,6 @@ namespace NoSQL_0._0
             // Reset input fields
             txt_addCustomer_ssn.Text = "";
             txt_addCustomer_occupation.Text = "";
-            combo_addCustomer_location.SelectedIndex = -1;
             datepicker_addCustomer.SelectedDate = null;
 
             // Display new customer in datagrid
@@ -275,8 +281,9 @@ namespace NoSQL_0._0
                 txt_addEmployee_name.Text,
                 "admin",
                 txt_addEmployee_SSN.Text,
-                combo_addEmployee_postition.Text,
-                combo_addEmployee_location.Text,
+                (Position)combo_addEmployee_postition.SelectedItem,
+                currentUser.Country,
+                currentUser.City,
                 datepicker_addEmployee_startDate.ToString().Split(' ')[0],
                 datepicker_addEmployee_endDate.ToString().Split(' ')[0],
                 capacity);
@@ -295,7 +302,6 @@ namespace NoSQL_0._0
             txt_addEmployee_SSN.Text = "";
             txt_addEmployee_capacity.Text = "";
             combo_addEmployee_postition.SelectedIndex = -1;
-            combo_addEmployee_location.SelectedIndex = -1;
             datepicker_addEmployee_startDate.SelectedDate = null;
             datepicker_addEmployee_endDate.SelectedDate = null;
 
@@ -316,34 +322,6 @@ namespace NoSQL_0._0
             var currentCell = e.ClipboardRowContent[dataGrid.CurrentCell.Column.DisplayIndex];
             e.ClipboardRowContent.Clear();
             e.ClipboardRowContent.Add(currentCell);
-        }
-
-        /// <summary>
-        /// Method is called when the 'Show all' combobox below the datagrid is changed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void comboShowAll_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch (comboShowAll.SelectedIndex)
-            {
-                case 0:
-                    dataGrid.ItemsSource = db.GetAllCostumers();
-                    break;
-                case 1:
-                    dataGrid.ItemsSource = db.GetAllEmployees();
-                    break;
-                case 2:
-                    ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
-                    dataGrid.ItemsSource = itemStock.Items;
-                    break;
-                case 3:
-                    dataGrid.ItemsSource = db.GetAllOrders();
-                    break;
-                case 4:
-                    dataGrid.ItemsSource = db.GetAllComments();
-                    break;
-            }
         }
 
         /// <summary>
@@ -520,8 +498,9 @@ namespace NoSQL_0._0
                     txt_updateEmployee_name.Text,
                     "admin",
                     txt_updateEmployee_SSN.Text,
-                    combo_updateEmployee_postition.Text,
-                    combo_updateEmployee_city.Text,
+                    (Position)combo_updateEmployee_postition.SelectedItem,
+                    currentUser.Country,
+                    currentUser.City,
                     datepicker_updateEmployee_startDate.Text,
                     datepicker_updateEmployee_endDate.Text,
                     capacity);
@@ -544,7 +523,6 @@ namespace NoSQL_0._0
             txt_updateEmployee_SSN.Text = "";
             txt_updateEmployee_capacity.Text = "";
             combo_updateEmployee_postition.SelectedIndex = -1;
-            combo_updateEmployee_city.SelectedIndex = -1;
             datepicker_updateEmployee_startDate.SelectedDate = null;
             datepicker_updateEmployee_endDate.SelectedDate = null;
 
@@ -570,7 +548,7 @@ namespace NoSQL_0._0
                 Int32.TryParse(combo_updateCustomer_bonusPoints.Text, out bonusPoints);
                 c = new Customer(
                     txt_updateCustomer_ssn.Text,
-                    combo_updateCustomer_location.Text,
+                    currentUser.Country,
                     txt_updateCustomer_occupation.Text,
                     bonusPoints,
                     datepicker_updateCustomer.ToString().Split(' ')[0]);
@@ -590,7 +568,6 @@ namespace NoSQL_0._0
             // Reset input fields
             txt_updateCustomer_ssn.Text = "";
             txt_updateCustomer_occupation.Text = "";
-            combo_updateCustomer_location.SelectedIndex = -1;
             datepicker_updateCustomer.SelectedDate = null;
 
             // Display new customer in datagrid
@@ -671,27 +648,41 @@ namespace NoSQL_0._0
             combo_search_attribute.Items.Clear();
             switch (combo_search_collection.SelectedIndex)
             {
-                // Customer
+                // Customers
                 case 0:
                     searchForCollection = new Customer();
                     combo_search_attribute.Items.Add("SSN");
-                    combo_search_attribute.Items.Add("City");
                     combo_search_attribute.Items.Add("Occupation");
+                    if (currentUser.Position.Equals(Position.Corporate_Sales_Manager))
+                    {
+                        combo_search_attribute.Items.Add("All");
+                        txt_search_query.IsEnabled = false;
+                    }
+                    combo_search_attribute.SelectedIndex = 0;
                     break;
 
-                // Employee
+                // Employees
                 case 1:
-                    searchForCollection = new Employee();
-                    combo_search_attribute.Items.Add("Name");
-                    combo_search_attribute.Items.Add("SSN");
-                    combo_search_attribute.Items.Add("Position");
-                    combo_search_attribute.Items.Add("City");
+                    if (currentUser.Position != Position.Employee)
+                    {
+                        searchForCollection = new Employee();
+                        combo_search_attribute.Items.Add("Name");
+                        combo_search_attribute.Items.Add("SSN");
+                        combo_search_attribute.Items.Add("All in city");
+                        if (currentUser.Position.Equals(Position.Corporate_Sales_Manager))
+                        {
+                            combo_search_attribute.Items.Add("All");
+                            txt_search_query.IsEnabled = false;
+                        }
+                        combo_search_attribute.SelectedIndex = 0;
+                    }
                     break;
                 
-                // Item
+                // Itemstocks
                 case 2:
                     searchForCollection = new Item();
                     combo_search_attribute.Items.Add("Name");
+                    combo_search_attribute.Items.Add("All in city");
                     combo_search_attribute.SelectedIndex = 0;
                     break;
             }
@@ -704,7 +695,7 @@ namespace NoSQL_0._0
         /// <param name="e"></param>
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City);
+            dataGrid.ItemsSource = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City, currentUser.Country);
         }
     }
 }

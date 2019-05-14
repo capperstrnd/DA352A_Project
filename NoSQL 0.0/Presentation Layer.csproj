@@ -76,9 +76,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="City.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="Country.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="ItemStock.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="StockLog.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

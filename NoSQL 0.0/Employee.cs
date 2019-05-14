@@ -43,18 +43,9 @@ namespace NoSQL_0._0
                     throw new Exception("SSN is not correct! Must be numeric in the form: xxxxxx-xxxx");
             }
         }
-        private string postition;
-        public string Position
-        {
-            get { return postition; }
-            set { if (value == "Employee" || value == "Manager") postition = value; else throw new Exception("Position must be filled."); }
-        }
-        private string city;
-        public string City
-        {
-            get { return city; }
-            set { if (value.Length > 0) city = value; else throw new Exception("City must be filled."); }
-        }
+        public Country Country { get; set; }
+        public City City { get; set; }
+        public Position Position { get; set; }
         private string startDate;
         public string StartDate
         {
@@ -75,12 +66,13 @@ namespace NoSQL_0._0
         }
         public List<Comment> Comments { get; set; }
 
-        public Employee(string name, string password, string sSN, string position, string city, string startDate, string endDate, int workingCapacity)
+        public Employee(string name, string password, string sSN, Position position, Country country, City city, string startDate, string endDate, int workingCapacity)
         {
             Name = name;
             Password = password;
             SSN = sSN;
             Position = position;
+            Country = country;
             City = city;
             StartDate = startDate;
             EndDate = endDate;
