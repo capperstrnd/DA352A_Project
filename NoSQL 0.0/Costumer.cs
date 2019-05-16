@@ -34,7 +34,7 @@ namespace NoSQL_0._0
                     throw new Exception("SSN is not correct! Must be numeric in the form: xxxxxx-xxxx");
             }
         }
-        public Country Country { get; set; }
+        public string Country { get; set; }
         private string occupation;
         public string Occupation
         {
@@ -61,7 +61,7 @@ namespace NoSQL_0._0
             } 
         }
 
-        public Customer(string sSN, Country country, string occupation, int bonusCounter, string membershipDate)
+        public Customer(string sSN, string country, string occupation, int bonusCounter, string membershipDate)
         {
             SSN = sSN;
             Country = country;

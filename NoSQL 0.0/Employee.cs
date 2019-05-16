@@ -43,9 +43,9 @@ namespace NoSQL_0._0
                     throw new Exception("SSN is not correct! Must be numeric in the form: xxxxxx-xxxx");
             }
         }
-        public Country Country { get; set; }
-        public City City { get; set; }
-        public Position Position { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Position { get; set; }
         private string startDate;
         public string StartDate
         {
@@ -66,7 +66,7 @@ namespace NoSQL_0._0
         }
         public List<Comment> Comments { get; set; }
 
-        public Employee(string name, string password, string sSN, Position position, Country country, City city, string startDate, string endDate, int workingCapacity)
+        public Employee(string name, string password, string sSN, string position, string country, string city, string startDate, string endDate, int workingCapacity)
         {
             Name = name;
             Password = password;

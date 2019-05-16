@@ -40,7 +40,7 @@
         </Grid>
 
         <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
-            <TabControl x:Name="tabControlMain" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
+            <TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">
                     </Grid>

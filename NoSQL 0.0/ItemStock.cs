@@ -10,10 +10,10 @@ namespace NoSQL_0._0
     class ItemStock
     {
         public ObjectId Id { get; set; }
-        public City City { get; set; }
+        public string City { get; set; }
         public List<Item> Items { get; set; }
 
-        public ItemStock(City city, List<Item> items)
+        public ItemStock(string city, List<Item> items)
         {
             City = city;
             Items = items;

@@ -34,6 +34,8 @@ namespace NoSQL_0._0
 
             // Connect to database.
             db = new Database();
+
+            Console.WriteLine(City.Malmö1.ToString());
         }
 
         /// <summary>
@@ -73,7 +75,7 @@ namespace NoSQL_0._0
             }
 
             // If the user is only an employee then restrict what that employee can do by disabling some tabs
-            if (emp.Position.Equals(Position.Employee))
+            if (emp.Position == Position.Employee.ToString())
             {
                 foreach (var tabItem in tabControlMain.Items)
                 {
@@ -85,7 +87,7 @@ namespace NoSQL_0._0
             }
 
             // If the user is a location manager then restrict from producing reports.
-            if (emp.Position.Equals(Position.Location_Manager))
+            if (emp.Position == Position.Location_Manager.ToString())
             {
                 tabAddReports.IsEnabled = false;
             }
@@ -281,7 +283,7 @@ namespace NoSQL_0._0
                 txt_addEmployee_name.Text,
                 "admin",
                 txt_addEmployee_SSN.Text,
-                (Position)combo_addEmployee_postition.SelectedItem,
+                combo_addEmployee_postition.SelectedItem.ToString(),
                 currentUser.Country,
                 currentUser.City,
                 datepicker_addEmployee_startDate.ToString().Split(' ')[0],
@@ -498,7 +500,7 @@ namespace NoSQL_0._0
                     txt_updateEmployee_name.Text,
                     "admin",
                     txt_updateEmployee_SSN.Text,
-                    (Position)combo_updateEmployee_postition.SelectedItem,
+                    combo_updateEmployee_postition.SelectedItem.ToString(),
                     currentUser.Country,
                     currentUser.City,
                     datepicker_updateEmployee_startDate.Text,
@@ -561,6 +563,7 @@ namespace NoSQL_0._0
 
             // Delete current customer
             db.DeleteCustomer(customerToUpdate);
+            customerToUpdate = null;
 
             // Add customer to database
             db.AddCustomer(c);
@@ -653,7 +656,7 @@ namespace NoSQL_0._0
                     searchForCollection = new Customer();
                     combo_search_attribute.Items.Add("SSN");
                     combo_search_attribute.Items.Add("Occupation");
-                    if (currentUser.Position.Equals(Position.Corporate_Sales_Manager))
+                    if (currentUser.Position == Position.Corporate_Sales_Manager.ToString())
                     {
                         combo_search_attribute.Items.Add("All");
                         txt_search_query.IsEnabled = false;
@@ -663,13 +666,13 @@ namespace NoSQL_0._0
 
                 // Employees
                 case 1:
-                    if (currentUser.Position != Position.Employee)
+                    if (currentUser.Position != Position.Employee.ToString())
                     {
                         searchForCollection = new Employee();
                         combo_search_attribute.Items.Add("Name");
                         combo_search_attribute.Items.Add("SSN");
                         combo_search_attribute.Items.Add("All in city");
-                        if (currentUser.Position.Equals(Position.Corporate_Sales_Manager))
+                        if (currentUser.Position == Position.Corporate_Sales_Manager.ToString())
                         {
                             combo_search_attribute.Items.Add("All");
                             txt_search_query.IsEnabled = false;
@@ -696,6 +699,13 @@ namespace NoSQL_0._0
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
             dataGrid.ItemsSource = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City, currentUser.Country);
+        }
+
+        private void OnTabSelectionChanged(Object sender, SelectionChangedEventArgs args)
+        {
+            currentOrder = null;
+            employeeToUpdate = null;
+            customerToUpdate = null;
         }
     }
 }
