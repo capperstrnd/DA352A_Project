@@ -103,7 +103,7 @@ namespace NoSQL_0._0
             combo_updateEmployee_postition.ItemsSource = Enum.GetValues(typeof(Position));
 
             // Fill datagrid with all customers from the same country
-            dataGrid.ItemsSource = db.GetItemStockByCity(currentUser.City).Items;
+            dataGrid.ItemsSource = CreateLocalizedItemList(db.GetItemStockByCity(currentUser.City).Items);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace NoSQL_0._0
                         db.UpdateItemQuantityInItemStock(currentUser.City, item.Name, quantity, false);
                         ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
                         db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
-                        dataGrid.ItemsSource = itemStock.Items;
+                        dataGrid.ItemsSource = CreateLocalizedItemList(itemStock.Items);
                     }
                     break;
 
@@ -219,7 +219,7 @@ namespace NoSQL_0._0
                             if (row.Item is Order && dataGrid.CurrentCell.Column.DisplayIndex == 3)
                             {
                                 Order order = (Order)row.Item;
-                                dataGrid.ItemsSource = order.Items;
+                                dataGrid.ItemsSource = CreateLocalizedItemList(order.Items);
                             }
                             break;
                     }
@@ -706,6 +706,32 @@ namespace NoSQL_0._0
             currentOrder = null;
             employeeToUpdate = null;
             customerToUpdate = null;
+        }
+
+        private List<Item> CreateLocalizedItemList(List<Item> oldList)
+        {
+            var tempList = new List<Item>(oldList);
+            var ukMult = 10d;
+            var usMult = 100d;
+
+            foreach(var item in tempList)
+            {
+                switch (currentUser.Country)
+                {
+                    case "Sweden":
+                        break;
+                    case "England":
+                        item.Price *= ukMult;
+                        break;
+                    case "United States":
+                        item.Price *= usMult;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return tempList;
         }
     }
 }
