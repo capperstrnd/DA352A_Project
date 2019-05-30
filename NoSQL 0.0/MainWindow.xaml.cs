@@ -203,7 +203,7 @@ namespace NoSQL_0._0
                         Int32.TryParse(Microsoft.VisualBasic.Interaction.InputBox("How many " + item.Name + " to add to stock?", "Add " + item.Name + " to stock"), out quantity);
                         db.UpdateItemQuantityInItemStock(currentUser.City, item.Name, quantity, false);
                         ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
-                        db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
+                        db.AddStockLog(new StockLog(DateTime.Now, currentUser.City, itemStock.Items));
                         dataGrid.ItemsSource = CreateLocalizedItemList(itemStock.Items);
                     }
                     break;
@@ -221,10 +221,20 @@ namespace NoSQL_0._0
                             }
                             break;
 
+                        // Currently Sales per customer.
                         case 2:
                             if (row.Item is Customer)
                             {
                                 ProduceSalesPerCustomer((Customer)row.Item);
+                            }
+                            break;
+
+                        // Currently Stocklog per date and item
+                        case 3:
+                            if (row.Item is Item)
+                            {
+                                Item item = (Item)row.Item;
+                                txt_produceReports_stocklogPerDate.Text = item.Name;
                             }
                             break;
                     }
@@ -424,7 +434,7 @@ namespace NoSQL_0._0
 
             // Add a StockLog
             ItemStock itemStock = db.GetItemStockByCity(currentUser.City);
-            db.AddStockLog(new StockLog(DateTime.Now.ToString(), currentUser.City, itemStock.Items));
+            db.AddStockLog(new StockLog(DateTime.Now, currentUser.City, itemStock.Items));
 
             // Reset currentOrder
             currentOrder = new Order();
@@ -758,5 +768,33 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = db.GetOrderByCustomerId(customer.Id);
         }
 
+        private void btn_produceReports_stocklogPerDate_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (datepicker_produceReports_stocklogPerDate_startdate.SelectedDate == null
+                || datepicker_produceReports_stocklogPerDate_enddate.SelectedDate == null)
+            {
+                MessageBox.Show("Please fill in both datepickers");
+                return;
+            }
+
+            DateTime start = (DateTime)datepicker_produceReports_stocklogPerDate_startdate.SelectedDate;
+            DateTime end = (DateTime)datepicker_produceReports_stocklogPerDate_enddate.SelectedDate;
+
+            List<StockLog> stockLogs = db.GetStockLogsBetweenDates(start, end);
+            List<StockItem> itemStocks = new List<StockItem>();
+            foreach (StockLog sl in stockLogs)
+            {
+                List<Item> itemsInStocklog = sl.CurrentStock;
+                foreach (Item item in itemsInStocklog)
+                {
+                    if (item.Name == txt_produceReports_stocklogPerDate.Text)
+                    {
+                        itemStocks.Add(new StockItem(item.Name, item.Quantity, sl.City, sl.Date));
+                    }
+                }
+            }
+            dataGrid.ItemsSource = itemStocks;
+        }
     }
 }

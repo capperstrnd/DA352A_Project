@@ -82,6 +82,7 @@
     <Compile Include="Database.cs" />
     <Compile Include="ItemStock.cs" />
     <Compile Include="Position.cs" />
+    <Compile Include="StockItem.cs" />
     <Compile Include="StockLog.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

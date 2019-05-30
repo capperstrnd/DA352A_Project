@@ -210,6 +210,20 @@
 
                                 </Grid>
                             </TabItem>
+                            <TabItem Header="Stocklog per item and date">
+                                <Grid Background="#FFE5E5E5">
+                                    <DatePicker x:Name="datepicker_produceReports_stocklogPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+                                    <DatePicker x:Name="datepicker_produceReports_stocklogPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+                                    <Button x:Name="btn_produceReports_stocklogPerDate" Content="Search" HorizontalAlignment="Left" Margin="56,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_stocklogPerDate_Click"/>
+                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+                                    <GroupBox Header="Search item" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="183">
+                                        <TextBlock TextWrapping="Wrap"><Run Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click "/><Run Text="the item to search for."/><Run Text=" The datagrid will show the most recent log of the selected item."/><LineBreak/><Run Text=""/><LineBreak/><Run Text="Selected item:"/></TextBlock>
+                                    </GroupBox>
+                                    <TextBlock x:Name="txt_produceReports_stocklogPerDate" HorizontalAlignment="Left" Margin="102,211,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+
+                                </Grid>
+                            </TabItem>
                         </TabControl>
                     </Grid>
                 </TabItem>

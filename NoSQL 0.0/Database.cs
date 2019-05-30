@@ -228,9 +228,14 @@ namespace NoSQL_0._0
             colStockLog.InsertOne(stockLog);
         }
 
+        public List<StockLog> GetStockLogsBetweenDates(DateTime start, DateTime end)
+        {
+            return colStockLog.Find(x => x.Date >= start & x.Date <= end).ToList();
+        }
+
         /*
          * ORDER QUERIES!
-         */ 
+         */
 
         public void AddOrder(Order order)
         {
