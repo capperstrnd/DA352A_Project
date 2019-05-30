@@ -220,6 +220,13 @@ namespace NoSQL_0._0
                                 dataGrid.ItemsSource = CreateLocalizedItemList(order.Items);
                             }
                             break;
+
+                        case 2:
+                            if (row.Item is Customer)
+                            {
+                                ProduceSalesPerCustomer((Customer)row.Item);
+                            }
+                            break;
                     }
                     break;
             }
@@ -745,5 +752,11 @@ namespace NoSQL_0._0
 
             return tempList;
         }
+
+        private void ProduceSalesPerCustomer(Customer customer)
+        {
+            dataGrid.ItemsSource = db.GetOrderByCustomerId(customer.Id);
+        }
+
     }
 }

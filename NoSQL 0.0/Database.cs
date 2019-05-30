@@ -252,6 +252,11 @@ namespace NoSQL_0._0
             return colOrder.Find(x => x.Date >= startDate & x.Date <= endDate).ToList();
         }
 
+        public List<Order> GetOrderByCustomerId(ObjectId customerId)
+        {
+            return colOrder.Find(x => x.CustomerId == customerId).ToList();
+        }
+
         /*
          * COMMENT QUERIES!
          */
