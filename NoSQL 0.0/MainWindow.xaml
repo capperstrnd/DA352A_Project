@@ -15,7 +15,7 @@
             <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
             <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
         </Grid>
-        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Visible" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
+        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
             <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="272" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
@@ -39,7 +39,7 @@
 
         </Grid>
 
-        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+        <Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
             <TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
                 <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
                     <Grid Background="#FFE5E5E5">

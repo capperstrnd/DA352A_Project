@@ -34,8 +34,6 @@ namespace NoSQL_0._0
 
             // Connect to database.
             db = new Database();
-
-            Console.WriteLine(City.Malmö1.ToString());
         }
 
         /// <summary>
@@ -362,7 +360,6 @@ namespace NoSQL_0._0
 
         /// <summary>
         /// Method is called when the 'Add Order' button is clicked in the 'Add Order' tab.
-        /// TODO: ADD A STOCKLOG!
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -373,6 +370,12 @@ namespace NoSQL_0._0
             if (currentOrder.Items.Count == 0)
             {
                 MessageBox.Show("No items in the order.");
+                return;
+            }
+            
+            if (currentOrder.CustomerId.ToString() == "000000000000000000000000")
+            {
+                MessageBox.Show("No customer in the order.");
                 return;
             }
 
@@ -698,12 +701,21 @@ namespace NoSQL_0._0
         /// <param name="e"></param>
         private void btn_search_Click(object sender, RoutedEventArgs e)
         {
-            dataGrid.ItemsSource = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City, currentUser.Country);
+            var temp = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City, currentUser.Country);
+            if (temp is IEnumerable<Item>)
+            {
+                temp = CreateLocalizedItemList((List < Item > ) temp);
+            }
+            dataGrid.ItemsSource = temp;
         }
 
         private void OnTabSelectionChanged(Object sender, SelectionChangedEventArgs args)
         {
-            currentOrder = null;
+            if (currentOrder != null)
+            {
+                currentOrder = new Order();
+                currentOrder.EmployeeId = currentUser.Id;
+            }
             employeeToUpdate = null;
             customerToUpdate = null;
         }
