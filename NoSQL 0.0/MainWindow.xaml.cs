@@ -237,6 +237,15 @@ namespace NoSQL_0._0
                                 txt_produceReports_stocklogPerDate.Text = item.Name;
                             }
                             break;
+
+                        case 4:
+                            if (row.Item is Employee)
+                            {
+                                Employee emp = (Employee)row.Item;
+                                txt_produceReports_ordersByEmployee_name.Text = emp.Name;
+                                txt_produceReports_ordersByEmployee_id.Text = emp.Id.ToString();
+                            }
+                            break;
                     }
                     break;
             }
@@ -390,16 +399,17 @@ namespace NoSQL_0._0
                 return;
             }
             
-            if (currentOrder.CustomerId.ToString() == "000000000000000000000000")
-            {
-                MessageBox.Show("No customer in the order.");
-                return;
-            }
+            //if (currentOrder.CustomerId.ToString() == "000000000000000000000000")
+            //{
+            //    MessageBox.Show("No customer in the order.");
+                
+            //    return;
+            //}
 
             // Update stock quantity and update customer bonus points
             foreach (Item addedItem in currentOrder.Items)
             {
-                if (addedItem.BonusItem)
+                if (addedItem.BonusItem && currentOrder.CustomerId.ToString() != "000000000000000000000000")
                 {
                     int currentBonus = db.GetCustomerById(currentOrder.CustomerId)[0].BonusCounter;
                     int bonusItems = addedItem.Quantity;
@@ -795,6 +805,30 @@ namespace NoSQL_0._0
                 }
             }
             dataGrid.ItemsSource = itemStocks;
+        }
+
+        private void btn_produceReports_ordersByEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (datepicker_produceReports_ordersByEmployee_startdate.SelectedDate == null
+                || datepicker_produceReports_ordersByEmployee_enddate.SelectedDate == null)
+            {
+                MessageBox.Show("Please fill in both datepickers");
+                return;
+            }
+
+            DateTime start = (DateTime)datepicker_produceReports_ordersByEmployee_startdate.SelectedDate;
+            DateTime end = (DateTime)datepicker_produceReports_ordersByEmployee_enddate.SelectedDate;
+            List<Order> orders = db.GetOrderBetweenDates(start, end.AddHours(23.99));
+            List<Order> ordersByEmp = new List<Order>();
+            foreach(Order order in orders)
+            {
+                if (order.EmployeeId.ToString() == txt_produceReports_ordersByEmployee_id.Text)
+                {
+                    ordersByEmp.Add(order);
+                }
+            }
+            dataGrid.ItemsSource = ordersByEmp;
         }
     }
 }
