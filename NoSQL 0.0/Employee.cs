@@ -46,17 +46,17 @@ namespace NoSQL_0._0
         public string Country { get; set; }
         public string City { get; set; }
         public string Position { get; set; }
-        private string startDate;
-        public string StartDate
+        private DateTime startDate;
+        public DateTime StartDate
         {
             get { return startDate; }
-            set { if (value.Length > 0) startDate = value; else throw new Exception("Start Date must be filled."); }
+            set { if (value.Year > 0) startDate = value; else throw new Exception("Start Date must be filled."); }
         }
-        private string endDate;
-        public string EndDate
+        private DateTime endDate;
+        public DateTime EndDate
         {
             get { return endDate; }
-            set { if (value.Length > 0) endDate = value; else throw new Exception("End Date must be filled."); }
+            set { if (value.Year > 0) endDate = value; else throw new Exception("End Date must be filled."); }
         }
         private int workingCapacity;
         public int WorkingCapacity
@@ -74,8 +74,8 @@ namespace NoSQL_0._0
             Position = position;
             Country = country;
             City = city;
-            StartDate = startDate;
-            EndDate = endDate;
+            StartDate = DateTime.Parse(startDate);
+            EndDate = DateTime.Parse(endDate);
             WorkingCapacity = workingCapacity;
             Comments = new List<Comment>();
         }

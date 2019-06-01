@@ -87,15 +87,20 @@ namespace NoSQL_0._0
 
         public List<Employee> GetEmployeesByStartDate(string date)
         {
-            return colEmployee.Find(x => x.StartDate == date).ToList();
+            return colEmployee.Find(x => x.StartDate == DateTime.Parse(date)).ToList();
         }
 
         public List<Employee> GetEmployeesByEndDate(string date)
         {
-            return colEmployee.Find(x => x.EndDate == date).ToList();
+            return colEmployee.Find(x => x.EndDate == DateTime.Parse(date)).ToList();
         }
 
-        public List<Employee> GetEmployeesByWorkingCapacity(int capacity)
+		public List<Employee> GetEmployeeBetweenDates(DateTime startDate, DateTime endDate)
+		{
+			return colEmployee.Find(x => x.StartDate >= startDate & x.StartDate <= endDate).ToList();
+		}
+
+		public List<Employee> GetEmployeesByWorkingCapacity(int capacity)
         {
             return colEmployee.Find(x => x.WorkingCapacity == capacity).ToList();
         }
@@ -150,7 +155,12 @@ namespace NoSQL_0._0
             return colCustomer.Find(x => x.Occupation == occupation).ToList();
         }
 
-        public void UpdateCustomerBonusPoints(Customer customer, int newBonusPoints)
+		public List<Customer> GetCustomerBetweenDates(DateTime startDate, DateTime endDate)
+		{
+			return colCustomer.Find(x => x.MembershipDate >= startDate & x.MembershipDate <= endDate).ToList();
+		}
+
+		public void UpdateCustomerBonusPoints(Customer customer, int newBonusPoints)
         {
             // Chose to find customer by "_id"
             var filter = Builders<Customer>.Filter.Eq("_id", customer.Id);

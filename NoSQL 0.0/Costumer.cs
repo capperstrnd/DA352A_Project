@@ -48,13 +48,13 @@ namespace NoSQL_0._0
             }
         }
         public int BonusCounter { get; set; }
-        private string membershipDate;
-        public string MembershipDate
+        private DateTime membershipDate;
+        public DateTime MembershipDate
         {
             get { return membershipDate; }
             set
             {
-                if (value.Length > 0)
+                if (value.Year < 0)
                     membershipDate = value;
                 else
                     throw new Exception("The date must be filled.");
@@ -67,7 +67,7 @@ namespace NoSQL_0._0
             Country = country;
             Occupation = occupation;
             BonusCounter = bonusCounter;
-            MembershipDate = membershipDate;
+			MembershipDate = DateTime.Parse(membershipDate);
         }
 
         public Customer()
