@@ -21,7 +21,7 @@ namespace NoSQL_0._0
         //private IMongoCollection<Item> colItem;
         private IMongoCollection<Comment> colComment;
 
-        public Database()
+        public Database(string[] cmdArgs)
         {
             // Connect to mongodb server running on 'localhost:27017' and get/create database 'BeaverCoffee'
             db = new MongoClient("mongodb://localhost:27017").GetDatabase("BeaverCoffee");
@@ -34,8 +34,11 @@ namespace NoSQL_0._0
             colComment = db.GetCollection<Comment>("Comment");
             colStockLog = db.GetCollection<StockLog>("StockLog");
 
-            // Testing and debug stuff
-            //addStuffToDB();
+            foreach (string s in cmdArgs)
+            {
+                if(s == "buildDB") // build test database
+                    addStuffToDB();
+            }
         }
 
         /*

@@ -25,15 +25,35 @@ namespace NoSQL_0._0
         public MainWindow()
         {
             InitializeComponent();
-
+            
             // Show login view
             gridLogin.Visibility = System.Windows.Visibility.Visible;
 
             // Enable copying of a row in the datagrid.
             dataGrid.SelectionMode = DataGridSelectionMode.Single;
 
+            /*
+             * This way you can launch the app with command line arguments.
+             * Used for adding the testing data currently if the argument 
+             * buildDB is added when launching this app.
+             * 
+             * Essentially a string array that you can loop through and
+             * check for matching strings that should activate certain 
+             * things
+             * 
+             * You can add arguments when running it in Visual Studio by 
+             * going into project Properties > Debug > Command line arguments
+             */
+            string[] cmdArgs = Environment.GetCommandLineArgs();
+
             // Connect to database.
-            db = new Database();
+            db = new Database(cmdArgs);
+
+            foreach (string s in cmdArgs)
+            {
+                if (s == "buildDB") // if app was used to create the test database then terminate afterwards
+                    Environment.Exit(Environment.ExitCode);
+            }
         }
 
         /// <summary>
