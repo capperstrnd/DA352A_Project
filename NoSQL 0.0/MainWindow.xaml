@@ -6,243 +6,273 @@
         xmlns:local="clr-namespace:NoSQL_0._0"
         mc:Ignorable="d"
         Title="BeaverCoffee AB" Height="775" Width="800" ResizeMode="NoResize">
-    <Grid>
-        <Grid Margin="299,244,0,0" x:Name="gridLogin" Visibility="Hidden" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
-            <Label Content="Ahem... User = admin. Pass = admin" HorizontalAlignment="Left" Margin="0,-83,0,0" VerticalAlignment="Top"/>
-            <Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label Content="Password: " HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="74,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="txtUser"/>
-            <PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
-            <Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
-        </Grid>
-        <Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
-            <DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="272" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridRow">
-                        <EventSetter Event="MouseDoubleClick" Handler="gridMain_DoubleClick"/>
-                    </Style>
-                </DataGrid.Resources>
-            </DataGrid>
-            <Button x:Name="btnLogout" Content="Logout" Margin="684,0,0,16" Click="btnLogout_Click" HorizontalAlignment="Left" Width="80" Height="22" VerticalAlignment="Bottom"/>
-            <Grid Margin="0,0,612,315"/>
-            <Label Content="Search for:" HorizontalAlignment="Left" Margin="10,277,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="combo_search_collection" HorizontalAlignment="Left" Margin="128,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="Customers"/>
-                <ComboBoxItem Content="Employees"/>
-                <ComboBoxItem Content="Itemstocks"/>
-            </ComboBox>
-            <Label Content="By attribute:" HorizontalAlignment="Left" Margin="10,304,0,0" VerticalAlignment="Top"/>
-            <ComboBox x:Name="combo_search_attribute" HorizontalAlignment="Left" Margin="128,308,0,0" VerticalAlignment="Top" Width="120"/>
-            <Label Content="With query:" HorizontalAlignment="Left" Margin="10,331,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="txt_search_query" HorizontalAlignment="Left" Height="23" Margin="128,334,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="btn_search" Content="Search" HorizontalAlignment="Left" Margin="173,362,0,0" VerticalAlignment="Top" Width="75" Click="btn_search_Click"/>
+	<Grid>
+		<Grid Margin="299,244,0,0" x:Name="gridLogin" Visibility="Hidden" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
+			<Label Content="Ahem... User = admin. Pass = admin" HorizontalAlignment="Left" Margin="0,-83,0,0" VerticalAlignment="Top"/>
+			<Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
+			<Label Content="Password: " HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top"/>
+			<TextBox HorizontalAlignment="Left" Height="23" Margin="74,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="txtUser"/>
+			<PasswordBox HorizontalAlignment="Left" Height="23" Margin="74,31,0,0" VerticalAlignment="Top" Width="120" x:Name="txtPass"/>
+			<Button Content="Login" HorizontalAlignment="Left" Margin="74,62,0,0" VerticalAlignment="Top" Width="75" Click="btnLogin_Click"/>
+		</Grid>
+		<Grid x:Name="gridDataGrid" Margin="10,348,0,0" Visibility="Hidden" Height="398" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" >
+			<DataGrid x:Name="dataGrid"  IsReadOnly="True" ColumnWidth="*" CopyingRowClipboardContent="Copy_cell_event" Height="272" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
+				<DataGrid.Resources>
+					<Style TargetType="DataGridRow">
+						<EventSetter Event="MouseDoubleClick" Handler="gridMain_DoubleClick"/>
+					</Style>
+				</DataGrid.Resources>
+			</DataGrid>
+			<Button x:Name="btnLogout" Content="Logout" Margin="684,0,0,16" Click="btnLogout_Click" HorizontalAlignment="Left" Width="80" Height="22" VerticalAlignment="Bottom"/>
+			<Grid Margin="0,0,612,315"/>
+			<Label Content="Search for:" HorizontalAlignment="Left" Margin="10,277,0,0" VerticalAlignment="Top"/>
+			<ComboBox x:Name="combo_search_collection" HorizontalAlignment="Left" Margin="128,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+				<ComboBoxItem Content="Customers"/>
+				<ComboBoxItem Content="Employees"/>
+				<ComboBoxItem Content="Itemstocks"/>
+			</ComboBox>
+			<Label Content="By attribute:" HorizontalAlignment="Left" Margin="10,304,0,0" VerticalAlignment="Top"/>
+			<ComboBox x:Name="combo_search_attribute" HorizontalAlignment="Left" Margin="128,308,0,0" VerticalAlignment="Top" Width="120"/>
+			<Label Content="With query:" HorizontalAlignment="Left" Margin="10,331,0,0" VerticalAlignment="Top"/>
+			<TextBox x:Name="txt_search_query" HorizontalAlignment="Left" Height="23" Margin="128,334,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+			<Button x:Name="btn_search" Content="Search" HorizontalAlignment="Left" Margin="173,362,0,0" VerticalAlignment="Top" Width="75" Click="btn_search_Click"/>
 
-        </Grid>
+		</Grid>
 
-        <Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
-            <TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
-                <TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
-                    <Grid Background="#FFE5E5E5">
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddCustomer" Header="Add Customer">
-                    <Grid Background="#FFE5E5E5">
-                        <Grid>
-                            <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Date:" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="56,98,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
-                            <DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,69,0,0" VerticalAlignment="Top"/>
-                        </Grid>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddOrder" Header="Add Order">
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to add him/her to the order" VerticalAlignment="Top" Height="160" Width="204"/>
-                        </GroupBox>
-                        <ScrollViewer Margin="468,10,0,35">
-                            <TextBlock x:Name="txt_addOrder_order" FontFamily="Consolas" Background="White"/>
-                        </ScrollViewer>
-                        <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="239,10,0,0" VerticalAlignment="Top" Width="224">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click an item to add it to the order" VerticalAlignment="Top" Height="160" Width="204"/>
-                        </GroupBox>
-                        <Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
-                        <Button x:Name="btn_addOrder_resetOrder" Content="Reset Order" HorizontalAlignment="Left" Margin="548,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_resetOrder_Click"/>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddComment" Header="Add Comment">
-                    <Grid Background="#FFE5E5E5">
-                        <TextBox x:Name="txt_addComment_comment" HorizontalAlignment="Left" Height="175" Margin="327,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
-                        <TextBox x:Name="txt_addComment_id" HorizontalAlignment="Left" Height="23" Margin="327,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
-                        <Button x:Name="btn_addComment_add" Content="Add Comment" Margin="421,229,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
-                        <Label Content="Comment:" HorizontalAlignment="Left" Margin="239,21,0,0" VerticalAlignment="Top"/>
-                        <Label Content="Employee ID:" HorizontalAlignment="Left" Margin="239,201,0,0" VerticalAlignment="Top"/>
-                        <GroupBox Header="Search employee" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to add his/her Id to the comment. Alternatively, ctrl+c on the id you wish to copy then ctrl+v in the 'Employee ID:' textbox." VerticalAlignment="Top" Height="160" Width="204"/>
-                        </GroupBox>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddEmployee" Header="Add Employee">
-                    <Grid Background="#FFE5E5E5">
-                        <Grid>
-                            <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                            <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Start Date:" HorizontalAlignment="Left" Margin="11,91,0,0" VerticalAlignment="Top"/>
-                            <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
-                            <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120"/>
-                            <DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="122,93,0,0" VerticalAlignment="Top"/>
-                            <DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="122,122,0,0" VerticalAlignment="Top"/>
-                            <TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="122,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                            <Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="79,179,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
+		<Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+			<TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
+				<TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
+					<Grid Background="#FFE5E5E5">
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabAddCustomer" Header="Add Customer">
+					<Grid Background="#FFE5E5E5">
+						<Grid>
+							<Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+							<Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+							<Label Content="Date:" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
+							<TextBox x:Name="txt_addCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="88,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+							<TextBox x:Name="txt_addCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="88,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+							<Button x:Name="btn_addCustomer_add" Content="Add Customer" HorizontalAlignment="Left" Margin="56,98,0,0" VerticalAlignment="Top" Click="btn_addCustomer_add_Click"/>
+							<DatePicker x:Name="datepicker_addCustomer" HorizontalAlignment="Left" Margin="88,69,0,0" VerticalAlignment="Top"/>
+						</Grid>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabAddOrder" Header="Add Order">
+					<Grid Background="#FFE5E5E5">
+						<GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to add him/her to the order" VerticalAlignment="Top" Height="160" Width="204"/>
+						</GroupBox>
+						<ScrollViewer Margin="468,10,0,35">
+							<TextBlock x:Name="txt_addOrder_order" FontFamily="Consolas" Background="White"/>
+						</ScrollViewer>
+						<GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="239,10,0,0" VerticalAlignment="Top" Width="224">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click an item to add it to the order" VerticalAlignment="Top" Height="160" Width="204"/>
+						</GroupBox>
+						<Button x:Name="btn_addOrder_add" Content="Add Order" HorizontalAlignment="Left" Margin="468,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_add_Click"/>
+						<Button x:Name="btn_addOrder_resetOrder" Content="Reset Order" HorizontalAlignment="Left" Margin="548,270,0,0" VerticalAlignment="Top" Width="75" Click="btn_addOrder_resetOrder_Click"/>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabAddComment" Header="Add Comment">
+					<Grid Background="#FFE5E5E5">
+						<TextBox x:Name="txt_addComment_comment" HorizontalAlignment="Left" Height="175" Margin="327,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+						<TextBox x:Name="txt_addComment_id" HorizontalAlignment="Left" Height="23" Margin="327,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="175"/>
+						<Button x:Name="btn_addComment_add" Content="Add Comment" Margin="421,229,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_test_add_comment_Click"/>
+						<Label Content="Comment:" HorizontalAlignment="Left" Margin="239,21,0,0" VerticalAlignment="Top"/>
+						<Label Content="Employee ID:" HorizontalAlignment="Left" Margin="239,201,0,0" VerticalAlignment="Top"/>
+						<GroupBox Header="Search employee" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to add his/her Id to the comment. Alternatively, ctrl+c on the id you wish to copy then ctrl+v in the 'Employee ID:' textbox." VerticalAlignment="Top" Height="160" Width="204"/>
+						</GroupBox>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabAddEmployee" Header="Add Employee">
+					<Grid Background="#FFE5E5E5">
+						<Grid>
+							<Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+							<Label Content="SSN:" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+							<Label Content="Position:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+							<Label Content="Start Date:" HorizontalAlignment="Left" Margin="11,91,0,0" VerticalAlignment="Top"/>
+							<Label Content="End Date:" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top"/>
+							<Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top"/>
+							<TextBox x:Name="txt_addEmployee_name" HorizontalAlignment="Left" Height="23" Margin="121,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+							<TextBox x:Name="txt_addEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="121,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+							<ComboBox x:Name="combo_addEmployee_postition" HorizontalAlignment="Left" Margin="121,66,0,0" VerticalAlignment="Top" Width="120"/>
+							<DatePicker x:Name="datepicker_addEmployee_startDate" HorizontalAlignment="Left" Margin="122,93,0,0" VerticalAlignment="Top"/>
+							<DatePicker x:Name="datepicker_addEmployee_endDate" HorizontalAlignment="Left" Margin="122,122,0,0" VerticalAlignment="Top"/>
+							<TextBox x:Name="txt_addEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="122,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+							<Button x:Name="btn_addEmployee" Content="Add Employee" HorizontalAlignment="Left" Margin="79,179,0,0" VerticalAlignment="Top" Click="btn_addEmployee_Click"/>
 
-                        </Grid>
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabDeleteEmployee" Header="Delete Employee">
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,-22" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to "/><Run Text="delete him/her."/></TextBlock>
-                        </GroupBox>
+						</Grid>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabDeleteEmployee" Header="Delete Employee">
+					<Grid Background="#FFE5E5E5">
+						<GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="170" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,0,-22" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to "/><Run Text="delete him/her."/></TextBlock>
+						</GroupBox>
 
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabUpdateEmployee" Header="Update Employee">
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="188" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,0,-4" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to "/><Run Text="transfer his/her info to the 'Update' box to the right."/></TextBlock>
-                        </GroupBox>
-                        <GroupBox Header="Update" HorizontalAlignment="Left" Height="280" VerticalAlignment="Top" Width="280" Margin="249,10,0,0">
-                            <Grid>
-                                <Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0"/>
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Position:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top"/>
-                                <Label Content="End Date:" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_updateEmployee_name" HorizontalAlignment="Left" Height="23" Margin="124,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_updateEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="124,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <ComboBox x:Name="combo_updateEmployee_postition" HorizontalAlignment="Left" Margin="124,68,0,0" VerticalAlignment="Top" Width="120"/>
-                                <DatePicker x:Name="datepicker_updateEmployee_startDate" HorizontalAlignment="Left" Margin="124,95,0,0" VerticalAlignment="Top"/>
-                                <DatePicker x:Name="datepicker_updateEmployee_endDate" HorizontalAlignment="Left" Margin="124,124,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_updateEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="124,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_updateEmployee_update" Content="Update info" HorizontalAlignment="Left" Margin="82,181,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_update_Click"/>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabUpdateEmployee" Header="Update Employee">
+					<Grid Background="#FFE5E5E5">
+						<GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="188" Margin="10,10,0,0" VerticalAlignment="Top" Width="234">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,0,-4" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for an employee with the search functions below the datagrid to view employees in the datagrid. Double-click an employee to "/><Run Text="transfer his/her info to the 'Update' box to the right."/></TextBlock>
+						</GroupBox>
+						<GroupBox Header="Update" HorizontalAlignment="Left" Height="280" VerticalAlignment="Top" Width="280" Margin="249,10,0,0">
+							<Grid>
+								<Label Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,12,0,0"/>
+								<Label Content="SSN:" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+								<Label Content="Position:" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
+								<Label Content="Start Date:" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top"/>
+								<Label Content="End Date:" HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top"/>
+								<Label Content="Working Capacity:" HorizontalAlignment="Left" Margin="10,150,0,0" VerticalAlignment="Top"/>
+								<TextBox x:Name="txt_updateEmployee_name" HorizontalAlignment="Left" Height="23" Margin="124,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+								<TextBox x:Name="txt_updateEmployee_SSN" HorizontalAlignment="Left" Height="23" Margin="124,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+								<ComboBox x:Name="combo_updateEmployee_postition" HorizontalAlignment="Left" Margin="124,68,0,0" VerticalAlignment="Top" Width="120"/>
+								<DatePicker x:Name="datepicker_updateEmployee_startDate" HorizontalAlignment="Left" Margin="124,95,0,0" VerticalAlignment="Top"/>
+								<DatePicker x:Name="datepicker_updateEmployee_endDate" HorizontalAlignment="Left" Margin="124,124,0,0" VerticalAlignment="Top"/>
+								<TextBox x:Name="txt_updateEmployee_capacity" HorizontalAlignment="Left" Height="23" Margin="124,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+								<Button x:Name="btn_updateEmployee_update" Content="Update info" HorizontalAlignment="Left" Margin="82,181,0,0" VerticalAlignment="Top" Width="75" Click="btn_updateEmployee_update_Click"/>
 
-                            </Grid>
-                        </GroupBox>
+							</Grid>
+						</GroupBox>
 
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Update Customer">
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to "/><Run Text="transfer"/><Run Text=" him/her "/><Run Text="info to the 'Update Customer' box to the right."/></TextBlock>
-                        </GroupBox>
-                        <GroupBox Header="Update Customer" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="248" Margin="239,10,0,0">
-                            <Grid>
-                                <Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Date:" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>
-                                <TextBox x:Name="txt_updateCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <TextBox x:Name="txt_updateCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="100,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                                <Button x:Name="btn_updateCustomer_add" Content="Update Customer" HorizontalAlignment="Left" Margin="54,122,0,0" VerticalAlignment="Top" Click="btn_updateCustomer_add_Click"/>
-                                <DatePicker x:Name="datepicker_updateCustomer" HorizontalAlignment="Left" Margin="100,93,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Bonuspoints:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
-                                <ComboBox x:Name="combo_updateCustomer_bonusPoints" HorizontalAlignment="Left" Margin="100,66,0,0" VerticalAlignment="Top" Width="120">
-                                    <ComboBoxItem Content="0"/>
-                                    <ComboBoxItem Content="1"/>
-                                    <ComboBoxItem Content="2"/>
-                                    <ComboBoxItem Content="3"/>
-                                    <ComboBoxItem Content="4"/>
-                                    <ComboBoxItem Content="5"/>
-                                    <ComboBoxItem Content="6"/>
-                                    <ComboBoxItem Content="7"/>
-                                    <ComboBoxItem Content="8"/>
-                                    <ComboBoxItem Content="9"/>
-                                </ComboBox>
-                            </Grid>
-                        </GroupBox>
+					</Grid>
+				</TabItem>
+				<TabItem Header="Update Customer">
+					<Grid Background="#FFE5E5E5">
+						<GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to "/><Run Text="transfer"/><Run Text=" him/her "/><Run Text="info to the 'Update Customer' box to the right."/></TextBlock>
+						</GroupBox>
+						<GroupBox Header="Update Customer" HorizontalAlignment="Left" Height="205" VerticalAlignment="Top" Width="248" Margin="239,10,0,0">
+							<Grid>
+								<Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+								<Label Content="Occupation:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top"/>
+								<Label Content="Date:" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top"/>
+								<TextBox x:Name="txt_updateCustomer_ssn" HorizontalAlignment="Left" Height="23" Margin="100,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+								<TextBox x:Name="txt_updateCustomer_occupation" HorizontalAlignment="Left" Height="23" Margin="100,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+								<Button x:Name="btn_updateCustomer_add" Content="Update Customer" HorizontalAlignment="Left" Margin="54,122,0,0" VerticalAlignment="Top" Click="btn_updateCustomer_add_Click"/>
+								<DatePicker x:Name="datepicker_updateCustomer" HorizontalAlignment="Left" Margin="100,93,0,0" VerticalAlignment="Top"/>
+								<Label Content="Bonuspoints:" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+								<ComboBox x:Name="combo_updateCustomer_bonusPoints" HorizontalAlignment="Left" Margin="100,66,0,0" VerticalAlignment="Top" Width="120">
+									<ComboBoxItem Content="0"/>
+									<ComboBoxItem Content="1"/>
+									<ComboBoxItem Content="2"/>
+									<ComboBoxItem Content="3"/>
+									<ComboBoxItem Content="4"/>
+									<ComboBoxItem Content="5"/>
+									<ComboBoxItem Content="6"/>
+									<ComboBoxItem Content="7"/>
+									<ComboBoxItem Content="8"/>
+									<ComboBoxItem Content="9"/>
+								</ComboBox>
+							</Grid>
+						</GroupBox>
 
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddToStock" Header="Add To Stock">
-                    <Grid Background="#FFE5E5E5">
-                        <GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                            <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for "/><Run Text="an item "/><Run Text="with the search functions below the datagrid to view "/><Run Text="items"/><Run Text=" in the datagrid. Double-click a"/><Run Text="n item"/><Run Text=" to "/><Run Text="add to its stock."/></TextBlock>
-                        </GroupBox>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabAddToStock" Header="Add To Stock">
+					<Grid Background="#FFE5E5E5">
+						<GroupBox Header="Search item" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+							<TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for "/><Run Text="an item "/><Run Text="with the search functions below the datagrid to view "/><Run Text="items"/><Run Text=" in the datagrid. Double-click a"/><Run Text="n item"/><Run Text=" to "/><Run Text="add to its stock."/></TextBlock>
+						</GroupBox>
 
-                    </Grid>
-                </TabItem>
-                <TabItem x:Name="tabAddReports" Header="Produce Reports">
-                    <Grid Background="#FFE5E5E5">
-                        <TabControl x:Name="tabControlReports">
-                            <TabItem Header="Sales per date">
-                                <Grid Background="#FFE5E5E5">
-                                    <DatePicker x:Name="datepicker_produceReports_salesPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <DatePicker x:Name="datepicker_produceReports_salesPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <Button x:Name="btn_produceReports_salesPerDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
-                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-                                    <TextBlock HorizontalAlignment="Left" Margin="10,93,0,0" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
+					</Grid>
+				</TabItem>
+				<TabItem x:Name="tabAddReports" Header="Produce Reports">
+					<Grid Background="#FFE5E5E5">
+						<TabControl x:Name="tabControlReports">
+							<TabItem Header="Sales per date">
+								<Grid Background="#FFE5E5E5">
+									<DatePicker x:Name="datepicker_produceReports_salesPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<DatePicker x:Name="datepicker_produceReports_salesPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<Button x:Name="btn_produceReports_salesPerDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
+									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+									<TextBlock HorizontalAlignment="Left" Margin="10,93,0,0" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
 
-                                </Grid>
-                            </TabItem>
-                            <TabItem Header="Sales per item and date">
-                                <Grid Background="#FFE5E5E5">
-                                    <DatePicker x:Name="datepicker_produceReports_salesPerItemAndDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <DatePicker x:Name="datepicker_produceReports_salesPerItemAndDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <Button x:Name="btn_produceReports_salesPerItemAndDate" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerItemAndDate_Click"/>
-                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-                                </Grid>
-                            </TabItem>
-                            <TabItem Header="Sales per customer">
-                                <Grid Background="#FFE5E5E5">
-                                    <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                                        <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to"/><Run Text="... TODO!!!!"/></TextBlock>
-                                    </GroupBox>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Sales per item and date">
+								<Grid Background="#FFE5E5E5">
+									<DatePicker x:Name="datepicker_produceReports_salesPerItemAndDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<DatePicker x:Name="datepicker_produceReports_salesPerItemAndDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<Button x:Name="btn_produceReports_salesPerItemAndDate" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerItemAndDate_Click"/>
+									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Sales per customer">
+								<Grid Background="#FFE5E5E5">
+									<GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
+										<TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to"/><Run Text="... TODO!!!!"/></TextBlock>
+									</GroupBox>
 
-                                </Grid>
-                            </TabItem>
-                            <TabItem Header="Stocklog per item and date">
-                                <Grid Background="#FFE5E5E5">
-                                    <DatePicker x:Name="datepicker_produceReports_stocklogPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <DatePicker x:Name="datepicker_produceReports_stocklogPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <Button x:Name="btn_produceReports_stocklogPerDate" Content="Search" HorizontalAlignment="Left" Margin="56,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_stocklogPerDate_Click"/>
-                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-                                    <GroupBox Header="Search item" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="183">
-                                        <TextBlock TextWrapping="Wrap"><Run Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click "/><Run Text="the item to search for."/><Run Text=" The datagrid will show the most recent log of the selected item."/><LineBreak/><Run Text=""/><LineBreak/><Run Text="Selected item:"/></TextBlock>
-                                    </GroupBox>
-                                    <TextBlock x:Name="txt_produceReports_stocklogPerDate" HorizontalAlignment="Left" Margin="102,211,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Stocklog per item and date">
+								<Grid Background="#FFE5E5E5">
+									<DatePicker x:Name="datepicker_produceReports_stocklogPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<DatePicker x:Name="datepicker_produceReports_stocklogPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<Button x:Name="btn_produceReports_stocklogPerDate" Content="Search" HorizontalAlignment="Left" Margin="56,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_stocklogPerDate_Click"/>
+									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+									<GroupBox Header="Search item" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="183">
+										<TextBlock TextWrapping="Wrap"><Run Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click "/><Run Text="the item to search for."/><Run Text=" The datagrid will show the most recent log of the selected item."/><LineBreak/><Run Text=""/><LineBreak/><Run Text="Selected item:"/></TextBlock>
+									</GroupBox>
+									<TextBlock x:Name="txt_produceReports_stocklogPerDate" HorizontalAlignment="Left" Margin="102,211,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
 
-                                </Grid>
-                            </TabItem>
-                            <TabItem Header="Orders by employee and date">
-                                <Grid Background="#FFE5E5E5">
-                                    <DatePicker x:Name="datepicker_produceReports_ordersByEmployee_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <DatePicker x:Name="datepicker_produceReports_ordersByEmployee_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <Button x:Name="btn_produceReports_ordersByEmployee" Content="Search" HorizontalAlignment="Left" Margin="91,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_ordersByEmployee_Click"/>
-                                    <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
-                                    <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-                                    <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="277">
-                                        <TextBlock TextWrapping="Wrap"><Run Text="Search for an "/><Run Text="employee"/><Run Text=" with the search functions below the datagrid to view "/><Run Text="employees "/><Run Text="in the datagrid. "/><Run Text="Double-click an employee and then click the search button to search for the employees order in the given time period"/><LineBreak/><Run/><LineBreak/><Run Text="Selected "/><Run Text="Employee"/><Run Text=":"/></TextBlock>
-                                    </GroupBox>
-                                    <TextBlock x:Name="txt_produceReports_ordersByEmployee_name" HorizontalAlignment="Left" Margin="137,203,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
-                                    <TextBlock x:Name="txt_produceReports_ordersByEmployee_id" HorizontalAlignment="Left" Margin="137,182,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Orders by employee and date">
+								<Grid Background="#FFE5E5E5">
+									<DatePicker x:Name="datepicker_produceReports_ordersByEmployee_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<DatePicker x:Name="datepicker_produceReports_ordersByEmployee_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<Button x:Name="btn_produceReports_ordersByEmployee" Content="Search" HorizontalAlignment="Left" Margin="91,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_ordersByEmployee_Click"/>
+									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+									<GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="277">
+										<TextBlock TextWrapping="Wrap"><Run Text="Search for an "/><Run Text="employee"/><Run Text=" with the search functions below the datagrid to view "/><Run Text="employees "/><Run Text="in the datagrid. "/><Run Text="Double-click an employee and then click the search button to search for the employees order in the given time period"/><LineBreak/><Run/><LineBreak/><Run Text="Selected "/><Run Text="Employee"/><Run Text=":"/></TextBlock>
+									</GroupBox>
+									<TextBlock x:Name="txt_produceReports_ordersByEmployee_name" HorizontalAlignment="Left" Margin="137,203,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+									<TextBlock x:Name="txt_produceReports_ordersByEmployee_id" HorizontalAlignment="Left" Margin="137,182,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
 
-                                </Grid>
-                            </TabItem>
-                        </TabControl>
-                    </Grid>
-                </TabItem>
-            </TabControl>
-        </Grid>
-    </Grid>
+								</Grid>
+							</TabItem>
+							<TabItem Header="Customer by Date" Margin="-2,-2,-2,0">
+								<Grid Background="#FFE5E5E5">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="77*"/>
+										<ColumnDefinition Width="17*"/>
+									</Grid.ColumnDefinitions>
+									<DatePicker x:Name="datepicker_produceReports_customersByDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<DatePicker x:Name="datepicker_produceReports_customersByDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<Button x:Name="btn_produceReports_customersByDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
+									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+									<TextBlock HorizontalAlignment="Left" Margin="10,93,0,-10" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
+
+								</Grid>
+							</TabItem>
+							<TabItem Header="Employee by Date" Margin="-2,-2,14,0">
+								<Grid Background="#FFE5E5E5">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="77*"/>
+										<ColumnDefinition Width="17*"/>
+									</Grid.ColumnDefinitions>
+									<DatePicker x:Name="datepicker_produceReports_employeeByDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<DatePicker x:Name="datepicker_produceReports_employeeByDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
+									<Button x:Name="btn_produceReports_employeeByDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
+									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
+									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
+									<TextBlock HorizontalAlignment="Left" Margin="10,93,0,-10" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
+
+								</Grid>
+							</TabItem>
+						</TabControl>
+					</Grid>
+				</TabItem>
+			</TabControl>
+		</Grid>
+	</Grid>
 </Window>

@@ -194,8 +194,8 @@ namespace NoSQL_0._0
                         txt_updateEmployee_name.Text = emp.Name;
                         txt_updateEmployee_SSN.Text = emp.SSN;
                         combo_updateEmployee_postition.SelectedItem = emp.Position;
-                        datepicker_updateEmployee_startDate.Text = emp.StartDate;
-                        datepicker_updateEmployee_endDate.Text = emp.EndDate;
+                        datepicker_updateEmployee_startDate.Text = emp.StartDate.ToString();
+                        datepicker_updateEmployee_endDate.Text = emp.EndDate.ToString();
                         txt_updateEmployee_capacity.Text = emp.WorkingCapacity.ToString();
                         employeeToUpdate = emp;
                     }
@@ -209,7 +209,7 @@ namespace NoSQL_0._0
                         txt_updateCustomer_ssn.Text = cus.SSN;
                         txt_updateCustomer_occupation.Text = cus.Occupation;
                         combo_updateCustomer_bonusPoints.Text = cus.BonusCounter.ToString();
-                        datepicker_updateCustomer.Text = cus.MembershipDate;
+                        datepicker_updateCustomer.Text = cus.MembershipDate.ToString();
                         customerToUpdate = cus;
                     }
                     break;
@@ -850,5 +850,45 @@ namespace NoSQL_0._0
             }
             dataGrid.ItemsSource = ordersByEmp;
         }
-    }
+
+		/// <summary>
+		/// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Customers by date' tab.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btn_produceReports_customersByDate_search_Click(object sender, RoutedEventArgs e)
+		{
+			// Input check
+			if (datepicker_produceReports_customersByDate_startdate.SelectedDate == null
+				|| datepicker_produceReports_customersByDate_enddate.SelectedDate == null)
+			{
+				MessageBox.Show("Please fill in both datepickers");
+				return;
+			}
+
+			DateTime start = (DateTime)datepicker_produceReports_customersByDate_startdate.SelectedDate;
+			DateTime end = (DateTime)datepicker_produceReports_customersByDate_enddate.SelectedDate;
+			dataGrid.ItemsSource = db.GetCustomerBetweenDates(start, end);
+		}
+
+		/// <summary>
+		/// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Employees by date' tab.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btn_produceReports_employeeByDate_search_Click(object sender, RoutedEventArgs e)
+		{
+			// Input check
+			if (datepicker_produceReports_employeeByDate_startdate.SelectedDate == null
+				|| datepicker_produceReports_employeeByDate_enddate.SelectedDate == null)
+			{
+				MessageBox.Show("Please fill in both datepickers");
+				return;
+			}
+
+			DateTime start = (DateTime)datepicker_produceReports_employeeByDate_startdate.SelectedDate;
+			DateTime end = (DateTime)datepicker_produceReports_employeeByDate_enddate.SelectedDate;
+			dataGrid.ItemsSource = db.GetCustomerBetweenDates(start, end);
+		}
+	}
 }
