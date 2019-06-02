@@ -25,7 +25,7 @@ namespace NoSQL_0._0
         public MainWindow()
         {
             InitializeComponent();
-            
+
             // Show login view
             gridLogin.Visibility = System.Windows.Visibility.Visible;
 
@@ -88,7 +88,8 @@ namespace NoSQL_0._0
                 gridLogin.Visibility = System.Windows.Visibility.Hidden;
                 gridDataGrid.Visibility = System.Windows.Visibility.Visible;
                 gridMain.Visibility = System.Windows.Visibility.Visible;
-            } else
+            }
+            else
             {
                 System.Windows.MessageBox.Show("Password is incorrect.");
                 return;
@@ -113,16 +114,19 @@ namespace NoSQL_0._0
 
             // Store current user as field
             currentUser = emp;
-            
+
             // Store current order as field
             currentOrder = new Order();
             currentOrder.EmployeeId = currentUser.Id;
-            
+
             combo_addEmployee_postition.ItemsSource = Enum.GetValues(typeof(Position));
             combo_updateEmployee_postition.ItemsSource = Enum.GetValues(typeof(Position));
 
             // Fill datagrid with all customers from the same country
             dataGrid.ItemsSource = CreateLocalizedItemList(db.GetItemStockByCity(currentUser.City).Items);
+
+            // Default selected tab
+            tabAddOrder.IsSelected = true;
         }
 
         /// <summary>
@@ -136,12 +140,31 @@ namespace NoSQL_0._0
 
             switch (tabControlMain.SelectedIndex)
             {
-                // Currently Add Customer
+                //Currently View Comments
                 case 0:
+                    if (row.Item is Employee)
+                    {
+                        Employee emp = (Employee)row.Item;
+
+                        List<Comment> comments = new List<Comment>();
+                        comments = emp.Comments;
+                        dataGrid.ItemsSource = comments;
+                    }
+
+                    if (row.Item is Comment)
+                    {
+                        Comment cmt = (Comment)row.Item;
+                        txt_viewComment_comment.Text = cmt.Text;
+                    }
+
+                    break;
+
+                // Currently Add Customer
+                case 1:
                     break;
 
                 // Currently Add Order
-                case 1:
+                case 2:
                     if (row.Item is Customer)
                     {
                         Customer customer = (Customer)row.Item;
@@ -156,20 +179,20 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Add Comment
-                case 2:
+                case 3:
                     if (row.Item is Employee)
                     {
                         Employee emp = (Employee)row.Item;
                         txt_addComment_id.Text = emp.Id.ToString();
                     }
                     break;
-                
+
                 // Currently Add Employee
-                case 3:
-                    break;
-                
-                // Currently Delete Employee
                 case 4:
+                    break;
+
+                // Currently Delete Employee
+                case 5:
                     if (row.Item is Employee)
                     {
                         Employee employee = (Employee)row.Item;
@@ -184,7 +207,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Update Employee
-                case 5:
+                case 6:
                     if (row.Item is Employee)
                     {
                         Employee emp = (Employee)row.Item;
@@ -199,7 +222,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Update Customer
-                case 6:
+                case 7:
                     if (row.Item is Customer)
                     {
                         Customer cus = (Customer)row.Item;
@@ -212,7 +235,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Add To Stock
-                case 7:
+                case 8:
                     if (row.Item is Item)
                     {
                         Item item = (Item)row.Item;
@@ -226,7 +249,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Produce Reports
-                case 8:
+                case 9:
                     switch (tabControlReports.SelectedIndex)
                     {
                         // Currently Sales per date
@@ -390,15 +413,23 @@ namespace NoSQL_0._0
         /// <param name="e"></param>
         private void btn_test_add_comment_Click(object sender, RoutedEventArgs e)
         {
-            ObjectId id = new ObjectId(txt_addComment_id.Text);
-            Boolean commentAdded = db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_addComment_comment.Text, DateTime.Now.ToString()));
-            if (!commentAdded)
-                MessageBox.Show("No employee with Id " + id);
-            else
+            try
             {
-                txt_addComment_comment.Text = "";
-                txt_addComment_id.Text = "";
+                ObjectId id = new ObjectId(txt_addComment_id.Text);
+                Boolean commentAdded = db.UpdateEmployeeAddComment(id, new Comment(currentUser.Id, txt_addComment_comment.Text, DateTime.Now.ToString()));
+                if (!commentAdded)
+                    MessageBox.Show("No employee with Id " + id);
+                else
+                {
+                    txt_addComment_comment.Text = "";
+                    txt_addComment_id.Text = "";
+                }
             }
+            catch
+            {
+                MessageBox.Show("Invalid id input: " + txt_addComment_id.Text);
+            }
+
         }
 
         /// <summary>
@@ -415,11 +446,11 @@ namespace NoSQL_0._0
                 MessageBox.Show("No items in the order.");
                 return;
             }
-            
+
             //if (currentOrder.CustomerId.ToString() == "000000000000000000000000")
             //{
             //    MessageBox.Show("No customer in the order.");
-                
+
             //    return;
             //}
 
@@ -589,7 +620,7 @@ namespace NoSQL_0._0
         private void btn_updateCustomer_add_Click(object sender, RoutedEventArgs e)
         {
             // Create new customer
-            
+
             Customer c = null;
             try
             {
@@ -727,7 +758,7 @@ namespace NoSQL_0._0
                         combo_search_attribute.SelectedIndex = 0;
                     }
                     break;
-                
+
                 // Itemstocks
                 case 2:
                     searchForCollection = new Item();
@@ -748,9 +779,10 @@ namespace NoSQL_0._0
             var temp = db.AllInOneSearch(searchForCollection, combo_search_attribute.Text, txt_search_query.Text, currentUser.City, currentUser.Country);
             if (temp is IEnumerable<Item>)
             {
-                temp = CreateLocalizedItemList((List < Item > ) temp);
+                temp = CreateLocalizedItemList((List<Item>)temp);
             }
             dataGrid.ItemsSource = temp;
+            txt_viewComment_comment.Text = "";
         }
 
         private void OnTabSelectionChanged(Object sender, SelectionChangedEventArgs args)
@@ -760,6 +792,7 @@ namespace NoSQL_0._0
                 currentOrder = new Order();
                 currentOrder.EmployeeId = currentUser.Id;
             }
+            txt_viewComment_comment.Text = "";
             //employeeToUpdate = null;
             //customerToUpdate = null;
         }
@@ -770,7 +803,7 @@ namespace NoSQL_0._0
             var ukMult = 10d;
             var usMult = 100d;
 
-            foreach(var item in tempList)
+            foreach (var item in tempList)
             {
                 switch (currentUser.Country)
                 {
@@ -838,7 +871,7 @@ namespace NoSQL_0._0
             DateTime end = (DateTime)datepicker_produceReports_ordersByEmployee_enddate.SelectedDate;
             List<Order> orders = db.GetOrderBetweenDates(start, end.AddHours(23.99));
             List<Order> ordersByEmp = new List<Order>();
-            foreach(Order order in orders)
+            foreach (Order order in orders)
             {
                 if (order.EmployeeId.ToString() == txt_produceReports_ordersByEmployee_id.Text)
                 {
@@ -848,44 +881,44 @@ namespace NoSQL_0._0
             dataGrid.ItemsSource = ordersByEmp;
         }
 
-		/// <summary>
-		/// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Customers by date' tab.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void btn_produceReports_customersByDate_search_Click(object sender, RoutedEventArgs e)
-		{
-			// Input check
-			if (datepicker_produceReports_customersByDate_startdate.SelectedDate == null
-				|| datepicker_produceReports_customersByDate_enddate.SelectedDate == null)
-			{
-				MessageBox.Show("Please fill in both datepickers");
-				return;
-			}
+        /// <summary>
+        /// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Customers by date' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_produceReports_customersByDate_search_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (datepicker_produceReports_customersByDate_startdate.SelectedDate == null
+                || datepicker_produceReports_customersByDate_enddate.SelectedDate == null)
+            {
+                MessageBox.Show("Please fill in both datepickers");
+                return;
+            }
 
-			DateTime start = (DateTime)datepicker_produceReports_customersByDate_startdate.SelectedDate;
-			DateTime end = (DateTime)datepicker_produceReports_customersByDate_enddate.SelectedDate;
-			dataGrid.ItemsSource = db.GetCustomerBetweenDates(start, end);
-		}
+            DateTime start = (DateTime)datepicker_produceReports_customersByDate_startdate.SelectedDate;
+            DateTime end = (DateTime)datepicker_produceReports_customersByDate_enddate.SelectedDate;
+            dataGrid.ItemsSource = db.GetCustomerBetweenDates(start, end);
+        }
 
-		/// <summary>
-		/// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Employees by date' tab.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void btn_produceReports_employeeByDate_search_Click(object sender, RoutedEventArgs e)
-		{
-			// Input check
-			if (datepicker_produceReports_employeeByDate_startdate.SelectedDate == null
-				|| datepicker_produceReports_employeeByDate_enddate.SelectedDate == null)
-			{
-				MessageBox.Show("Please fill in both datepickers");
-				return;
-			}
+        /// <summary>
+        /// This method is called when the user clicks on the 'Search' button in the 'Produce Reports -> Employees by date' tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_produceReports_employeeByDate_search_Click(object sender, RoutedEventArgs e)
+        {
+            // Input check
+            if (datepicker_produceReports_employeeByDate_startdate.SelectedDate == null
+                || datepicker_produceReports_employeeByDate_enddate.SelectedDate == null)
+            {
+                MessageBox.Show("Please fill in both datepickers");
+                return;
+            }
 
-			DateTime start = (DateTime)datepicker_produceReports_employeeByDate_startdate.SelectedDate;
-			DateTime end = (DateTime)datepicker_produceReports_employeeByDate_enddate.SelectedDate;
-			dataGrid.ItemsSource = db.GetEmployeeBetweenDates(start, end);
-		}
-	}
+            DateTime start = (DateTime)datepicker_produceReports_employeeByDate_startdate.SelectedDate;
+            DateTime end = (DateTime)datepicker_produceReports_employeeByDate_enddate.SelectedDate;
+            dataGrid.ItemsSource = db.GetEmployeeBetweenDates(start, end);
+        }
+    }
 }
