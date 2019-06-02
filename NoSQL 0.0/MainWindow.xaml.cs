@@ -44,16 +44,18 @@ namespace NoSQL_0._0
              * You can add arguments when running it in Visual Studio by 
              * going into project Properties > Debug > Command line arguments
              */
-            string[] cmdArgs = Environment.GetCommandLineArgs();
+            //string[] cmdArgs = Environment.GetCommandLineArgs();
 
-            // Connect to database.
-            db = new Database(cmdArgs);
+            //// Connect to database.
+            //db = new Database(cmdArgs);
 
-            foreach (string s in cmdArgs)
-            {
-                if (s == "buildDB") // if app was used to create the test database then terminate afterwards
-                    Environment.Exit(Environment.ExitCode);
-            }
+            //foreach (string s in cmdArgs)
+            //{
+            //    if (s == "buildDB") // if app was used to create the test database then terminate afterwards
+            //        Environment.Exit(Environment.ExitCode);
+            //}
+
+            db = new Database();
         }
 
         /// <summary>
@@ -288,7 +290,7 @@ namespace NoSQL_0._0
                 currentUser.Country,
                 txt_addCustomer_occupation.Text,
                 0,
-                datepicker_addCustomer.ToString().Split(' ')[0]);
+                datepicker_addCustomer.SelectedDate.Value);
             }
             catch (Exception ex)
             {
@@ -330,8 +332,8 @@ namespace NoSQL_0._0
                 combo_addEmployee_postition.SelectedItem.ToString(),
                 currentUser.Country,
                 currentUser.City,
-                datepicker_addEmployee_startDate.ToString().Split(' ')[0],
-                datepicker_addEmployee_endDate.ToString().Split(' ')[0],
+                datepicker_addEmployee_startDate.SelectedDate.Value,
+                datepicker_addEmployee_endDate.SelectedDate.Value,
                 capacity);
             }
             catch (Exception ex)
@@ -553,8 +555,8 @@ namespace NoSQL_0._0
                     combo_updateEmployee_postition.SelectedItem.ToString(),
                     currentUser.Country,
                     currentUser.City,
-                    datepicker_updateEmployee_startDate.Text,
-                    datepicker_updateEmployee_endDate.Text,
+                    datepicker_updateEmployee_startDate.SelectedDate.Value,
+                    datepicker_updateEmployee_endDate.SelectedDate.Value,
                     capacity);
                 emp.Comments = employeeToUpdate.Comments;
             }
@@ -603,7 +605,7 @@ namespace NoSQL_0._0
                     currentUser.Country,
                     txt_updateCustomer_occupation.Text,
                     bonusPoints,
-                    datepicker_updateCustomer.ToString().Split(' ')[0]);
+                    datepicker_updateCustomer.SelectedDate.Value);
             }
             catch (Exception ex)
             {
@@ -763,8 +765,8 @@ namespace NoSQL_0._0
                 currentOrder = new Order();
                 currentOrder.EmployeeId = currentUser.Id;
             }
-            employeeToUpdate = null;
-            customerToUpdate = null;
+            //employeeToUpdate = null;
+            //customerToUpdate = null;
         }
 
         private List<Item> CreateLocalizedItemList(List<Item> oldList)
@@ -888,7 +890,7 @@ namespace NoSQL_0._0
 
 			DateTime start = (DateTime)datepicker_produceReports_employeeByDate_startdate.SelectedDate;
 			DateTime end = (DateTime)datepicker_produceReports_employeeByDate_enddate.SelectedDate;
-			dataGrid.ItemsSource = db.GetCustomerBetweenDates(start, end);
+			dataGrid.ItemsSource = db.GetEmployeeBetweenDates(start, end);
 		}
 	}
 }

@@ -39,7 +39,7 @@
 
 		</Grid>
 
-		<Grid x:Name="gridMain" Visibility="Visible" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
+		<Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
 			<TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
 				<TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
 					<Grid Background="#FFE5E5E5">
@@ -228,14 +228,14 @@
 								<Grid Background="#FFE5E5E5">
 									<DatePicker x:Name="datepicker_produceReports_ordersByEmployee_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
 									<DatePicker x:Name="datepicker_produceReports_ordersByEmployee_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-									<Button x:Name="btn_produceReports_ordersByEmployee" Content="Search" HorizontalAlignment="Left" Margin="91,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_ordersByEmployee_Click"/>
+									<Button x:Name="btn_produceReports_ordersByEmployee" Content="Search" HorizontalAlignment="Left" Margin="73,191,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_ordersByEmployee_Click" RenderTransformOrigin="0.533,0.6"/>
 									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
 									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-									<GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="277">
+									<GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="422">
 										<TextBlock TextWrapping="Wrap"><Run Text="Search for an "/><Run Text="employee"/><Run Text=" with the search functions below the datagrid to view "/><Run Text="employees "/><Run Text="in the datagrid. "/><Run Text="Double-click an employee and then click the search button to search for the employees order in the given time period"/><LineBreak/><Run/><LineBreak/><Run Text="Selected "/><Run Text="Employee"/><Run Text=":"/></TextBlock>
 									</GroupBox>
-									<TextBlock x:Name="txt_produceReports_ordersByEmployee_name" HorizontalAlignment="Left" Margin="137,203,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
-									<TextBlock x:Name="txt_produceReports_ordersByEmployee_id" HorizontalAlignment="Left" Margin="137,182,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+									<TextBlock x:Name="txt_produceReports_ordersByEmployee_name" HorizontalAlignment="Left" Margin="137,170,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+									<TextBlock x:Name="txt_produceReports_ordersByEmployee_id" HorizontalAlignment="Left" Margin="137,149,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
 
 								</Grid>
 							</TabItem>
@@ -247,12 +247,11 @@
 									</Grid.ColumnDefinitions>
 									<DatePicker x:Name="datepicker_produceReports_customersByDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
 									<DatePicker x:Name="datepicker_produceReports_customersByDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-									<Button x:Name="btn_produceReports_customersByDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
+                                    <Button x:Name="btn_produceReports_customersByDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_customersByDate_search_Click"/>
 									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
 									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-									<TextBlock HorizontalAlignment="Left" Margin="10,93,0,-10" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
 
-								</Grid>
+                                </Grid>
 							</TabItem>
 							<TabItem Header="Employee by Date" Margin="-2,-2,14,0">
 								<Grid Background="#FFE5E5E5">
@@ -262,12 +261,11 @@
 									</Grid.ColumnDefinitions>
 									<DatePicker x:Name="datepicker_produceReports_employeeByDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
 									<DatePicker x:Name="datepicker_produceReports_employeeByDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-									<Button x:Name="btn_produceReports_employeeByDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_salesPerDate_search_Click"/>
+                                    <Button x:Name="btn_produceReports_employeeByDate_search" Content="Search" HorizontalAlignment="Left" Margin="48,68,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_employeeByDate_search_Click"/>
 									<Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
 									<Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-									<TextBlock HorizontalAlignment="Left" Margin="10,93,0,-10" TextWrapping="Wrap" Text="Once searched, double-click the 'Items' column in an order to view the order's items." VerticalAlignment="Top" Height="169" Width="183"/>
 
-								</Grid>
+                                </Grid>
 							</TabItem>
 						</TabControl>
 					</Grid>

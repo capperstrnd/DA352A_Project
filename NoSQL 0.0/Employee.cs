@@ -66,7 +66,7 @@ namespace NoSQL_0._0
         }
         public List<Comment> Comments { get; set; }
 
-        public Employee(string name, string password, string sSN, string position, string country, string city, string startDate, string endDate, int workingCapacity)
+        public Employee(string name, string password, string sSN, string position, string country, string city, DateTime startDate, DateTime endDate, int workingCapacity)
         {
             Name = name;
             Password = password;
@@ -74,8 +74,8 @@ namespace NoSQL_0._0
             Position = position;
             Country = country;
             City = city;
-            StartDate = DateTime.Parse(startDate);
-            EndDate = DateTime.Parse(endDate);
+            StartDate = startDate;
+            EndDate = endDate;
             WorkingCapacity = workingCapacity;
             Comments = new List<Comment>();
         }

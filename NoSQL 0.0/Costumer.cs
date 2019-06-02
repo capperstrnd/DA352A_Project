@@ -52,22 +52,16 @@ namespace NoSQL_0._0
         public DateTime MembershipDate
         {
             get { return membershipDate; }
-            set
-            {
-                if (value.Year < 0)
-                    membershipDate = value;
-                else
-                    throw new Exception("The date must be filled.");
-            } 
+            set { if (value.Year > 0) membershipDate = value; else throw new Exception("Date must be filled."); }
         }
 
-        public Customer(string sSN, string country, string occupation, int bonusCounter, string membershipDate)
+        public Customer(string sSN, string country, string occupation, int bonusCounter, DateTime membershipDate)
         {
             SSN = sSN;
             Country = country;
             Occupation = occupation;
             BonusCounter = bonusCounter;
-			MembershipDate = DateTime.Parse(membershipDate);
+			MembershipDate = membershipDate;
         }
 
         public Customer()

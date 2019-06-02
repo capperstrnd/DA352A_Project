@@ -41,6 +41,22 @@ namespace NoSQL_0._0
             }
         }
 
+        public Database()
+        {
+            // Connect to mongodb server running on 'localhost:27017' and get/create database 'BeaverCoffee'
+            db = new MongoClient("mongodb://localhost:27017").GetDatabase("BeaverCoffee");
+
+            // Get/create five collections in the 'BeaverCoffee' database.
+            colEmployee = db.GetCollection<Employee>("Employee");
+            colCustomer = db.GetCollection<Customer>("Customer");
+            colOrder = db.GetCollection<Order>("Order");
+            colItemStock = db.GetCollection<ItemStock>("ItemStock");
+            colComment = db.GetCollection<Comment>("Comment");
+            colStockLog = db.GetCollection<StockLog>("StockLog");
+
+            //addStuffToDB();
+        }
+
         /*
          *  EMPLOYEE QUERIES!
          */
@@ -342,10 +358,10 @@ namespace NoSQL_0._0
             /*
              * Insert employees
              */
-            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", Position.Location_Manager.ToString(), Country.Sweden.ToString(), City.Malmö1.ToString(), "2018-08-23", "2019-08-23", 100);
-            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", Position.Employee.ToString(), Country.Sweden.ToString(), City.Malmö2.ToString(), "2019-03-01", "2020-03-01", 100);
-            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", Position.Employee.ToString(), Country.Sweden.ToString(), City.Malmö3.ToString(), "2019-05-04", "2020-05-04", 100);
-            Employee e4 = new Employee("admin", "admin", "880604-1234", Position.Corporate_Sales_Manager.ToString(), Country.England.ToString(), City.London.ToString(), "2018-08-23", "2019-08-12", 100);
+            Employee e1 = new Employee("Mattias Sundquist", "admin", "549835-4682", Position.Location_Manager.ToString(), Country.Sweden.ToString(), City.Malmö1.ToString(), DateTime.Now, DateTime.MaxValue, 100);
+            Employee e2 = new Employee("Betty Brändström", "admin", "815462-4583", Position.Employee.ToString(), Country.Sweden.ToString(), City.Malmö2.ToString(), DateTime.Now, DateTime.MaxValue, 100);
+            Employee e3 = new Employee("Casper Strand", "admin", "690715-1234", Position.Employee.ToString(), Country.Sweden.ToString(), City.Malmö3.ToString(), DateTime.Now, DateTime.MaxValue, 100);
+            Employee e4 = new Employee("admin", "admin", "880604-1234", Position.Corporate_Sales_Manager.ToString(), Country.England.ToString(), City.London.ToString(), DateTime.Now, DateTime.MaxValue, 100);
             colEmployee.InsertOne(e1);
             colEmployee.InsertOne(e2);
             colEmployee.InsertOne(e3);
@@ -354,8 +370,8 @@ namespace NoSQL_0._0
             /*
              * Insert costumers
              */
-            Customer c1 = new Customer("884579-4568", Country.Sweden.ToString(), "Bricklayer", 4, "2017-08-20");
-            Customer c2 = new Customer("915384-7538", Country.England.ToString(), "Ping pong player", 2, "2019-05-01");
+            Customer c1 = new Customer("884579-4568", Country.Sweden.ToString(), "Bricklayer", 4, DateTime.Now);
+            Customer c2 = new Customer("915384-7538", Country.England.ToString(), "Ping pong player", 2, DateTime.Now);
             colCustomer.InsertOne(c1);
             colCustomer.InsertOne(c2);
 
