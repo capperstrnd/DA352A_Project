@@ -44,18 +44,19 @@ namespace NoSQL_0._0
              * You can add arguments when running it in Visual Studio by 
              * going into project Properties > Debug > Command line arguments
              */
-            //string[] cmdArgs = Environment.GetCommandLineArgs();
+            string[] cmdArgs = Environment.GetCommandLineArgs();
 
-            //// Connect to database.
-            //db = new Database(cmdArgs);
-
-            //foreach (string s in cmdArgs)
-            //{
-            //    if (s == "buildDB") // if app was used to create the test database then terminate afterwards
-            //        Environment.Exit(Environment.ExitCode);
-            //}
-
-            db = new Database();
+            // Connect to database.
+            if (cmdArgs.Length >= 0)
+                db = new Database(cmdArgs);
+            else
+                db = new Database();
+            
+            foreach (string s in cmdArgs)
+            {
+                if (s == "buildDB") // if app was used to create the test database then terminate afterwards
+                    Environment.Exit(Environment.ExitCode);
+            }
         }
 
         /// <summary>

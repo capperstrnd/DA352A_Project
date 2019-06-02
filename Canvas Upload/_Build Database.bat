@@ -1,0 +1,1 @@
+@start "" "%~dp0\Bin\NoSQL 0.0.exe" buildDB
