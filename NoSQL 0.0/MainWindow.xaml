@@ -8,7 +8,6 @@
         Title="BeaverCoffee AB" Height="775" Width="800" ResizeMode="NoResize">
 	<Grid>
 		<Grid Margin="299,244,0,0" x:Name="gridLogin" Visibility="Hidden" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234">
-			<Label Content="Ahem... User = admin. Pass = admin" HorizontalAlignment="Left" Margin="0,-83,0,0" VerticalAlignment="Top"/>
 			<Label Content="Username: " HorizontalAlignment="Left" VerticalAlignment="Top"/>
 			<Label Content="Password: " HorizontalAlignment="Left" Margin="0,31,0,0" VerticalAlignment="Top"/>
 			<TextBox HorizontalAlignment="Left" Height="23" Margin="74,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" x:Name="txtUser"/>
@@ -40,12 +39,8 @@
 		</Grid>
 
 		<Grid x:Name="gridMain" Visibility="Hidden" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="774" Margin="10,0,0,0">
-			<TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
-				<TabItem x:Name="tabDebugTesting" Header="Degub/Testing">
-					<Grid Background="#FFE5E5E5">
-					</Grid>
-				</TabItem>
-				<TabItem x:Name="tabAddCustomer" Header="Add Customer">
+            <TabControl x:Name="tabControlMain" SelectionChanged="OnTabSelectionChanged" Height="348" VerticalAlignment="Top" HorizontalAlignment="Left" Width="764">
+                <TabItem x:Name="tabAddCustomer" Header="Add Customer">
 					<Grid Background="#FFE5E5E5">
 						<Grid>
 							<Label Content="SSN:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>

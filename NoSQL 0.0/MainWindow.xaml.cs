@@ -101,7 +101,6 @@ namespace NoSQL_0._0
                 {
                     (tabItem as TabItem).IsEnabled = false;
                 }
-                tabDebugTesting.IsEnabled = true;
                 tabAddCustomer.IsEnabled = true;
                 tabAddOrder.IsEnabled = true;
             }
@@ -137,16 +136,12 @@ namespace NoSQL_0._0
 
             switch (tabControlMain.SelectedIndex)
             {
-                // Currently debug/testing
+                // Currently Add Customer
                 case 0:
                     break;
 
-                // Currently Add Customer
-                case 1:
-                    break;
-
                 // Currently Add Order
-                case 2:
+                case 1:
                     if (row.Item is Customer)
                     {
                         Customer customer = (Customer)row.Item;
@@ -161,7 +156,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Add Comment
-                case 3:
+                case 2:
                     if (row.Item is Employee)
                     {
                         Employee emp = (Employee)row.Item;
@@ -170,11 +165,11 @@ namespace NoSQL_0._0
                     break;
                 
                 // Currently Add Employee
-                case 4:
+                case 3:
                     break;
                 
                 // Currently Delete Employee
-                case 5:
+                case 4:
                     if (row.Item is Employee)
                     {
                         Employee employee = (Employee)row.Item;
@@ -189,7 +184,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Update Employee
-                case 6:
+                case 5:
                     if (row.Item is Employee)
                     {
                         Employee emp = (Employee)row.Item;
@@ -204,7 +199,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Update Customer
-                case 7:
+                case 6:
                     if (row.Item is Customer)
                     {
                         Customer cus = (Customer)row.Item;
@@ -217,7 +212,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Add To Stock
-                case 8:
+                case 7:
                     if (row.Item is Item)
                     {
                         Item item = (Item)row.Item;
@@ -231,7 +226,7 @@ namespace NoSQL_0._0
                     break;
 
                 // Currently Produce Reports
-                case 9:
+                case 8:
                     switch (tabControlReports.SelectedIndex)
                     {
                         // Currently Sales per date
