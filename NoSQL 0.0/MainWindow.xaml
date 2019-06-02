@@ -211,7 +211,7 @@
                             <TabItem Header="Sales per customer">
                                 <Grid Background="#FFE5E5E5">
                                     <GroupBox Header="Search customer member" HorizontalAlignment="Left" Height="180" Margin="10,10,0,0" VerticalAlignment="Top" Width="224">
-                                        <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to"/><Run Text="... TODO!!!!"/></TextBlock>
+                                        <TextBlock HorizontalAlignment="Left" Margin="10,10,-2,-12" TextWrapping="Wrap" VerticalAlignment="Top" Height="160" Width="204"><Run Text="Search for a customer member with the search functions below the datagrid to view customer members in the datagrid. Double-click a customer member to"/><Run Text=" view his/her orders"/></TextBlock>
                                     </GroupBox>
 
                                 </Grid>
@@ -220,13 +220,13 @@
                                 <Grid Background="#FFE5E5E5">
                                     <DatePicker x:Name="datepicker_produceReports_stocklogPerDate_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
                                     <DatePicker x:Name="datepicker_produceReports_stocklogPerDate_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <Button x:Name="btn_produceReports_stocklogPerDate" Content="Search" HorizontalAlignment="Left" Margin="56,242,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_stocklogPerDate_Click"/>
+                                    <Button x:Name="btn_produceReports_stocklogPerDate" Content="Search" HorizontalAlignment="Left" Margin="56,198,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_stocklogPerDate_Click"/>
                                     <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
                                     <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-                                    <GroupBox Header="Search item" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="183">
+                                    <GroupBox Header="Search item" HorizontalAlignment="Left" Height="125" Margin="10,68,0,0" VerticalAlignment="Top" Width="295">
                                         <TextBlock TextWrapping="Wrap"><Run Text="Search for an item member with the search functions below the datagrid to view items in the datagrid. Double-click "/><Run Text="the item to search for."/><Run Text=" The datagrid will show the most recent log of the selected item."/><LineBreak/><Run Text=""/><LineBreak/><Run Text="Selected item:"/></TextBlock>
                                     </GroupBox>
-                                    <TextBlock x:Name="txt_produceReports_stocklogPerDate" HorizontalAlignment="Left" Margin="102,211,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
+                                    <TextBlock x:Name="txt_produceReports_stocklogPerDate" HorizontalAlignment="Left" Margin="102,166,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
 
                                 </Grid>
                             </TabItem>
@@ -234,10 +234,10 @@
                                 <Grid Background="#FFE5E5E5">
                                     <DatePicker x:Name="datepicker_produceReports_ordersByEmployee_startdate" HorizontalAlignment="Left" Margin="91,10,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
                                     <DatePicker x:Name="datepicker_produceReports_ordersByEmployee_enddate" HorizontalAlignment="Left" Margin="91,39,0,0" VerticalAlignment="Top" SelectedDateFormat="Long"/>
-                                    <Button x:Name="btn_produceReports_ordersByEmployee" Content="Search" HorizontalAlignment="Left" Margin="73,191,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_ordersByEmployee_Click" RenderTransformOrigin="0.533,0.6"/>
+                                    <Button x:Name="btn_produceReports_ordersByEmployee" Content="Search" HorizontalAlignment="Left" Margin="77,202,0,0" VerticalAlignment="Top" Width="75" Click="btn_produceReports_ordersByEmployee_Click" RenderTransformOrigin="0.48,0.5"/>
                                     <Label Content="Start date" HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top"/>
                                     <Label Content="End date" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top"/>
-                                    <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="169" Margin="10,68,0,0" VerticalAlignment="Top" Width="422">
+                                    <GroupBox Header="Search Employee" HorizontalAlignment="Left" Height="129" Margin="10,68,0,0" VerticalAlignment="Top" Width="422">
                                         <TextBlock TextWrapping="Wrap"><Run Text="Search for an "/><Run Text="employee"/><Run Text=" with the search functions below the datagrid to view "/><Run Text="employees "/><Run Text="in the datagrid. "/><Run Text="Double-click an employee and then click the search button to search for the employees order in the given time period"/><LineBreak/><Run/><LineBreak/><Run Text="Selected "/><Run Text="Employee"/><Run Text=":"/></TextBlock>
                                     </GroupBox>
                                     <TextBlock x:Name="txt_produceReports_ordersByEmployee_name" HorizontalAlignment="Left" Margin="137,170,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top"/>
